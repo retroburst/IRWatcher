@@ -1,0 +1,14 @@
+{
+    "irWatcherConfig" :
+    {
+        "targetUri" : "http://www.anz.com/productdata/productdata.asp?output=json&callback=callbackFunction",
+        "smtpHost" : "",
+        "smtpUser" : "",
+        "smtpPass" : "",
+        "dbFilename" : "irWatcher.db.store",
+        "watchInterval" : 86400000,
+        "listenPort" : 8080,
+        "productJsonLeftTrimLength" : 17,
+        "productJsonRightTrimLength" : 1
+    }
+}
