@@ -5,10 +5,25 @@
         "smtpHost" : "",
         "smtpUser" : "",
         "smtpPass" : "",
-        "dbFilename" : "irWatcher.db.store",
+        "gmailAddressAlertList" : "retroburst",
+        "gmailSuffix" : "@gmail.com",
+        "dataStoreFilename" : "irWatcher.db.store",
         "watchInterval" : 86400000,
         "listenPort" : 8080,
         "productJsonLeftTrimLength" : 17,
-        "productJsonRightTrimLength" : 1
+        "productJsonRightTrimLength" : 1,
+        "log4js" : {
+            "appenders": [
+                          {
+                            "type": "console"
+                          },
+                          {
+                            "type": "file",
+                            "filename": "irWatcher.log",
+                            "maxLogSize": 20480,
+                            "backups": 3
+                          }
+                          ]
+            }
     }
 }

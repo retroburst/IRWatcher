@@ -1,0 +1,235 @@
+[2016-02-04 11:00:28.718] [INFO] irWatcher - inserted a row
+[2016-02-04 11:00:28.726] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 10:43:23 GMT+0900 (JST),
+  _id: '6WjEtAGl9ddxCcHT' }
+[2016-02-04 11:00:28.727] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 10:43:30 GMT+0900 (JST),
+  _id: 'VQ9Rlb9wLo9McvrM' }
+[2016-02-04 11:00:28.728] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 10:43:34 GMT+0900 (JST),
+  _id: 'uqeklBwjiKVct1bA' }
+[2016-02-04 11:00:28.728] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:00:28 GMT+0900 (JST),
+  _id: 'wdVRiJZV8VnCGfTG' }
+[2016-02-04 11:02:14.884] [INFO] irWatcher - inserted a row
+[2016-02-04 11:02:14.890] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 10:43:23 GMT+0900 (JST),
+  _id: '6WjEtAGl9ddxCcHT' }
+[2016-02-04 11:02:14.892] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:02:14 GMT+0900 (JST),
+  _id: 'FuolkBDlagcmss6w' }
+[2016-02-04 11:02:14.893] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 10:43:30 GMT+0900 (JST),
+  _id: 'VQ9Rlb9wLo9McvrM' }
+[2016-02-04 11:02:14.893] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 10:43:34 GMT+0900 (JST),
+  _id: 'uqeklBwjiKVct1bA' }
+[2016-02-04 11:02:14.894] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:00:28 GMT+0900 (JST),
+  _id: 'wdVRiJZV8VnCGfTG' }
+[2016-02-04 11:05:08.632] [INFO] irWatcher - inserted a row
+[2016-02-04 11:05:08.644] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 10:43:23 GMT+0900 (JST),
+  _id: '6WjEtAGl9ddxCcHT' }
+[2016-02-04 11:05:08.646] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:02:14 GMT+0900 (JST),
+  _id: 'FuolkBDlagcmss6w' }
+[2016-02-04 11:05:08.647] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 10:43:30 GMT+0900 (JST),
+  _id: 'VQ9Rlb9wLo9McvrM' }
+[2016-02-04 11:05:08.648] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:05:08 GMT+0900 (JST),
+  _id: 'q1KGIOH3AvARgNl4' }
+[2016-02-04 11:05:08.648] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 10:43:34 GMT+0900 (JST),
+  _id: 'uqeklBwjiKVct1bA' }
+[2016-02-04 11:05:08.649] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:00:28 GMT+0900 (JST),
+  _id: 'wdVRiJZV8VnCGfTG' }
+[2016-02-04 11:09:46.325] [INFO] irWatcher - inserted a row
+[2016-02-04 11:09:46.332] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 10:43:23 GMT+0900 (JST),
+  _id: '6WjEtAGl9ddxCcHT' }
+[2016-02-04 11:09:46.334] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:02:14 GMT+0900 (JST),
+  _id: 'FuolkBDlagcmss6w' }
+[2016-02-04 11:09:46.334] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 10:43:30 GMT+0900 (JST),
+  _id: 'VQ9Rlb9wLo9McvrM' }
+[2016-02-04 11:09:46.335] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:09:46 GMT+0900 (JST),
+  _id: 'j7mJP0nXg1wkp6EQ' }
+[2016-02-04 11:09:46.335] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:05:08 GMT+0900 (JST),
+  _id: 'q1KGIOH3AvARgNl4' }
+[2016-02-04 11:09:46.336] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 10:43:34 GMT+0900 (JST),
+  _id: 'uqeklBwjiKVct1bA' }
+[2016-02-04 11:09:46.338] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:00:28 GMT+0900 (JST),
+  _id: 'wdVRiJZV8VnCGfTG' }
+[2016-02-04 11:11:18.005] [INFO] irWatcher - inserted a row
+[2016-02-04 11:11:18.012] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 10:43:23 GMT+0900 (JST),
+  _id: '6WjEtAGl9ddxCcHT' }
+[2016-02-04 11:11:18.014] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:02:14 GMT+0900 (JST),
+  _id: 'FuolkBDlagcmss6w' }
+[2016-02-04 11:11:18.014] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 10:43:30 GMT+0900 (JST),
+  _id: 'VQ9Rlb9wLo9McvrM' }
+[2016-02-04 11:11:18.015] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:09:46 GMT+0900 (JST),
+  _id: 'j7mJP0nXg1wkp6EQ' }
+[2016-02-04 11:11:18.016] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:11:17 GMT+0900 (JST),
+  _id: 'jXPXLGWvZksxuDQw' }
+[2016-02-04 11:11:18.017] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:05:08 GMT+0900 (JST),
+  _id: 'q1KGIOH3AvARgNl4' }
+[2016-02-04 11:11:18.018] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 10:43:34 GMT+0900 (JST),
+  _id: 'uqeklBwjiKVct1bA' }
+[2016-02-04 11:11:18.018] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:00:28 GMT+0900 (JST),
+  _id: 'wdVRiJZV8VnCGfTG' }
+[2016-02-04 11:13:15.991] [INFO] irWatcher - inserted a row
+[2016-02-04 11:13:15.997] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 10:43:23 GMT+0900 (JST),
+  _id: '6WjEtAGl9ddxCcHT' }
+[2016-02-04 11:13:15.999] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:13:15 GMT+0900 (JST),
+  _id: 'Fe9Dlall5pzmgiGz' }
+[2016-02-04 11:13:16.000] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:02:14 GMT+0900 (JST),
+  _id: 'FuolkBDlagcmss6w' }
+[2016-02-04 11:13:16.001] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 10:43:30 GMT+0900 (JST),
+  _id: 'VQ9Rlb9wLo9McvrM' }
+[2016-02-04 11:13:16.001] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:09:46 GMT+0900 (JST),
+  _id: 'j7mJP0nXg1wkp6EQ' }
+[2016-02-04 11:13:16.002] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:11:17 GMT+0900 (JST),
+  _id: 'jXPXLGWvZksxuDQw' }
+[2016-02-04 11:13:16.003] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:05:08 GMT+0900 (JST),
+  _id: 'q1KGIOH3AvARgNl4' }
+[2016-02-04 11:13:16.003] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 10:43:34 GMT+0900 (JST),
+  _id: 'uqeklBwjiKVct1bA' }
+[2016-02-04 11:13:16.004] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:00:28 GMT+0900 (JST),
+  _id: 'wdVRiJZV8VnCGfTG' }
+[2016-02-04 11:13:21.815] [DEBUG] irWatcher - ::1 - - "GET / HTTP/1.1" 304 - "" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
+[2016-02-04 11:13:21.856] [DEBUG] irWatcher - ::1 - - "GET /stylesheets/style.css HTTP/1.1" 304 - "http://localhost:8080/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
+[2016-02-04 11:13:38.130] [DEBUG] irWatcher - ::1 - - "GET / HTTP/1.1" 304 - "" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
+[2016-02-04 11:13:38.165] [DEBUG] irWatcher - ::1 - - "GET /stylesheets/style.css HTTP/1.1" 304 - "http://localhost:8080/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
+[2016-02-04 11:14:46.099] [INFO] irWatcher - inserted a row
+[2016-02-04 11:14:46.105] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 10:43:23 GMT+0900 (JST),
+  _id: '6WjEtAGl9ddxCcHT' }
+[2016-02-04 11:14:46.107] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:13:15 GMT+0900 (JST),
+  _id: 'Fe9Dlall5pzmgiGz' }
+[2016-02-04 11:14:46.107] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:02:14 GMT+0900 (JST),
+  _id: 'FuolkBDlagcmss6w' }
+[2016-02-04 11:14:46.108] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 10:43:30 GMT+0900 (JST),
+  _id: 'VQ9Rlb9wLo9McvrM' }
+[2016-02-04 11:14:46.108] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:14:46 GMT+0900 (JST),
+  _id: 'ZiPFSOsBUdaudd1r' }
+[2016-02-04 11:14:46.109] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:09:46 GMT+0900 (JST),
+  _id: 'j7mJP0nXg1wkp6EQ' }
+[2016-02-04 11:14:46.110] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:11:17 GMT+0900 (JST),
+  _id: 'jXPXLGWvZksxuDQw' }
+[2016-02-04 11:14:46.110] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:05:08 GMT+0900 (JST),
+  _id: 'q1KGIOH3AvARgNl4' }
+[2016-02-04 11:14:46.111] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 10:43:34 GMT+0900 (JST),
+  _id: 'uqeklBwjiKVct1bA' }
+[2016-02-04 11:14:46.112] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:00:28 GMT+0900 (JST),
+  _id: 'wdVRiJZV8VnCGfTG' }
+[2016-02-04 11:14:50.200] [WARN] irWatcher - ::1 - - "GET / HTTP/1.1" 304 - "" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
+[2016-02-04 11:14:50.244] [WARN] irWatcher - ::1 - - "GET /stylesheets/style.css HTTP/1.1" 304 - "http://localhost:8080/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
+[2016-02-04 11:15:14.727] [INFO] irWatcher - inserted a row
+[2016-02-04 11:15:14.732] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 10:43:23 GMT+0900 (JST),
+  _id: '6WjEtAGl9ddxCcHT' }
+[2016-02-04 11:15:14.734] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:15:14 GMT+0900 (JST),
+  _id: 'BHwLfhNCeRNCbJmT' }
+[2016-02-04 11:15:14.735] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:13:15 GMT+0900 (JST),
+  _id: 'Fe9Dlall5pzmgiGz' }
+[2016-02-04 11:15:14.735] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:02:14 GMT+0900 (JST),
+  _id: 'FuolkBDlagcmss6w' }
+[2016-02-04 11:15:14.736] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 10:43:30 GMT+0900 (JST),
+  _id: 'VQ9Rlb9wLo9McvrM' }
+[2016-02-04 11:15:14.737] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:14:46 GMT+0900 (JST),
+  _id: 'ZiPFSOsBUdaudd1r' }
+[2016-02-04 11:15:14.738] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:09:46 GMT+0900 (JST),
+  _id: 'j7mJP0nXg1wkp6EQ' }
+[2016-02-04 11:15:14.739] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:11:17 GMT+0900 (JST),
+  _id: 'jXPXLGWvZksxuDQw' }
+[2016-02-04 11:15:14.739] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:05:08 GMT+0900 (JST),
+  _id: 'q1KGIOH3AvARgNl4' }
+[2016-02-04 11:15:14.740] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 10:43:34 GMT+0900 (JST),
+  _id: 'uqeklBwjiKVct1bA' }
+[2016-02-04 11:15:14.740] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:00:28 GMT+0900 (JST),
+  _id: 'wdVRiJZV8VnCGfTG' }
+[2016-02-04 11:15:18.496] [DEBUG] irWatcher - ::1 - - "GET / HTTP/1.1" 304 - "" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
+[2016-02-04 11:15:18.543] [DEBUG] irWatcher - ::1 - - "GET /stylesheets/style.css HTTP/1.1" 304 - "http://localhost:8080/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
+[2016-02-04 11:16:13.938] [INFO] irWatcher - inserted a row
+[2016-02-04 11:16:13.945] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 10:43:23 GMT+0900 (JST),
+  _id: '6WjEtAGl9ddxCcHT' }
+[2016-02-04 11:16:13.947] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:15:14 GMT+0900 (JST),
+  _id: 'BHwLfhNCeRNCbJmT' }
+[2016-02-04 11:16:13.948] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:13:15 GMT+0900 (JST),
+  _id: 'Fe9Dlall5pzmgiGz' }
+[2016-02-04 11:16:13.948] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:02:14 GMT+0900 (JST),
+  _id: 'FuolkBDlagcmss6w' }
+[2016-02-04 11:16:13.949] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 10:43:30 GMT+0900 (JST),
+  _id: 'VQ9Rlb9wLo9McvrM' }
+[2016-02-04 11:16:13.950] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:14:46 GMT+0900 (JST),
+  _id: 'ZiPFSOsBUdaudd1r' }
+[2016-02-04 11:16:13.951] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:09:46 GMT+0900 (JST),
+  _id: 'j7mJP0nXg1wkp6EQ' }
+[2016-02-04 11:16:13.951] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:11:17 GMT+0900 (JST),
+  _id: 'jXPXLGWvZksxuDQw' }
+[2016-02-04 11:16:13.952] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:05:08 GMT+0900 (JST),
+  _id: 'q1KGIOH3AvARgNl4' }
+[2016-02-04 11:16:13.954] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:16:13 GMT+0900 (JST),
+  _id: 'sODxKPf1PaoF9bgD' }
+[2016-02-04 11:16:13.954] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 10:43:34 GMT+0900 (JST),
+  _id: 'uqeklBwjiKVct1bA' }
+[2016-02-04 11:16:13.955] [INFO] irWatcher - { name: 'asdasd',
+  date: Thu Feb 04 2016 11:00:28 GMT+0900 (JST),
+  _id: 'wdVRiJZV8VnCGfTG' }
+[2016-02-04 11:16:16.732] [INFO] irWatcher - ::1 - - "GET / HTTP/1.1" 304 - "" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
+[2016-02-04 11:16:16.775] [INFO] irWatcher - ::1 - - "GET /stylesheets/style.css HTTP/1.1" 304 - "http://localhost:8080/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
