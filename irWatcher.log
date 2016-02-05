@@ -1,235 +1,42 @@
-[2016-02-04 11:00:28.718] [INFO] irWatcher - inserted a row
-[2016-02-04 11:00:28.726] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 10:43:23 GMT+0900 (JST),
-  _id: '6WjEtAGl9ddxCcHT' }
-[2016-02-04 11:00:28.727] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 10:43:30 GMT+0900 (JST),
-  _id: 'VQ9Rlb9wLo9McvrM' }
-[2016-02-04 11:00:28.728] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 10:43:34 GMT+0900 (JST),
-  _id: 'uqeklBwjiKVct1bA' }
-[2016-02-04 11:00:28.728] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:00:28 GMT+0900 (JST),
-  _id: 'wdVRiJZV8VnCGfTG' }
-[2016-02-04 11:02:14.884] [INFO] irWatcher - inserted a row
-[2016-02-04 11:02:14.890] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 10:43:23 GMT+0900 (JST),
-  _id: '6WjEtAGl9ddxCcHT' }
-[2016-02-04 11:02:14.892] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:02:14 GMT+0900 (JST),
-  _id: 'FuolkBDlagcmss6w' }
-[2016-02-04 11:02:14.893] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 10:43:30 GMT+0900 (JST),
-  _id: 'VQ9Rlb9wLo9McvrM' }
-[2016-02-04 11:02:14.893] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 10:43:34 GMT+0900 (JST),
-  _id: 'uqeklBwjiKVct1bA' }
-[2016-02-04 11:02:14.894] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:00:28 GMT+0900 (JST),
-  _id: 'wdVRiJZV8VnCGfTG' }
-[2016-02-04 11:05:08.632] [INFO] irWatcher - inserted a row
-[2016-02-04 11:05:08.644] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 10:43:23 GMT+0900 (JST),
-  _id: '6WjEtAGl9ddxCcHT' }
-[2016-02-04 11:05:08.646] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:02:14 GMT+0900 (JST),
-  _id: 'FuolkBDlagcmss6w' }
-[2016-02-04 11:05:08.647] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 10:43:30 GMT+0900 (JST),
-  _id: 'VQ9Rlb9wLo9McvrM' }
-[2016-02-04 11:05:08.648] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:05:08 GMT+0900 (JST),
-  _id: 'q1KGIOH3AvARgNl4' }
-[2016-02-04 11:05:08.648] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 10:43:34 GMT+0900 (JST),
-  _id: 'uqeklBwjiKVct1bA' }
-[2016-02-04 11:05:08.649] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:00:28 GMT+0900 (JST),
-  _id: 'wdVRiJZV8VnCGfTG' }
-[2016-02-04 11:09:46.325] [INFO] irWatcher - inserted a row
-[2016-02-04 11:09:46.332] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 10:43:23 GMT+0900 (JST),
-  _id: '6WjEtAGl9ddxCcHT' }
-[2016-02-04 11:09:46.334] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:02:14 GMT+0900 (JST),
-  _id: 'FuolkBDlagcmss6w' }
-[2016-02-04 11:09:46.334] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 10:43:30 GMT+0900 (JST),
-  _id: 'VQ9Rlb9wLo9McvrM' }
-[2016-02-04 11:09:46.335] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:09:46 GMT+0900 (JST),
-  _id: 'j7mJP0nXg1wkp6EQ' }
-[2016-02-04 11:09:46.335] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:05:08 GMT+0900 (JST),
-  _id: 'q1KGIOH3AvARgNl4' }
-[2016-02-04 11:09:46.336] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 10:43:34 GMT+0900 (JST),
-  _id: 'uqeklBwjiKVct1bA' }
-[2016-02-04 11:09:46.338] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:00:28 GMT+0900 (JST),
-  _id: 'wdVRiJZV8VnCGfTG' }
-[2016-02-04 11:11:18.005] [INFO] irWatcher - inserted a row
-[2016-02-04 11:11:18.012] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 10:43:23 GMT+0900 (JST),
-  _id: '6WjEtAGl9ddxCcHT' }
-[2016-02-04 11:11:18.014] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:02:14 GMT+0900 (JST),
-  _id: 'FuolkBDlagcmss6w' }
-[2016-02-04 11:11:18.014] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 10:43:30 GMT+0900 (JST),
-  _id: 'VQ9Rlb9wLo9McvrM' }
-[2016-02-04 11:11:18.015] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:09:46 GMT+0900 (JST),
-  _id: 'j7mJP0nXg1wkp6EQ' }
-[2016-02-04 11:11:18.016] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:11:17 GMT+0900 (JST),
-  _id: 'jXPXLGWvZksxuDQw' }
-[2016-02-04 11:11:18.017] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:05:08 GMT+0900 (JST),
-  _id: 'q1KGIOH3AvARgNl4' }
-[2016-02-04 11:11:18.018] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 10:43:34 GMT+0900 (JST),
-  _id: 'uqeklBwjiKVct1bA' }
-[2016-02-04 11:11:18.018] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:00:28 GMT+0900 (JST),
-  _id: 'wdVRiJZV8VnCGfTG' }
-[2016-02-04 11:13:15.991] [INFO] irWatcher - inserted a row
-[2016-02-04 11:13:15.997] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 10:43:23 GMT+0900 (JST),
-  _id: '6WjEtAGl9ddxCcHT' }
-[2016-02-04 11:13:15.999] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:13:15 GMT+0900 (JST),
-  _id: 'Fe9Dlall5pzmgiGz' }
-[2016-02-04 11:13:16.000] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:02:14 GMT+0900 (JST),
-  _id: 'FuolkBDlagcmss6w' }
-[2016-02-04 11:13:16.001] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 10:43:30 GMT+0900 (JST),
-  _id: 'VQ9Rlb9wLo9McvrM' }
-[2016-02-04 11:13:16.001] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:09:46 GMT+0900 (JST),
-  _id: 'j7mJP0nXg1wkp6EQ' }
-[2016-02-04 11:13:16.002] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:11:17 GMT+0900 (JST),
-  _id: 'jXPXLGWvZksxuDQw' }
-[2016-02-04 11:13:16.003] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:05:08 GMT+0900 (JST),
-  _id: 'q1KGIOH3AvARgNl4' }
-[2016-02-04 11:13:16.003] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 10:43:34 GMT+0900 (JST),
-  _id: 'uqeklBwjiKVct1bA' }
-[2016-02-04 11:13:16.004] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:00:28 GMT+0900 (JST),
-  _id: 'wdVRiJZV8VnCGfTG' }
-[2016-02-04 11:13:21.815] [DEBUG] irWatcher - ::1 - - "GET / HTTP/1.1" 304 - "" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
-[2016-02-04 11:13:21.856] [DEBUG] irWatcher - ::1 - - "GET /stylesheets/style.css HTTP/1.1" 304 - "http://localhost:8080/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
-[2016-02-04 11:13:38.130] [DEBUG] irWatcher - ::1 - - "GET / HTTP/1.1" 304 - "" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
-[2016-02-04 11:13:38.165] [DEBUG] irWatcher - ::1 - - "GET /stylesheets/style.css HTTP/1.1" 304 - "http://localhost:8080/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
-[2016-02-04 11:14:46.099] [INFO] irWatcher - inserted a row
-[2016-02-04 11:14:46.105] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 10:43:23 GMT+0900 (JST),
-  _id: '6WjEtAGl9ddxCcHT' }
-[2016-02-04 11:14:46.107] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:13:15 GMT+0900 (JST),
-  _id: 'Fe9Dlall5pzmgiGz' }
-[2016-02-04 11:14:46.107] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:02:14 GMT+0900 (JST),
-  _id: 'FuolkBDlagcmss6w' }
-[2016-02-04 11:14:46.108] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 10:43:30 GMT+0900 (JST),
-  _id: 'VQ9Rlb9wLo9McvrM' }
-[2016-02-04 11:14:46.108] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:14:46 GMT+0900 (JST),
-  _id: 'ZiPFSOsBUdaudd1r' }
-[2016-02-04 11:14:46.109] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:09:46 GMT+0900 (JST),
-  _id: 'j7mJP0nXg1wkp6EQ' }
-[2016-02-04 11:14:46.110] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:11:17 GMT+0900 (JST),
-  _id: 'jXPXLGWvZksxuDQw' }
-[2016-02-04 11:14:46.110] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:05:08 GMT+0900 (JST),
-  _id: 'q1KGIOH3AvARgNl4' }
-[2016-02-04 11:14:46.111] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 10:43:34 GMT+0900 (JST),
-  _id: 'uqeklBwjiKVct1bA' }
-[2016-02-04 11:14:46.112] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:00:28 GMT+0900 (JST),
-  _id: 'wdVRiJZV8VnCGfTG' }
-[2016-02-04 11:14:50.200] [WARN] irWatcher - ::1 - - "GET / HTTP/1.1" 304 - "" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
-[2016-02-04 11:14:50.244] [WARN] irWatcher - ::1 - - "GET /stylesheets/style.css HTTP/1.1" 304 - "http://localhost:8080/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
-[2016-02-04 11:15:14.727] [INFO] irWatcher - inserted a row
-[2016-02-04 11:15:14.732] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 10:43:23 GMT+0900 (JST),
-  _id: '6WjEtAGl9ddxCcHT' }
-[2016-02-04 11:15:14.734] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:15:14 GMT+0900 (JST),
-  _id: 'BHwLfhNCeRNCbJmT' }
-[2016-02-04 11:15:14.735] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:13:15 GMT+0900 (JST),
-  _id: 'Fe9Dlall5pzmgiGz' }
-[2016-02-04 11:15:14.735] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:02:14 GMT+0900 (JST),
-  _id: 'FuolkBDlagcmss6w' }
-[2016-02-04 11:15:14.736] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 10:43:30 GMT+0900 (JST),
-  _id: 'VQ9Rlb9wLo9McvrM' }
-[2016-02-04 11:15:14.737] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:14:46 GMT+0900 (JST),
-  _id: 'ZiPFSOsBUdaudd1r' }
-[2016-02-04 11:15:14.738] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:09:46 GMT+0900 (JST),
-  _id: 'j7mJP0nXg1wkp6EQ' }
-[2016-02-04 11:15:14.739] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:11:17 GMT+0900 (JST),
-  _id: 'jXPXLGWvZksxuDQw' }
-[2016-02-04 11:15:14.739] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:05:08 GMT+0900 (JST),
-  _id: 'q1KGIOH3AvARgNl4' }
-[2016-02-04 11:15:14.740] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 10:43:34 GMT+0900 (JST),
-  _id: 'uqeklBwjiKVct1bA' }
-[2016-02-04 11:15:14.740] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:00:28 GMT+0900 (JST),
-  _id: 'wdVRiJZV8VnCGfTG' }
-[2016-02-04 11:15:18.496] [DEBUG] irWatcher - ::1 - - "GET / HTTP/1.1" 304 - "" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
-[2016-02-04 11:15:18.543] [DEBUG] irWatcher - ::1 - - "GET /stylesheets/style.css HTTP/1.1" 304 - "http://localhost:8080/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
-[2016-02-04 11:16:13.938] [INFO] irWatcher - inserted a row
-[2016-02-04 11:16:13.945] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 10:43:23 GMT+0900 (JST),
-  _id: '6WjEtAGl9ddxCcHT' }
-[2016-02-04 11:16:13.947] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:15:14 GMT+0900 (JST),
-  _id: 'BHwLfhNCeRNCbJmT' }
-[2016-02-04 11:16:13.948] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:13:15 GMT+0900 (JST),
-  _id: 'Fe9Dlall5pzmgiGz' }
-[2016-02-04 11:16:13.948] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:02:14 GMT+0900 (JST),
-  _id: 'FuolkBDlagcmss6w' }
-[2016-02-04 11:16:13.949] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 10:43:30 GMT+0900 (JST),
-  _id: 'VQ9Rlb9wLo9McvrM' }
-[2016-02-04 11:16:13.950] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:14:46 GMT+0900 (JST),
-  _id: 'ZiPFSOsBUdaudd1r' }
-[2016-02-04 11:16:13.951] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:09:46 GMT+0900 (JST),
-  _id: 'j7mJP0nXg1wkp6EQ' }
-[2016-02-04 11:16:13.951] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:11:17 GMT+0900 (JST),
-  _id: 'jXPXLGWvZksxuDQw' }
-[2016-02-04 11:16:13.952] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:05:08 GMT+0900 (JST),
-  _id: 'q1KGIOH3AvARgNl4' }
-[2016-02-04 11:16:13.954] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:16:13 GMT+0900 (JST),
-  _id: 'sODxKPf1PaoF9bgD' }
-[2016-02-04 11:16:13.954] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 10:43:34 GMT+0900 (JST),
-  _id: 'uqeklBwjiKVct1bA' }
-[2016-02-04 11:16:13.955] [INFO] irWatcher - { name: 'asdasd',
-  date: Thu Feb 04 2016 11:00:28 GMT+0900 (JST),
-  _id: 'wdVRiJZV8VnCGfTG' }
-[2016-02-04 11:16:16.732] [INFO] irWatcher - ::1 - - "GET / HTTP/1.1" 304 - "" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
-[2016-02-04 11:16:16.775] [INFO] irWatcher - ::1 - - "GET /stylesheets/style.css HTTP/1.1" 304 - "http://localhost:8080/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
+[2016-02-05 21:45:38.353] [INFO] irWatcher - IRWatcher listening on port '8080'.
+[2016-02-05 21:45:53.582] [DEBUG] irWatcher - Trimming json response from bank.
+[2016-02-05 21:46:51.819] [INFO] irWatcher - IRWatcher listening on port '8080'.
+[2016-02-05 21:47:08.115] [DEBUG] irWatcher - Trimming json response from bank.
+[2016-02-05 21:50:45.671] [INFO] irWatcher - IRWatcher listening on port '8080'.
+[2016-02-05 21:51:03.882] [DEBUG] irWatcher - Trimming json response from bank.
+[2016-02-05 21:51:03.883] [DEBUG] irWatcher - Parsing json response from bank.
+[2016-02-05 21:51:03.889] [DEBUG] irWatcher - Looking for json path [ANZ Progress Saver]: '$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'PSAWB')].baserate[?(@.code === 'PSAWB8T')]'.
+[2016-02-05 21:51:35.832] [INFO] irWatcher - IRWatcher listening on port '8080'.
+[2016-02-05 21:51:49.327] [DEBUG] irWatcher - Trimming json response from bank.
+[2016-02-05 21:51:49.328] [DEBUG] irWatcher - Parsing json response from bank.
+[2016-02-05 21:51:49.335] [DEBUG] irWatcher - Looking for json path [ANZ Progress Saver]: '$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'PSAWB')].baserate[?(@.code === 'PSAWB8T')]'.
+[2016-02-05 21:51:49.341] [DEBUG] irWatcher - Found 1 rates for json path [ANZ Progress Saver].
+[2016-02-05 21:51:49.341] [DEBUG] irWatcher - Looking for json path [ANZ Online Saver]: '$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'OS')].baserate[?(@.code === 'OSV')]'.
+[2016-02-05 21:51:49.343] [DEBUG] irWatcher - Found 1 rates for json path [ANZ Online Saver].
+[2016-02-05 21:51:49.343] [DEBUG] irWatcher - Looking for json path [ANZ Term Deposit]: '$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ATD')].baserate[*]'.
+[2016-02-05 21:51:49.349] [DEBUG] irWatcher - Found 64 rates for json path [ANZ Term Deposit].
+[2016-02-05 21:51:49.349] [DEBUG] irWatcher - Looking for json path [ANZ Advance Notice Term Deposit]: '$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ANTD')].baserate[*]'.
+[2016-02-05 21:51:49.353] [DEBUG] irWatcher - Found 62 rates for json path [ANZ Advance Notice Term Deposit].
+[2016-02-05 21:51:49.369] [INFO] irWatcher - Inserted new rates of interest doc (128 rates).
+[2016-02-05 22:07:11.192] [INFO] irWatcher - IRWatcher listening on port '8080'.
+[2016-02-05 22:07:23.708] [INFO] irWatcher - ::1 - - "GET / HTTP/1.1" 304 - "" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
+[2016-02-05 22:07:23.787] [INFO] irWatcher - ::1 - - "GET /stylesheets/style.css HTTP/1.1" 304 - "http://localhost:8080/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
+[2016-02-05 22:07:28.943] [DEBUG] irWatcher - Trimming json response from bank.
+[2016-02-05 22:07:28.943] [DEBUG] irWatcher - Parsing json response from bank.
+[2016-02-05 22:07:28.948] [DEBUG] irWatcher - Looking for json path [ANZ Progress Saver]: '$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'PSAWB')].baserate[?(@.code === 'PSAWB8T')]'.
+[2016-02-05 22:07:28.952] [DEBUG] irWatcher - Found 1 rates for json path [ANZ Progress Saver].
+[2016-02-05 22:07:28.953] [DEBUG] irWatcher - Looking for json path [ANZ Online Saver]: '$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'OS')].baserate[?(@.code === 'OSV')]'.
+[2016-02-05 22:07:28.956] [DEBUG] irWatcher - Found 1 rates for json path [ANZ Online Saver].
+[2016-02-05 22:07:28.956] [DEBUG] irWatcher - Looking for json path [ANZ Term Deposit]: '$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ATD')].baserate[*]'.
+[2016-02-05 22:07:28.962] [DEBUG] irWatcher - Found 64 rates for json path [ANZ Term Deposit].
+[2016-02-05 22:07:28.962] [DEBUG] irWatcher - Looking for json path [ANZ Advance Notice Term Deposit]: '$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ANTD')].baserate[*]'.
+[2016-02-05 22:07:28.968] [DEBUG] irWatcher - Found 62 rates for json path [ANZ Advance Notice Term Deposit].
+[2016-02-05 22:07:28.994] [DEBUG] irWatcher - Inserted new rates of interest doc (128 rates).
+[2016-02-05 22:07:37.177] [INFO] irWatcher - ::1 - - "GET /list HTTP/1.1" 200 241 "" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
+[2016-02-05 22:07:37.222] [INFO] irWatcher - ::1 - - "GET /stylesheets/style.css HTTP/1.1" 304 - "http://localhost:8080/list" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
+[2016-02-05 22:10:56.630] [INFO] irWatcher - ::1 - - "GET /list HTTP/1.1" 200 12295 "" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
+[2016-02-05 22:10:56.665] [INFO] irWatcher - ::1 - - "GET /stylesheets/style.css HTTP/1.1" 304 - "http://localhost:8080/list" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
+[2016-02-05 22:12:43.260] [INFO] irWatcher - ::1 - - "GET /list HTTP/1.1" 200 17331 "" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
+[2016-02-05 22:12:43.291] [INFO] irWatcher - ::1 - - "GET /stylesheets/style.css HTTP/1.1" 304 - "http://localhost:8080/list" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
+[2016-02-05 22:13:28.940] [INFO] irWatcher - ::1 - - "GET /list HTTP/1.1" 200 18795 "" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
+[2016-02-05 22:13:28.977] [INFO] irWatcher - ::1 - - "GET /stylesheets/style.css HTTP/1.1" 304 - "http://localhost:8080/list" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"

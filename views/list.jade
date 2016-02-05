@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    h1.
+        List
+
+    ul
+        each doc, i in model.ratesOfInterestDocs
+            li #{doc.date} (#{doc.numRatesOfInterest})
+                ul
+                    each rate, j in doc.ratesOfInterest
+                        li #{rate.description} #{rate.code} #{rate.ratetype} #{rate.ratevalue} #{rate.ratesuffix}
+
+

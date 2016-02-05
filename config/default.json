@@ -7,11 +7,25 @@
         "smtpPass" : "",
         "gmailAddressAlertList" : "retroburst",
         "gmailSuffix" : "@gmail.com",
-        "dataStoreFilename" : "irWatcher.db.store",
+        "dataStoreFilename" : "irWatcher.nedb",
         "watchInterval" : 86400000,
         "listenPort" : 8080,
         "productJsonLeftTrimLength" : 17,
         "productJsonRightTrimLength" : 1,
+        "productJsonBaseRatePathsOfInterest" : [
+                                                { "description" : "ANZ Progress Saver", "productCode" : "PSAWB",
+                                                  "jsonPath" : "$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'PSAWB')].baserate[?(@.code === 'PSAWB8T')]"
+                                                },
+                                                { "description" : "ANZ Online Saver", "productCode" : "OS",
+                                                  "jsonPath" : "$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'OS')].baserate[?(@.code === 'OSV')]"
+                                                },
+                                                { "description" : "ANZ Term Deposit", "productCode" : "ATD",
+                                                  "jsonPath" : "$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ATD')].baserate[*]"
+                                                },
+                                                { "description" : "ANZ Advance Notice Term Deposit", "productCode" : "ANTD",
+                                                  "jsonPath" : "$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ANTD')].baserate[*]"
+                                                }
+                                                ],
         "log4js" : {
             "appenders": [
                           {

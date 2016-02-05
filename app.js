@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 var fs = require('fs');
 var nedb = require('nedb');
 var log4js = require('log4js');
+var jsonPath = require('jsonpath-plus');
 
 // modules
 var routes = require('./routes/index');
@@ -22,57 +23,104 @@ var ds = null;
 var logger = null;
 
 // functions
+var processJsonResult = function(body)
+{
+    logger.debug("Trimming json response from bank.");
+    body = body.slice(irWatcherConfig.productJsonLeftTrimLength, body.length - irWatcherConfig.productJsonRightTrimLength);
+    // parse the result
+    logger.debug("Parsing json response from bank.");
+    return(JSON.parse(body));
+};
+
+var findRatesOfInterest = function(productData)
+{
+    var paths = irWatcherConfig.productJsonBaseRatePathsOfInterest;
+    var ratesOfInterest = [];
+    // pick interesting bits and store in db
+    for(var i=0; i < paths.length; i++)
+    {
+        var path = paths[i];
+        logger.debug("Looking for json path [" + path.description + "]: '" + path.jsonPath + "'.");
+        var result = jsonPath(path.jsonPath, productData);
+        logger.debug("Found " + result.length + " rates for json path [" + path.description + "].");
+        // add account type properties to the rate
+        for(var j=0; j < result.length; j++) {
+            result[j].description = path.description;
+            result[j].productCode = path.productCode;
+        }
+        ratesOfInterest = ratesOfInterest.concat(result);
+    }
+    return(ratesOfInterest);
+};
+
+var insertNewRatesDoc = function(ratesOfInterest)
+{
+    var ratesOfInterestDoc = {
+        date : new Date(),
+        numRatesOfInterest : ratesOfInterest.length,
+        ratesOfInterest : ratesOfInterest
+    };
+    ds.insert(ratesOfInterestDoc, function (err, doc) {
+      if(err === null)
+      {
+          logger.debug("Inserted new rates of interest doc (" + ratesOfInterest.length + " rates).");
+      } else {
+          logger.error(err);
+      }
+    });
+};
+
+var compareRates = function(ratesOfInterest)
+{
+    ds.find({}).sort({ date: -1 }).limit(1).exec(function (err, docs) {
+     if(err === null)
+     {
+         // check for changed rates
+         var changedRates = [];
+         if(docs.length >= 1)
+         {
+             for(var i=0; i < docs[0].ratesOfInterest.length; i++)
+             {
+                 for(var j=0; j < ratesOfInterest.length; j++)
+                 {
+                     if(docs[0].ratesOfInterest[i].code === ratesOfInterest[j].code)
+                     {
+                         if(docs[0].ratesOfInterest[i].ratevalue !== ratesOfInterest[j].ratevalue)
+                         {
+                             var rateChange = { oldRateDate: docs[0].date, oldRate : docs[0].ratesOfInterest[i], newRate : ratesOfInterest[j] };
+                             logger.debug("Found changed rate! " + rateChange);
+                             changedRates.push(rateChange);
+                         }
+                     }
+                 }
+             }
+         }
+         // TODO: if different notify via email
+         if(changedRates.length > 0) {
+             // do stuff
+         }
+         
+         // stuff them into the datastore
+         insertNewRatesDoc(ratesOfInterest);
+     } else {
+         logger.error(err);
+     }
+    });
+};
+
 var handleRequestRes = function(error, response, body){
     if (!error && response.statusCode == 200) {
-        // trim the body
-        body = body.slice(irWatcherConfig.productJsonLeftTrimLength, body.length - irWatcherConfig.productJsonRightTrimLength);
-        // parse the result
-        var productData = JSON.parse(body);
-        
-        // pick interesting bits and store in db
-        
-        // compare this time to last time
-        
-        // if different notify via email
-        
-        console.log(productData);
-        
+        var productData = processJsonResult(body);
+        var ratesOfInterest = findRatesOfInterest(productData);
+        compareRates(ratesOfInterest);
     } else {
-        console.log(error);
+        logger.error(error);
     }
 };
 
-
-
 var initDatastore = function()
 {
-    
     ds = new nedb({ filename: irWatcherConfig.dataStoreFilename, autoload: true });
-    
-    // some testing here - to be removed
-    var doc = { name: "asdasd", date: new Date() };
-    ds.insert(doc, function (err, newDoc) {
-              logger.info("inserted a row");
-              });
-    
-    ds.find({}, function (err, docs) {
-            for(var i=0; i < docs.length; i++)
-            {
-            logger.info(docs[i]);
-            }
-            });
-    
-    /*
-     fs.stat(irWatcherConfig.dataStoreFilename, function(err, stat) {
-     if(err == null) {
-     // file exists - so load db
-     
-     } else {
-     // no datastore yet - create it
-     nedb
-     }
-     });
-     */
 };
 
 var initLog4js = function()
@@ -84,7 +132,7 @@ var initLog4js = function()
 var initApp = function()
 {
     // debug logs
-    console.log(irWatcherConfig);
+    console.log(irWatcherConfig); // console.log this out - don't want it in the logs
     // init log4js
     initLog4js();
     // init the data store
@@ -92,7 +140,7 @@ var initApp = function()
     // TODO: set an interval to pull down the json from ANZ once a day
     
     // pull down the product info json from ANZ bank
-    //request(irWatcherConfig.targetUri, handleRequestRes);
+    request(irWatcherConfig.targetUri, handleRequestRes);
     
     
 };
@@ -111,6 +159,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(function(req, res, next){
+        req.ds = ds;
+        req.config = irWatcherConfig;
+        req.logger = logger;
+        next();
+    });
 
 app.use('/', routes);
 app.use('/users', users);
@@ -150,9 +204,9 @@ app.use(function(err, req, res, next) {
 // start listening on config specified port
 app.listen(irWatcherConfig.listenPort, function (err) {
            if (err) {
-            console.log(err);
+            logger.error(err);
            } else {
-            console.log("IRWatcher listening on port '" + irWatcherConfig.listenPort + "'.");
+            logger.info("IRWatcher listening on port '" + irWatcherConfig.listenPort + "'.");
            }
         });
 
