@@ -1,42 +1,24 @@
-[2016-02-05 21:45:38.353] [INFO] irWatcher - IRWatcher listening on port '8080'.
-[2016-02-05 21:45:53.582] [DEBUG] irWatcher - Trimming json response from bank.
-[2016-02-05 21:46:51.819] [INFO] irWatcher - IRWatcher listening on port '8080'.
-[2016-02-05 21:47:08.115] [DEBUG] irWatcher - Trimming json response from bank.
-[2016-02-05 21:50:45.671] [INFO] irWatcher - IRWatcher listening on port '8080'.
-[2016-02-05 21:51:03.882] [DEBUG] irWatcher - Trimming json response from bank.
-[2016-02-05 21:51:03.883] [DEBUG] irWatcher - Parsing json response from bank.
-[2016-02-05 21:51:03.889] [DEBUG] irWatcher - Looking for json path [ANZ Progress Saver]: '$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'PSAWB')].baserate[?(@.code === 'PSAWB8T')]'.
-[2016-02-05 21:51:35.832] [INFO] irWatcher - IRWatcher listening on port '8080'.
-[2016-02-05 21:51:49.327] [DEBUG] irWatcher - Trimming json response from bank.
-[2016-02-05 21:51:49.328] [DEBUG] irWatcher - Parsing json response from bank.
-[2016-02-05 21:51:49.335] [DEBUG] irWatcher - Looking for json path [ANZ Progress Saver]: '$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'PSAWB')].baserate[?(@.code === 'PSAWB8T')]'.
-[2016-02-05 21:51:49.341] [DEBUG] irWatcher - Found 1 rates for json path [ANZ Progress Saver].
-[2016-02-05 21:51:49.341] [DEBUG] irWatcher - Looking for json path [ANZ Online Saver]: '$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'OS')].baserate[?(@.code === 'OSV')]'.
-[2016-02-05 21:51:49.343] [DEBUG] irWatcher - Found 1 rates for json path [ANZ Online Saver].
-[2016-02-05 21:51:49.343] [DEBUG] irWatcher - Looking for json path [ANZ Term Deposit]: '$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ATD')].baserate[*]'.
-[2016-02-05 21:51:49.349] [DEBUG] irWatcher - Found 64 rates for json path [ANZ Term Deposit].
-[2016-02-05 21:51:49.349] [DEBUG] irWatcher - Looking for json path [ANZ Advance Notice Term Deposit]: '$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ANTD')].baserate[*]'.
-[2016-02-05 21:51:49.353] [DEBUG] irWatcher - Found 62 rates for json path [ANZ Advance Notice Term Deposit].
-[2016-02-05 21:51:49.369] [INFO] irWatcher - Inserted new rates of interest doc (128 rates).
-[2016-02-05 22:07:11.192] [INFO] irWatcher - IRWatcher listening on port '8080'.
-[2016-02-05 22:07:23.708] [INFO] irWatcher - ::1 - - "GET / HTTP/1.1" 304 - "" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
-[2016-02-05 22:07:23.787] [INFO] irWatcher - ::1 - - "GET /stylesheets/style.css HTTP/1.1" 304 - "http://localhost:8080/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
-[2016-02-05 22:07:28.943] [DEBUG] irWatcher - Trimming json response from bank.
-[2016-02-05 22:07:28.943] [DEBUG] irWatcher - Parsing json response from bank.
-[2016-02-05 22:07:28.948] [DEBUG] irWatcher - Looking for json path [ANZ Progress Saver]: '$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'PSAWB')].baserate[?(@.code === 'PSAWB8T')]'.
-[2016-02-05 22:07:28.952] [DEBUG] irWatcher - Found 1 rates for json path [ANZ Progress Saver].
-[2016-02-05 22:07:28.953] [DEBUG] irWatcher - Looking for json path [ANZ Online Saver]: '$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'OS')].baserate[?(@.code === 'OSV')]'.
-[2016-02-05 22:07:28.956] [DEBUG] irWatcher - Found 1 rates for json path [ANZ Online Saver].
-[2016-02-05 22:07:28.956] [DEBUG] irWatcher - Looking for json path [ANZ Term Deposit]: '$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ATD')].baserate[*]'.
-[2016-02-05 22:07:28.962] [DEBUG] irWatcher - Found 64 rates for json path [ANZ Term Deposit].
-[2016-02-05 22:07:28.962] [DEBUG] irWatcher - Looking for json path [ANZ Advance Notice Term Deposit]: '$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ANTD')].baserate[*]'.
-[2016-02-05 22:07:28.968] [DEBUG] irWatcher - Found 62 rates for json path [ANZ Advance Notice Term Deposit].
-[2016-02-05 22:07:28.994] [DEBUG] irWatcher - Inserted new rates of interest doc (128 rates).
-[2016-02-05 22:07:37.177] [INFO] irWatcher - ::1 - - "GET /list HTTP/1.1" 200 241 "" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
-[2016-02-05 22:07:37.222] [INFO] irWatcher - ::1 - - "GET /stylesheets/style.css HTTP/1.1" 304 - "http://localhost:8080/list" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
-[2016-02-05 22:10:56.630] [INFO] irWatcher - ::1 - - "GET /list HTTP/1.1" 200 12295 "" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
-[2016-02-05 22:10:56.665] [INFO] irWatcher - ::1 - - "GET /stylesheets/style.css HTTP/1.1" 304 - "http://localhost:8080/list" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
-[2016-02-05 22:12:43.260] [INFO] irWatcher - ::1 - - "GET /list HTTP/1.1" 200 17331 "" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
-[2016-02-05 22:12:43.291] [INFO] irWatcher - ::1 - - "GET /stylesheets/style.css HTTP/1.1" 304 - "http://localhost:8080/list" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
-[2016-02-05 22:13:28.940] [INFO] irWatcher - ::1 - - "GET /list HTTP/1.1" 200 18795 "" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
-[2016-02-05 22:13:28.977] [INFO] irWatcher - ::1 - - "GET /stylesheets/style.css HTTP/1.1" 304 - "http://localhost:8080/list" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
+[2016-02-06 13:45:44.251] [INFO] irWatcher - IRWatcher listening on port '8080'.
+[2016-02-06 13:45:59.426] [DEBUG] irWatcher - Trimming json response from bank.
+[2016-02-06 13:45:59.427] [DEBUG] irWatcher - Parsing json response from bank.
+[2016-02-06 13:45:59.433] [DEBUG] irWatcher - Looking for json path [ANZ Progress Saver]: '$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'PSAWB')].baserate[?(@.code === 'PSAWB8T')]'.
+[2016-02-06 13:45:59.439] [DEBUG] irWatcher - Found 1 rates for json path [ANZ Progress Saver].
+[2016-02-06 13:45:59.440] [DEBUG] irWatcher - Looking for json path [ANZ Online Saver]: '$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'OS')].baserate[?(@.code === 'OSV')]'.
+[2016-02-06 13:45:59.441] [DEBUG] irWatcher - Found 1 rates for json path [ANZ Online Saver].
+[2016-02-06 13:45:59.442] [DEBUG] irWatcher - Looking for json path [ANZ Term Deposit : 3 Months]: '$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ATD')].baserate[?(@.code == 'TDB1M2M')]'.
+[2016-02-06 13:45:59.446] [DEBUG] irWatcher - Found 1 rates for json path [ANZ Term Deposit : 3 Months].
+[2016-02-06 13:45:59.446] [DEBUG] irWatcher - Looking for json path [ANZ Term Deposit : 6 Months]: '$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ATD')].baserate[?(@.code === 'TDB1M5M')]'.
+[2016-02-06 13:45:59.448] [DEBUG] irWatcher - Found 1 rates for json path [ANZ Term Deposit : 6 Months].
+[2016-02-06 13:45:59.448] [DEBUG] irWatcher - Looking for json path [ANZ Term Deposit : 12 Months]: '$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ATD')].baserate[?(@.code === 'TDB1M24A')]'.
+[2016-02-06 13:45:59.450] [DEBUG] irWatcher - Found 1 rates for json path [ANZ Term Deposit : 12 Months].
+[2016-02-06 13:45:59.450] [DEBUG] irWatcher - Looking for json path [ANZ Advance Notice Term Deposit : 3 Months]: '$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ANTD')].baserate[?(@.code === 'ANTDIML4M')]'.
+[2016-02-06 13:45:59.452] [DEBUG] irWatcher - Found 1 rates for json path [ANZ Advance Notice Term Deposit : 3 Months].
+[2016-02-06 13:45:59.453] [DEBUG] irWatcher - Looking for json path [ANZ Advance Notice Term Deposit : 6 Months]: '$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ANTD')].baserate[?(@.code === 'ANTDIML8M')]'.
+[2016-02-06 13:45:59.455] [DEBUG] irWatcher - Found 1 rates for json path [ANZ Advance Notice Term Deposit : 6 Months].
+[2016-02-06 13:45:59.455] [DEBUG] irWatcher - Looking for json path [ANZ Advance Notice Term Deposit : 12 Months]: '$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ANTD')].baserate[?(@.code === 'ANTDAIL18M')]'.
+[2016-02-06 13:45:59.457] [DEBUG] irWatcher - Found 1 rates for json path [ANZ Advance Notice Term Deposit : 12 Months].
+[2016-02-06 13:45:59.465] [DEBUG] irWatcher - Inserted new rates of interest doc (8 rates).
+[2016-02-06 13:46:17.476] [INFO] irWatcher - ::1 - - "GET / HTTP/1.1" 304 - "" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
+[2016-02-06 13:46:17.554] [INFO] irWatcher - ::1 - - "GET /stylesheets/style.css HTTP/1.1" 304 - "http://localhost:8080/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
+[2016-02-06 13:46:20.682] [INFO] irWatcher - ::1 - - "GET /list HTTP/1.1" 200 821 "" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
+[2016-02-06 13:46:20.728] [INFO] irWatcher - ::1 - - "GET /stylesheets/style.css HTTP/1.1" 304 - "http://localhost:8080/list" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"

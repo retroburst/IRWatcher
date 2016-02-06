@@ -42,7 +42,7 @@ var findRatesOfInterest = function(productData)
         var path = paths[i];
         logger.debug("Looking for json path [" + path.description + "]: '" + path.jsonPath + "'.");
         var result = jsonPath(path.jsonPath, productData);
-        logger.debug("Found " + result.length + " rates for json path [" + path.description + "].");
+        logger.debug("Found " + result.length + " rate(s) for json path [" + path.description + "].");
         // add account type properties to the rate
         for(var j=0; j < result.length; j++) {
             result[j].description = path.description;
@@ -137,8 +137,9 @@ var initApp = function()
     initLog4js();
     // init the data store
     initDatastore();
+
     // TODO: set an interval to pull down the json from ANZ once a day
-    
+    // TODO: check for count of docs in db - if none - run pull down immed.
     // pull down the product info json from ANZ bank
     request(irWatcherConfig.targetUri, handleRequestRes);
     
