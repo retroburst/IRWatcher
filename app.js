@@ -11,6 +11,7 @@ var fs = require('fs');
 var nedb = require('nedb');
 var log4js = require('log4js');
 var jsonPath = require('jsonpath-plus');
+var moment = require('moment');
 
 // modules
 var routes = require('./routes/index');
@@ -19,7 +20,8 @@ var users = require('./routes/users');
 // vars
 var irWatcherConfig = config.get('irWatcherConfig');
 var app = express();
-var ds = null;
+var pullsDatastore = null;
+var eventsDatastore = null;
 var logger = null;
 
 // functions
@@ -60,7 +62,7 @@ var insertNewRatesDoc = function(ratesOfInterest)
         numRatesOfInterest : ratesOfInterest.length,
         ratesOfInterest : ratesOfInterest
     };
-    ds.insert(ratesOfInterestDoc, function (err, doc) {
+    pullsDatastore.insert(ratesOfInterestDoc, function (err, doc) {
       if(err === null)
       {
           logger.debug("Inserted new rates of interest doc (" + ratesOfInterest.length + " rates).");
@@ -72,7 +74,7 @@ var insertNewRatesDoc = function(ratesOfInterest)
 
 var compareRates = function(ratesOfInterest)
 {
-    ds.find({}).sort({ date: -1 }).limit(1).exec(function (err, docs) {
+    pullsDatastore.find({}).sort({ date: -1 }).limit(1).exec(function (err, docs) {
      if(err === null)
      {
          // check for changed rates
@@ -118,9 +120,10 @@ var handleRequestRes = function(error, response, body){
     }
 };
 
-var initDatastore = function()
+var initDatastores = function()
 {
-    ds = new nedb({ filename: irWatcherConfig.dataStoreFilename, autoload: true });
+    pullsDatastore = new nedb({ filename: irWatcherConfig.pullsDatastore, autoload: true });
+    eventsDatastore = new nedb({ filename: irWatcherConfig.eventsDatastore, autoload: true });
 };
 
 var initLog4js = function()
@@ -135,10 +138,10 @@ var initApp = function()
     console.log(irWatcherConfig); // console.log this out - don't want it in the logs
     // init log4js
     initLog4js();
-    // init the data store
-    initDatastore();
+    // init the data stores
+    initDatastores();
 
-    // TODO: set an interval to pull down the json from ANZ once a day
+    // TODO: set an interval to check the last pull in the datastore, if a week or more - do a pull down
     // TODO: check for count of docs in db - if none - run pull down immed.
     // pull down the product info json from ANZ bank
     request(irWatcherConfig.targetUri, handleRequestRes);
@@ -160,8 +163,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
+app.use('/jquery', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
+app.use('/datatables', express.static(path.join(__dirname, 'node_modules/datatables/media')));
+
 app.use(function(req, res, next){
-        req.ds = ds;
+        req.pullsDatastore = pullsDatastore;
+        req.eventsDatastore = eventsDatastore;
         req.config = irWatcherConfig;
         req.logger = logger;
         next();
@@ -169,6 +177,9 @@ app.use(function(req, res, next){
 
 app.use('/', routes);
 app.use('/users', users);
+
+// add locals for jade
+app.locals.moment = moment;
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

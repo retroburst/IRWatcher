@@ -1,0 +1,25 @@
+extends layout
+
+block content
+    h1.
+        List of Pulls from ANZ Bank
+
+    each doc, i in model.pulls
+        div(class="panel panel-default")
+            div(class="panel-heading")
+                h3(class="panel-title") #{moment(doc.date).format("dddd, DD/MM/YYYY hh:mm A ZZ")} [#{doc.numRatesOfInterest} rate(s)]
+            div(class="panel-body")
+                table(class="table table-striped table-bordered table-hover")
+                    thead
+                        tr
+                            th Product
+                            th Code
+                            th Rate Type
+                            th Rate Value
+                    tbody
+                        each rate, j in doc.ratesOfInterest
+                            tr
+                                td #{rate.description}
+                                td #{rate.code}
+                                td #{rate.ratetype}
+                                td #{rate.ratevalue} #{rate.ratesuffix}
