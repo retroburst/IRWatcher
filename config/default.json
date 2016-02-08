@@ -7,8 +7,8 @@
         "smtpPass" : "",
         "gmailAddressAlertList" : "retroburst",
         "gmailSuffix" : "@gmail.com",
-        "pullsDatastore" : "irWatcher.pulls.nedb",
-        "eventsDatastore" : "irWatcher.events.nedb",
+        "pullsDatastore" : "./datastores/irWatcher.pulls.nedb",
+        "eventsDatastore" : "./datastores/irWatcher.events.nedb",
         "watchInterval" : 86400000,
         "listenPort" : 8080,
         "productJsonLeftTrimLength" : 17,
@@ -46,7 +46,7 @@
                           },
                           {
                             "type": "file",
-                            "filename": "irWatcher.log",
+                            "filename": "./logs/irWatcher.log",
                             "maxLogSize": 20480,
                             "backups": 3
                           }
