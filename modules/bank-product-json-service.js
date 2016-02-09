@@ -1,5 +1,7 @@
 var request = require('request');
 var jsonPath = require('jsonpath-plus');
+var util = require('util');
+var moment = require('moment');
 
 //TODO: convert terminology to align with concept of a 'pull' from the bank
 
@@ -66,6 +68,36 @@ var insertNewPullDoc = function(ratesOfInterest)
     _pullsDatastore.insert(pullDoc, handleInsertNewPullDocEvent);
 };
 
+var handleInsertNewEventDocEvent = function(err, doc){
+    if(err === null)
+    {
+        _logger.debug("Inserted new event doc.");
+    } else {
+        _logger.error(err);
+    }
+};
+
+var insertNewEventDoc = function(rateChange){
+    var eventDoc = {
+        date : new Date(),
+        oldRate : rateChange.oldRate,
+        newRate : rateChange.newRate,
+        description : rateChange.description
+    };
+    _eventsDatastore.insert(eventDoc, handleInsertNewEventDocEvent);
+};
+
+var buildRateChangeDescription = function(rateChange){
+    return(util.format("Product '%s' with rate code '%s' changed interest rate from %d %s to %d %s on %s.",
+        oldRate.description,
+        oldRate.code,
+        oldRate.ratevalue,
+        oldRate.ratesuffix,
+        newRate.ratevalue,
+        newRate.ratesuffix,
+        moment(new Date()).format("dddd, Do of MMMM @ hh:mm A ZZ")));
+};
+
 var compareRates = function(ratesOfInterest)
 {
     _pullsDatastore.find({}).sort({ date: -1 }).limit(1).exec(function (err, docs) {
@@ -84,7 +116,9 @@ var compareRates = function(ratesOfInterest)
                             if(docs[0].ratesOfInterest[i].ratevalue !== ratesOfInterest[j].ratevalue)
                             {
                                 var rateChange = { oldRateDate: docs[0].date, oldRate : docs[0].ratesOfInterest[i], newRate : ratesOfInterest[j] };
-                                _logger.debug("Found changed rate! " + rateChange);
+                                rateChange.description = buildRateChangeDescription(rateChange);
+                                _logger.info(rateChange.description);
+                                insertNewEventDoc(rateChange);
                                 changedRates.push(rateChange);
                             }
                         }
@@ -93,7 +127,7 @@ var compareRates = function(ratesOfInterest)
             }
             // TODO: if different notify via email
             if(changedRates.length > 0) {
-                // do stuff
+                // email out the info
             }
             
             // stuff them into the datastore
@@ -104,19 +138,19 @@ var compareRates = function(ratesOfInterest)
     });
 };
 
-var handleRequestRes = function(error, response, body){
-    if (!error && response.statusCode == 200) {
-        var productData = processJsonResult(body);
-        var ratesOfInterest = findRatesOfInterest(productData);
-        compareRates(ratesOfInterest);
-    } else {
-        _logger.error(error);
-    }
-};
-
-var process = function(){
+//TODO: check on callback patterns - this could be improved
+var process = function(callback){
     if(_configured){
-        request(_irWatcherConfig.targetUri, handleRequestRes);
+        request(_irWatcherConfig.targetUri, function(error, response, body){
+            if (!error && response.statusCode == 200) {
+                var productData = processJsonResult(body);
+                var ratesOfInterest = findRatesOfInterest(productData);
+                compareRates(ratesOfInterest);
+            } else {
+                _logger.error(error);
+            }
+            if(callback) { callback(); }
+        });
     } else {
         throw new Error("bankProductJsonService has not been configured. Call configure before attempting to call process.");
     }

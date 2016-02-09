@@ -10,12 +10,19 @@ router.get('/list-pulls', function(req, res, next){
     var ds = req.app.locals.pullsDatastore;
     ds.find({}).sort({ date: -1 }).exec(function (err, docs) {
         if(err === null){
-            res.render('list-pulls', { model : { pulls : docs } } );
+            res.render('list-pulls', { title : 'List of Pulls from ANZ Bank', model : { pulls : docs } } );
         } else {
             req.logger.error(err);
         }
     });
     
+});
+
+router.get('/force-pull', function(req, res, next){
+    var svc = req.app.locals.bankProductJsonService;
+    svc.process(function(){
+        res.redirect('/list-pulls');
+    });
 });
 
 // ideas for other routes

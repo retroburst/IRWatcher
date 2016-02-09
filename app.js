@@ -10,11 +10,14 @@ var fs = require('fs');
 var nedb = require('nedb');
 var log4js = require('log4js');
 var moment = require('moment');
+var util = require('util');
 
 // modules
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var bankProductJsonService = require('./modules/bank-product-json-service');
+var appConstants = require('./modules/app-constants');
+var viewHelpers = require('./modules/view-helpers');
 
 // vars
 var irWatcherConfig = config.get('irWatcherConfig');
@@ -81,6 +84,8 @@ app.use('/users', users);
 app.locals.moment = moment;
 app.locals.pullsDatastore = pullsDatastore;
 app.locals.eventsDatastore = eventsDatastore;
+app.locals.viewHelpers = viewHelpers;
+app.locals.bankProductJsonService = bankProductJsonService;
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -119,7 +124,7 @@ app.listen(irWatcherConfig.listenPort, function (err) {
     if (err) {
         logger.error(err);
     } else {
-        logger.info("IRWatcher listening on port '" + irWatcherConfig.listenPort + "'.");
+        logger.info(util.format("%s listening on port '%d'.", appConstants.APP_NAME, irWatcherConfig.listenPort));
     }
 });
 
