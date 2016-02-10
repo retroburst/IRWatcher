@@ -15,7 +15,17 @@ router.get('/list-pulls', function(req, res, next){
             req.logger.error(err);
         }
     });
-    
+});
+
+router.get('/list-events', function(req, res, next){
+    var ds = req.app.locals.eventsDatastore;
+    ds.find({}).sort({ date: -1 }).exec(function (err, docs) {
+        if(err === null){
+            res.render('list-events', { title : 'List of Events', model : { events : docs } } );
+        } else {
+            req.logger.error(err);
+        }
+    });
 });
 
 router.get('/force-pull', function(req, res, next){
@@ -24,10 +34,5 @@ router.get('/force-pull', function(req, res, next){
         res.redirect('/list-pulls');
     });
 });
-
-// ideas for other routes
-//-- report
-//-- log
-//
 
 module.exports = router;

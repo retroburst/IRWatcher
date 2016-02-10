@@ -36,7 +36,7 @@ var initDatastores = function()
 var initLog4js = function()
 {
     log4js.configure(irWatcherConfig.log4js);
-    logger = log4js.getLogger('irWatcher');
+    logger = log4js.getLogger(appConstants.APP_NAME);
 };
 
 var initBankProductJsonService = function(){
@@ -53,12 +53,10 @@ var initApp = function()
     initDatastores();
     // init the bank product json service
     initBankProductJsonService();
-    
-    // TODO: set an interval to check the last pull in the datastore, if a week or more - do a pull down
-    // TODO: check for count of docs in db - if none - run pull down immed.
-    // pull down the product info json from ANZ bank
-    //bankProductJsonService.process();
-    
+    // do an initial check
+    bankProductJsonService.check();
+    // set an interval to check the last pull in the datastore, if a week or more - do a pull down
+    setInterval(bankProductJsonService.check, irWatcherConfig.intervalHoursBetweenPullRequiredChecks * 3600000);
 };
 
 // initialise the application services

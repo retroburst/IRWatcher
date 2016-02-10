@@ -11,6 +11,9 @@ var _pullsDatastore = null;
 var _eventsDatastore = null;
 var _configured = false;
 
+/**
+ * Configures this instance of the bank product json service.
+ */
 function configure(irWatcherConfig, logger, pullsDatastore, eventsDatastore) {
     _irWatcherConfig = irWatcherConfig;
     _logger = logger;
@@ -88,14 +91,13 @@ var insertNewEventDoc = function(rateChange){
 };
 
 var buildRateChangeDescription = function(rateChange){
-    return(util.format("Product '%s' with rate code '%s' changed interest rate from %d %s to %d %s on %s.",
-        oldRate.description,
-        oldRate.code,
-        oldRate.ratevalue,
-        oldRate.ratesuffix,
-        newRate.ratevalue,
-        newRate.ratesuffix,
-        moment(new Date()).format("dddd, Do of MMMM @ hh:mm A ZZ")));
+    return(util.format("Product '%s' with rate code '%s' changed interest rate from %d %s to %d %s.",
+        rateChange.oldRate.description,
+        rateChange.oldRate.code,
+        rateChange.oldRate.ratevalue,
+        rateChange.oldRate.ratesuffix,
+        rateChange.newRate.ratevalue,
+        rateChange.newRate.ratesuffix));
 };
 
 var compareRates = function(ratesOfInterest)
@@ -156,7 +158,33 @@ var process = function(callback){
     }
 };
 
+var check = function(){
+    if(_configured){
+        _logger.info("Checking to see if a pull is required from the bank.");
+        _pullsDatastore.find({}).sort({ date: -1 }).limit(1).exec(function (err, docs) {
+            if(err === null)
+            {
+                // check when the last pull was - if a x (fomr config) or longer - run it now
+                if(docs.length >= 1){
+                    var daysDiff = moment(docs[0].date).diff(moment(new Date()));
+                    if(daysDiff >= _irWatcherConfig.numberOfDaysBetweenPulls){
+                        _logger.info(util.format("Doing a pull from the bank as it has been %d days or more since the last.", _irWatcherConfig.numberOfDaysBetweenPulls));
+                        process();
+                    } else {
+                        _logger.info("No pull required from the bank yet.");
+                    }
+                }
+            } else {
+                _logger.error(err);
+            }
+        });
+    } else {
+        throw new Error("bankProductJsonService has not been configured. Call configure before attempting to call process.");
+    }
+};
+
 module.exports = {
     configure : configure,
+    check : check,
     process : process
 };

@@ -11,6 +11,8 @@
         "eventsDatastore" : "./datastores/irWatcher.events.nedb",
         "watchInterval" : 86400000,
         "listenPort" : 8080,
+        "numberOfDaysBetweenPulls" : 7,
+        "intervalHoursBetweenPullRequiredChecks" : 24,
         "productJsonLeftTrimLength" : 17,
         "productJsonRightTrimLength" : 1,
         "productJsonBaseRatePathsOfInterest" : [
