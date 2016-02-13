@@ -2,11 +2,6 @@
     "irWatcherConfig" :
     {
         "targetUri" : "http://www.anz.com/productdata/productdata.asp?output=json&callback=callbackFunction",
-        "smtpHost" : "",
-        "smtpUser" : "",
-        "smtpPass" : "",
-        "gmailAddressAlertList" : "retroburst",
-        "gmailSuffix" : "@gmail.com",
         "pullsDatastore" : "./datastores/irWatcher.pulls.nedb",
         "eventsDatastore" : "./datastores/irWatcher.events.nedb",
         "watchInterval" : 86400000,

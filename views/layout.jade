@@ -9,4 +9,25 @@ html
     script(src='/bootstrap/js/bootstrap.js')
     script(src='/datatables/js/jquery.dataTables.js')
   body
+    nav.navbar.navbar-default
+      .container-fluid
+        // Brand and toggle get grouped for better mobile display
+        .navbar-header
+          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1', aria-expanded='false')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand IRWatcher
+        // Collect the nav links, forms, and other content for toggling
+        #bs-example-navbar-collapse-1.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            li
+              a(href='/')
+                | Home
+            li
+              a(href='/list-events') List Events
+            li
+              a(href='/list-pulls') List Pulls
+
     block content

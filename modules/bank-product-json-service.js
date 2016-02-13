@@ -2,6 +2,8 @@ var request = require('request');
 var jsonPath = require('jsonpath-plus');
 var util = require('util');
 var moment = require('moment');
+var email = require('emailjs');
+var appConstants = require('./app-constants');
 
 //TODO: convert terminology to align with concept of a 'pull' from the bank
 
@@ -24,10 +26,10 @@ function configure(irWatcherConfig, logger, pullsDatastore, eventsDatastore) {
 
 var processJsonResult = function(body)
 {
-    _logger.debug("Trimming json response from bank.");
+    _logger.info("Trimming json response from bank.");
     body = body.slice(_irWatcherConfig.productJsonLeftTrimLength, body.length - _irWatcherConfig.productJsonRightTrimLength);
     // parse the result
-    _logger.debug("Parsing json response from bank.");
+    _logger.info("Parsing json response from bank.");
     return(JSON.parse(body));
 };
 
@@ -39,9 +41,9 @@ var findRatesOfInterest = function(productData)
     for(var i=0; i < paths.length; i++)
     {
         var path = paths[i];
-        _logger.debug("Looking for json path [" + path.description + "]: '" + path.jsonPath + "'.");
+        _logger.info("Looking for json path [" + path.description + "]: '" + path.jsonPath + "'.");
         var result = jsonPath(path.jsonPath, productData);
-        _logger.debug("Found " + result.length + " rate(s) for json path [" + path.description + "].");
+        _logger.info("Found " + result.length + " rate(s) for json path [" + path.description + "].");
         // add account type properties to the rate
         for(var j=0; j < result.length; j++) {
             result[j].description = path.description;
@@ -55,7 +57,7 @@ var findRatesOfInterest = function(productData)
 var handleInsertNewPullDocEvent = function(err, doc){
     if(err === null)
     {
-        _logger.debug("Inserted new pull doc (" + doc.numRatesOfInterest + " rates).");
+        _logger.info("Inserted new pull doc (" + doc.numRatesOfInterest + " rates).");
     } else {
         _logger.error(err);
     }
@@ -74,7 +76,7 @@ var insertNewPullDoc = function(ratesOfInterest)
 var handleInsertNewEventDocEvent = function(err, doc){
     if(err === null)
     {
-        _logger.debug("Inserted new event doc.");
+        _logger.info("Inserted new event doc.");
     } else {
         _logger.error(err);
     }
@@ -99,6 +101,40 @@ var buildRateChangeDescription = function(rateChange){
         rateChange.newRate.ratevalue,
         rateChange.newRate.ratesuffix));
 };
+
+var handleNotificationMailEvent = function(err, message){
+    if(err){
+        _logger.error(err);
+    } else {
+        _logger.info("Email notifications sent successfully.");
+    }
+};
+
+var sendEmailNotifications = function(changedRates){
+    _logger.info("Sending email notifications to notify addresses.");
+    var server 	= email.server.connect(
+        {
+            user: _irWatcherConfig.smtpUser,
+            password: _irWatcherConfig.smtpPassword,
+            host: _irWatcherConfig.smtpHost,
+            ssl: true
+        });
+    var rateChangesMessage = "";
+    for(var j=0; j < changedRates.length; j++)
+    {
+        rateChangesMessage += changedRates[j].description + '\n\n';
+    }
+    
+    var message	=
+    {
+        text: rateChangesMessage,
+        from: appConstants.APP_NAME + " <" + appConstants.APP_NAME + "@donotreply.com>",
+        to: _irWatcherConfig.notifyAddresses.join(),
+        subject: appConstants.APP_NAME + ": Rates of Interest Change(s) @ " + moment(new Date()).format(appConstants.DISPLAY_DATE_FORMAT)
+    };
+    server.send(message, handleNotificationMailEvent);
+};
+
 
 var compareRates = function(ratesOfInterest)
 {
@@ -127,11 +163,8 @@ var compareRates = function(ratesOfInterest)
                     }
                 }
             }
-            // TODO: if different notify via email
-            if(changedRates.length > 0) {
-                // email out the info
-            }
-            
+            // if differences - notify via email
+            if(changedRates.length > 0) { sendEmailNotifications(changedRates); }
             // stuff them into the datastore
             insertNewPullDoc(ratesOfInterest);
         } else {
@@ -166,13 +199,16 @@ var check = function(){
             {
                 // check when the last pull was - if a x (fomr config) or longer - run it now
                 if(docs.length >= 1){
-                    var daysDiff = moment(docs[0].date).diff(moment(new Date()));
+                    var daysDiff = moment(docs[0].date).diff(moment(new Date()), 'days');
                     if(daysDiff >= _irWatcherConfig.numberOfDaysBetweenPulls){
                         _logger.info(util.format("Doing a pull from the bank as it has been %d days or more since the last.", _irWatcherConfig.numberOfDaysBetweenPulls));
                         process();
                     } else {
                         _logger.info("No pull required from the bank yet.");
                     }
+                } else if (docs.length == 0) {
+                    _logger.info("Doing an initial pull from the bank as none in the datastore.");
+                    process();
                 }
             } else {
                 _logger.error(err);

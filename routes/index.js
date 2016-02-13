@@ -3,7 +3,22 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('index', { title: 'IRWatcher' });
+    var pullsds = req.app.locals.pullsDatastore;
+    pullsds.find({}).sort({ date: -1 }).limit(1).exec(function (err, pulls) {
+        if(err === null)
+        {
+            var eventsds = req.app.locals.eventsDatastore;
+            eventsds.find({}).sort({ date: -1 }).limit(5).exec(function (err, events) {
+                if(err === null){
+                    res.render('index', { title: req.app.locals.appConstants.APP_NAME, model : { pulls : pulls, events : events } });
+                } else {
+                    req.logger.error(err);
+                }
+            });
+        } else {
+            req.logger.error(err);
+        }
+    });
 });
 
 router.get('/list-pulls', function(req, res, next){
