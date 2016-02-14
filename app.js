@@ -50,6 +50,8 @@ var processArguments = function(){
         irWatcherConfig.smtpUser = process.env.smtpUser;
         irWatcherConfig.smtpPassword = process.env.smtpPassword;
         irWatcherConfig.notifyAddresses = process.env.notifyAddresses.split(',');
+        // assign the listening port for heroku environment
+        irWatcherConfig.listenPort = process.env.PORT;
     } else {
         // proces the arguments using yargs
         var argv = yargs
