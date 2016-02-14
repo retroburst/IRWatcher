@@ -1,4 +1,6 @@
 body {
     padding: 50px;
-    @media (max-width: 979px) { body { padding: 0px;  } }
+}
+@media (max-width: 979px){
+    body { padding: 0px;  }
 }
