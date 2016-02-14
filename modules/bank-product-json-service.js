@@ -211,10 +211,10 @@ var check = function(){
             {
                 // check when the last pull was - if a x (from config) or longer - run it now
                 if(docs.length >= 1){
-                    var daysDiff = moment(new Date()).diff(moment(docs[0].date), 'days');
-                    _logger.info(util.format("Difference in days from last pull to now was %d days.", daysDiff));
-                    if(daysDiff >= _irWatcherConfig.numberOfDaysBetweenPulls){
-                        _logger.info(util.format("Doing a pull from the bank as it has been %d days or more since the last.", _irWatcherConfig.numberOfDaysBetweenPulls));
+                    var hoursDiff = moment(new Date()).diff(moment(docs[0].date), 'hours');
+                    _logger.info(util.format("Difference in hours from last pull to now was %d.", hoursDiff));
+                    if(hoursDiff >= _irWatcherConfig.numberOfHoursBetweenPulls){
+                        _logger.info(util.format("Doing a pull from the bank as it has been %d hours or more since the last.", _irWatcherConfig.numberOfHoursBetweenPulls));
                         process();
                     } else {
                         _logger.info("No pull required from the bank yet.");

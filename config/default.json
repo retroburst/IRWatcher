@@ -5,7 +5,7 @@
         "targetUri" : "http://www.anz.com/productdata/productdata.asp?output=json&callback=callbackFunction",
         "pullsDatastore" : "./datastores/irWatcher.pulls.nedb",
         "eventsDatastore" : "./datastores/irWatcher.events.nedb",
-        "numberOfDaysBetweenPulls" : 1,
+        "numberOfHoursBetweenPulls" : 5,
         "intervalHoursBetweenPullRequiredChecks" : 1,
         "productJsonLeftTrimLength" : 17,
         "productJsonRightTrimLength" : 1,
