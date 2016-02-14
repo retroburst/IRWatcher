@@ -6,7 +6,6 @@
         "pullsDatastore" : "./datastores/irWatcher.pulls.nedb",
         "eventsDatastore" : "./datastores/irWatcher.events.nedb",
         "watchInterval" : 86400000,
-        "listenPort" : 8080,
         "numberOfDaysBetweenPulls" : 7,
         "intervalHoursBetweenPullRequiredChecks" : 24,
         "productJsonLeftTrimLength" : 17,

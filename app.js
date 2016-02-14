@@ -24,6 +24,8 @@ var app = express();
 var pullsDatastore = null;
 var eventsDatastore = null;
 var logger = null;
+var port = "8080";
+var ipAddress = "127.0.0.1";
 
 // functions
 var initDatastores = function()
@@ -52,8 +54,9 @@ var processArguments = function(){
         irWatcherConfig.smtpPassword = process.env.smtpPassword;
         irWatcherConfig.notifyAddresses = process.env.notifyAddresses.split(',');
         // assign the listening port for heroku environment
-        logger.info("Using openshift assigned port: " + process.env.OPENSHIFT_NODEJS_PORT);
-        irWatcherConfig.openshiftListenPort = process.env.OPENSHIFT_NODEJS_PORT;
+        logger.info(util.format("Using openshift assigned port %s and IP address %s." + process.env.OPENSHIFT_NODEJS_PORT, process.env.OPENSHIFT_NODEJS_IP));
+        port = process.env.OPENSHIFT_NODEJS_PORT;
+        ipAddress = process.env.OPENSHIFT_NODEJS_IP;
     } else {
         // proces the arguments using yargs
         var argv = yargs
@@ -153,11 +156,11 @@ app.use(function(err, req, res, next) {
 
 
 // start listening on config specified port
-app.listen((irWatcherConfig.openshiftListenPort || irWatcherConfig.listenPort), function (err) {
+app.listen(port, ipAddress, function (err) {
     if (err) {
         logger.error(err);
     } else {
-        logger.info(util.format("%s listening on port '%d'.", appConstants.APP_NAME, (irWatcherConfig.openshiftListenPort || irWatcherConfig.listenPort)));
+        logger.info(util.format("%s listening on port '%d' for IP address %s.", appConstants.APP_NAME, port, ipAddress));
     }
 });
 
