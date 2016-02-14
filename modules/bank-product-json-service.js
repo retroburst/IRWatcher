@@ -211,9 +211,9 @@ var check = function(){
             {
                 // check when the last pull was - if a x (from config) or longer - run it now
                 if(docs.length >= 1){
-                    var hoursDiff = moment(new Date()).diff(moment(docs[0].date), 'hours');
-                    _logger.info(util.format("Difference in hours from last pull to now was %d.", hoursDiff));
-                    if(hoursDiff >= _irWatcherConfig.numberOfHoursBetweenPulls){
+                    var duration = moment.duration(moment(new Date()).diff(moment(docs[0].date)));
+                    _logger.info(util.format("Difference in hours from last pull to now was %d.", duration.asHours()));
+                    if(duration.asHours() >= _irWatcherConfig.numberOfHoursBetweenPulls){
                         _logger.info(util.format("Doing a pull from the bank as it has been %d hours or more since the last.", _irWatcherConfig.numberOfHoursBetweenPulls));
                         process();
                     } else {

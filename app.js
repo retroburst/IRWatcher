@@ -30,8 +30,8 @@ var ipAddress = "127.0.0.1";
 // functions
 var initDatastores = function()
 {
-    pullsDatastore = new nedb({ filename: irWatcherConfig.pullsDatastore, autoload: true });
-    eventsDatastore = new nedb({ filename: irWatcherConfig.eventsDatastore, autoload: true });
+    pullsDatastore = new nedb({ filename: irWatcherConfig.pullsDataStoreFullPath, autoload: true });
+    eventsDatastore = new nedb({ filename: irWatcherConfig.eventsDataStoreFullPath, autoload: true });
 };
 
 var initLog4js = function()
@@ -48,16 +48,19 @@ var processArguments = function(){
     // check if deployed on heroku
     if(process.env.environment === 'openshift')
     {
-        logger.info("Using openshift configuration");
+        logger.info("Using openshift configuration.");
         irWatcherConfig.smtpHost = process.env.smtpHost;
         irWatcherConfig.smtpUser = process.env.smtpUser;
         irWatcherConfig.smtpPassword = process.env.smtpPassword;
         irWatcherConfig.notifyAddresses = process.env.notifyAddresses.split(',');
-        // assign the listening port for heroku environment
+        irWatcherConfig.pullsDataStoreFullPath = path.join(process.env.OPENSHIFT_DATA_DIR, irWatcherConfig.pullsDatastore);
+        irWatcherConfig.eventsDataStoreFullPath = path.join(process.env.OPENSHIFT_DATA_DIR, irWatcherConfig.eventsDatastore);
+        // assign the listening port for openshift environment
         logger.info(util.format("Using openshift assigned port '%s' and IP address '%s'." + process.env.OPENSHIFT_NODEJS_PORT, process.env.OPENSHIFT_NODEJS_IP));
         port = process.env.OPENSHIFT_NODEJS_PORT;
         ipAddress = process.env.OPENSHIFT_NODEJS_IP;
     } else {
+        logger.info("Using local configuration.");
         // proces the arguments using yargs
         var argv = yargs
         .usage('Usage: $0 --smtpHost [string] --smtpUser [string] --smtpPassword [string] --notifyAddresses [array]')
@@ -78,6 +81,9 @@ var processArguments = function(){
         irWatcherConfig.smtpUser = argv.smtpUser;
         irWatcherConfig.smtpPassword = argv.smtpPassword;
         irWatcherConfig.notifyAddresses = argv.notifyAddresses;
+        
+        irWatcherConfig.pullsDataStoreFullPath = irWatcherConfig.datastoreDirectory + irWatcherConfig.pullsDatastore;
+        irWatcherConfig.eventsDataStoreFullPath = irWatcherConfig.datastoreDirectory + irWatcherConfig.eventsDatastore;
     }
 };
 
@@ -163,6 +169,5 @@ app.listen(port, ipAddress, function (err) {
         logger.info(util.format("%s listening on port '%s' for IP address '%s'.", appConstants.APP_NAME, port, ipAddress));
     }
 });
-
 
 module.exports = app;

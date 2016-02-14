@@ -3,8 +3,9 @@
     {
         "appHost" : "http://localhost:8080",
         "targetUri" : "http://www.anz.com/productdata/productdata.asp?output=json&callback=callbackFunction",
-        "pullsDatastore" : "./datastores/irWatcher.pulls.nedb",
-        "eventsDatastore" : "./datastores/irWatcher.events.nedb",
+        "datastoreDirectory" : "./datastores/",
+        "pullsDatastore" : "irWatcher.pulls.nedb",
+        "eventsDatastore" : "irWatcher.events.nedb",
         "numberOfHoursBetweenPulls" : 5,
         "intervalHoursBetweenPullRequiredChecks" : 1,
         "productJsonLeftTrimLength" : 17,
