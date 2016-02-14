@@ -53,7 +53,7 @@ var processArguments = function(){
         irWatcherConfig.notifyAddresses = process.env.notifyAddresses.split(',');
         // assign the listening port for heroku environment
         logger.info("Using heroku assigned port: " + process.env.PORT);
-        irWatcherConfig.listenPort = process.env.PORT;
+        irWatcherConfig.herokuListenPort = process.env.PORT;
     } else {
         // proces the arguments using yargs
         var argv = yargs
@@ -153,11 +153,11 @@ app.use(function(err, req, res, next) {
 
 
 // start listening on config specified port
-app.listen(irWatcherConfig.listenPort, function (err) {
+app.listen((irWatcherConfig.herokuListenPort || irWatcherConfig.listenPort), function (err) {
     if (err) {
         logger.error(err);
     } else {
-        logger.info(util.format("%s listening on port '%d'.", appConstants.APP_NAME, irWatcherConfig.listenPort));
+        logger.info(util.format("%s listening on port '%d'.", appConstants.APP_NAME, (irWatcherConfig.herokuListenPort || irWatcherConfig.listenPort)));
     }
 });
 
