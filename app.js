@@ -43,29 +43,35 @@ var initBankProductJsonService = function(){
 };
 
 var processArguments = function(){
-    // proces the arguments using yargs
-    var argv = yargs
-    .usage('Usage: $0 --smtpHost [string] --smtpUser [string] --smtpPassword [string] --notifyAddresses [array]')
-    .example('$0 -smtpHost smtp.host.com --smptpUser username --smtpPassword password --notifyAddresses person@host.com anotherperson@host.net')
-    .describe({
-        'smtpHost' : 'SMTP host for sending notification emails',
-        'smtpUser' : 'username for SMTP access',
-        'smtpPassword' : 'password for SMTP access',
-        'notifyAddresses' : 'array of receipient addressess for notification emails'
-        })
-    .array('notifyAddresses')
-    .string(['smtpHost', 'smtpUser', 'smtpPassword'])
-    .demand(['smtpHost', 'smtpUser', 'smtpPassword', 'notifyAddresses'])
-    .argv;
-    
-    // add the information from arguments in to the config
-    irWatcherConfig.smtpHost = argv.smtpHost;
-    irWatcherConfig.smtpUser = argv.smtpUser;
-    irWatcherConfig.smtpPassword = argv.smtpPassword;
-    irWatcherConfig.notifyAddresses = argv.notifyAddresses;
-    // output configuration to console (not log - don't want this in github by mistake)
-    console.log("Apps started with running configuration as follows.");
-    console.log(irWatcherConfig);
+    // check if deployed on heroku
+    if(process.env.deploy === 'heroku')
+    {
+        irWatcherConfig.smtpHost = process.env.smtpHost;
+        irWatcherConfig.smtpUser = process.env.smtpUser;
+        irWatcherConfig.smtpPassword = process.env.smtpPassword;
+        irWatcherConfig.notifyAddresses = process.env.notifyAddresses.split(',');
+    } else {
+        // proces the arguments using yargs
+        var argv = yargs
+        .usage('Usage: $0 --smtpHost [string] --smtpUser [string] --smtpPassword [string] --notifyAddresses [array]')
+        .example('$0 -smtpHost smtp.host.com --smptpUser username --smtpPassword password --notifyAddresses person@host.com anotherperson@host.net')
+        .describe({
+            'smtpHost' : 'SMTP host for sending notification emails',
+            'smtpUser' : 'username for SMTP access',
+            'smtpPassword' : 'password for SMTP access',
+            'notifyAddresses' : 'array of receipient addressess for notification emails'
+            })
+        .array('notifyAddresses')
+        .string(['smtpHost', 'smtpUser', 'smtpPassword'])
+        .demand(['smtpHost', 'smtpUser', 'smtpPassword', 'notifyAddresses'])
+        .argv;
+        
+        // add the information from arguments in to the config
+        irWatcherConfig.smtpHost = argv.smtpHost;
+        irWatcherConfig.smtpUser = argv.smtpUser;
+        irWatcherConfig.smtpPassword = argv.smtpPassword;
+        irWatcherConfig.notifyAddresses = argv.notifyAddresses;
+    }
 };
 
 var initApp = function()
