@@ -1,0 +1,13 @@
+{
+    "irWatcherConfig" :
+    {
+        "appHost" : "https://irwatcher.herokuapp.com/",
+        "log4js" : {
+            "appenders": [
+                {
+                "type": "console"
+                }
+                ]
+        }
+    }
+}
