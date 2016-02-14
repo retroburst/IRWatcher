@@ -54,7 +54,7 @@ var processArguments = function(){
         irWatcherConfig.smtpPassword = process.env.smtpPassword;
         irWatcherConfig.notifyAddresses = process.env.notifyAddresses.split(',');
         // assign the listening port for heroku environment
-        logger.info(util.format("Using openshift assigned port %s and IP address %s." + process.env.OPENSHIFT_NODEJS_PORT, process.env.OPENSHIFT_NODEJS_IP));
+        logger.info(util.format("Using openshift assigned port '%s' and IP address '%s'." + process.env.OPENSHIFT_NODEJS_PORT, process.env.OPENSHIFT_NODEJS_IP));
         port = process.env.OPENSHIFT_NODEJS_PORT;
         ipAddress = process.env.OPENSHIFT_NODEJS_IP;
     } else {
@@ -160,7 +160,7 @@ app.listen(port, ipAddress, function (err) {
     if (err) {
         logger.error(err);
     } else {
-        logger.info(util.format("%s listening on port '%d' for IP address %s.", appConstants.APP_NAME, port, ipAddress));
+        logger.info(util.format("%s listening on port '%s' for IP address '%s'.", appConstants.APP_NAME, port, ipAddress));
     }
 });
 
