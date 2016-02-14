@@ -13,8 +13,6 @@ block content
             tr
                 th Date
                 th Product
-                th Rate Code
-                th Rate Type
                 th Old Rate
                 th New Rate
         tbody
@@ -22,8 +20,6 @@ block content
                 tr
                     td #{moment(event.date).format(appConstants.DISPLAY_DATE_FORMAT)}
                     td #{event.newRate.description}
-                    td #{event.newRate.code}
-                    td #{event.newRate.ratetype}
                     td(class="danger") #{event.oldRate.ratevalue} #{event.oldRate.ratesuffix}
                     td(class="success") #{event.newRate.ratevalue} #{event.newRate.ratesuffix}
 
@@ -37,8 +33,6 @@ block content
                         thead
                             tr
                                 th Product
-                                th Rate Code
-                                th Rate Type
                                 th Rate Value
 
     else
@@ -51,13 +45,9 @@ block content
                         thead
                             tr
                                 th Product
-                                th Rate Code
-                                th Rate Type
                                 th Rate Value
                         tbody
                             each rate, j in doc.ratesOfInterest
                                 tr
                                     td #{rate.description}
-                                    td #{rate.code}
-                                    td #{rate.ratetype}
                                     td #{rate.ratevalue} #{rate.ratesuffix}
