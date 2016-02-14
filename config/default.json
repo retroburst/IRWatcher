@@ -1,6 +1,7 @@
 {
     "irWatcherConfig" :
     {
+        "appHost" : "http://localhost:8080",
         "targetUri" : "http://www.anz.com/productdata/productdata.asp?output=json&callback=callbackFunction",
         "pullsDatastore" : "./datastores/irWatcher.pulls.nedb",
         "eventsDatastore" : "./datastores/irWatcher.events.nedb",

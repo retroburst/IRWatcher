@@ -132,7 +132,7 @@ var sendEmailNotifications = function(changedRates){
             ssl: true
         });
     var rateChangesMessage = buildPlainTextChangedRatesMessage(changedRates);
-    var messageHTML = _emailTemplate({ model : { appName : appConstants.APP_NAME, changedRates : changedRates } });
+    var messageHTML = _emailTemplate({ model : { appName : appConstants.APP_NAME, appHost : _irWatcherConfig.appHost, changedRates : changedRates } });
     var message	=
     {
         text: rateChangesMessage,
@@ -209,9 +209,10 @@ var check = function(){
         _pullsDatastore.find({}).sort({ date: -1 }).limit(1).exec(function (err, docs) {
             if(err === null)
             {
-                // check when the last pull was - if a x (fomr config) or longer - run it now
+                // check when the last pull was - if a x (from config) or longer - run it now
                 if(docs.length >= 1){
-                    var daysDiff = moment(docs[0].date).diff(moment(new Date()), 'days');
+                    var daysDiff = moment(new Date()).diff(moment(docs[0].date), 'days');
+                    _logger.info(util.format("Difference in days from last pull to now was %d days.", daysDiff));
                     if(daysDiff >= _irWatcherConfig.numberOfDaysBetweenPulls){
                         _logger.info(util.format("Doing a pull from the bank as it has been %d days or more since the last.", _irWatcherConfig.numberOfDaysBetweenPulls));
                         process();
