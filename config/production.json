@@ -1,7 +1,7 @@
 {
     "irWatcherConfig" :
     {
-        "appHost" : "https://irwatcher.herokuapp.com/",
+        "appHost" : "https://irwatcher-retroburst.rhcloud.com",
         "log4js" : {
             "appenders": [
                 {

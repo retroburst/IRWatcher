@@ -44,16 +44,16 @@ var initBankProductJsonService = function(){
 
 var processArguments = function(){
     // check if deployed on heroku
-    if(process.env.deploy === 'heroku')
+    if(process.env.environment === 'openshift')
     {
-        logger.info("Using heroku configuration");
+        logger.info("Using openshift configuration");
         irWatcherConfig.smtpHost = process.env.smtpHost;
         irWatcherConfig.smtpUser = process.env.smtpUser;
         irWatcherConfig.smtpPassword = process.env.smtpPassword;
         irWatcherConfig.notifyAddresses = process.env.notifyAddresses.split(',');
         // assign the listening port for heroku environment
-        logger.info("Using heroku assigned port: " + process.env.PORT);
-        irWatcherConfig.herokuListenPort = process.env.PORT;
+        logger.info("Using openshift assigned port: " + process.env.OPENSHIFT_NODEJS_PORT);
+        irWatcherConfig.openshiftListenPort = process.env.OPENSHIFT_NODEJS_PORT;
     } else {
         // proces the arguments using yargs
         var argv = yargs
@@ -153,11 +153,11 @@ app.use(function(err, req, res, next) {
 
 
 // start listening on config specified port
-app.listen((irWatcherConfig.herokuListenPort || irWatcherConfig.listenPort), function (err) {
+app.listen((irWatcherConfig.openshiftListenPort || irWatcherConfig.listenPort), function (err) {
     if (err) {
         logger.error(err);
     } else {
-        logger.info(util.format("%s listening on port '%d'.", appConstants.APP_NAME, (irWatcherConfig.herokuListenPort || irWatcherConfig.listenPort)));
+        logger.info(util.format("%s listening on port '%d'.", appConstants.APP_NAME, (irWatcherConfig.openshiftListenPort || irWatcherConfig.listenPort)));
     }
 });
 
