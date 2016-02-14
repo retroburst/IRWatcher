@@ -12,6 +12,16 @@
     "express": "~4.13.1",
     "jade": "~1.11.0",
     "morgan": "~1.6.1",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "yargs": "~3.32.0",
+    "bootstrap": "~3.3.6",
+    "config": "~1.19.0",
+    "emailjs": "~1.0.2",
+    "jquery": "~2.2.0",
+    "jsonpath-plus": "~0.14.0",
+    "log4js": "~0.6.31",
+    "moment": "~2.11.1",
+    "nedb": "~1.7.4",
+    "request": "~2.69.0"
   }
 }

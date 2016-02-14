@@ -98,7 +98,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
 app.use('/jquery', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
-app.use('/datatables', express.static(path.join(__dirname, 'node_modules/datatables/media')));
 
 app.use('/', routes);
 app.use('/users', users);
