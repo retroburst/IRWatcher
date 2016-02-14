@@ -46,11 +46,13 @@ var processArguments = function(){
     // check if deployed on heroku
     if(process.env.deploy === 'heroku')
     {
+        logger.info("Using heroku configuration");
         irWatcherConfig.smtpHost = process.env.smtpHost;
         irWatcherConfig.smtpUser = process.env.smtpUser;
         irWatcherConfig.smtpPassword = process.env.smtpPassword;
         irWatcherConfig.notifyAddresses = process.env.notifyAddresses.split(',');
         // assign the listening port for heroku environment
+        logger.info("Using heroku assigned port: " + process.env.PORT);
         irWatcherConfig.listenPort = process.env.PORT;
     } else {
         // proces the arguments using yargs
