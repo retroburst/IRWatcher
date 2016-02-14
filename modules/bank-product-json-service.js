@@ -1,3 +1,4 @@
+var jade = require('jade');
 var request = require('request');
 var jsonPath = require('jsonpath-plus');
 var util = require('util');
@@ -12,6 +13,7 @@ var _logger = null;
 var _pullsDatastore = null;
 var _eventsDatastore = null;
 var _configured = false;
+var _emailTemplate = null;
 
 /**
  * Configures this instance of the bank product json service.
@@ -22,6 +24,7 @@ function configure(irWatcherConfig, logger, pullsDatastore, eventsDatastore) {
     _pullsDatastore = pullsDatastore;
     _eventsDatastore = eventsDatastore;
     _configured = true;
+    _emailTemplate = jade.compileFile("./templates/notify-email.jade", { pretty : true });
 }
 
 var processJsonResult = function(body)
@@ -93,7 +96,7 @@ var insertNewEventDoc = function(rateChange){
 };
 
 var buildRateChangeDescription = function(rateChange){
-    return(util.format("Product '%s' with rate code '%s' changed interest rate from %d %s to %d %s.",
+    return(util.format("Product '%s' with rate code '%s' changed interest rate from %d %s to %d%s",
         rateChange.oldRate.description,
         rateChange.oldRate.code,
         rateChange.oldRate.ratevalue,
@@ -110,6 +113,15 @@ var handleNotificationMailEvent = function(err, message){
     }
 };
 
+var buildPlainTextChangedRatesMessage = function(changedRates){
+    var rateChangesMessage = 'Notification\n\nChanges in rates of interest at ANZ bank have been detected.\n\n';
+    for(var i=0; i < changedRates.length; i++)
+    {
+        rateChangesMessage += ' • ' + changedRates[i].description + '\n';
+    }
+    return(rateChangesMessage);
+};
+
 var sendEmailNotifications = function(changedRates){
     _logger.info("Sending email notifications to notify addresses.");
     var server 	= email.server.connect(
@@ -119,18 +131,18 @@ var sendEmailNotifications = function(changedRates){
             host: _irWatcherConfig.smtpHost,
             ssl: true
         });
-    var rateChangesMessage = "";
-    for(var j=0; j < changedRates.length; j++)
-    {
-        rateChangesMessage += changedRates[j].description + '\n\n';
-    }
-    
+    var rateChangesMessage = buildPlainTextChangedRatesMessage(changedRates);
+    var messageHTML = _emailTemplate({ model : { appName : appConstants.APP_NAME, changedRates : changedRates } });
     var message	=
     {
         text: rateChangesMessage,
-        from: appConstants.APP_NAME + " <" + appConstants.APP_NAME + "@donotreply.com>",
+        from: appConstants.APP_NAME + " <" + _irWatcherConfig.smtpUser + ">",
         to: _irWatcherConfig.notifyAddresses.join(),
-        subject: appConstants.APP_NAME + ": Rates of Interest Change(s) @ " + moment(new Date()).format(appConstants.DISPLAY_DATE_FORMAT)
+        subject: appConstants.APP_NAME + ": Rates of Interest Change(s) @ " + moment(new Date()).format(appConstants.DISPLAY_DATE_FORMAT),
+        attachment:
+        [
+            { data: messageHTML, alternative: true }
+        ]
     };
     server.send(message, handleNotificationMailEvent);
 };

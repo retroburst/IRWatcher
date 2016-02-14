@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:templates">
+   </FileRef>
+   <FileRef
       location = "group:modules">
    </FileRef>
    <FileRef
