@@ -2,7 +2,6 @@
     "irWatcherConfig" :
     {
         "appHost" : "https://irwatcher.herokuapp.com/",
-        "listenPort" : 0000,
         "log4js" : {
             "appenders": [
                 {
