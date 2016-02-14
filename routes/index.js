@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
             var eventsds = req.app.locals.eventsDatastore;
             eventsds.find({}).sort({ date: -1 }).limit(5).exec(function (err, events) {
                 if(err === null){
-                    res.render('index', { title: req.app.locals.appConstants.APP_NAME, model : { pulls : pulls, events : events } });
+                    res.render('index', { title: 'Home', model : { pulls : pulls, events : events } });
                 } else {
                     req.logger.error(err);
                 }
