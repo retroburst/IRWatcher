@@ -5,7 +5,8 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var nedb = require('nedb');
+var mongodb = require('mongodb');
+var monk = require('monk');
 var log4js = require('log4js');
 var moment = require('moment');
 var util = require('util');
@@ -13,7 +14,6 @@ var yargs = require('yargs');
 
 // modules
 var routes = require('./routes/index');
-var users = require('./routes/users');
 var bankProductJsonService = require('./modules/bank-product-json-service');
 var appConstants = require('./modules/app-constants');
 var viewHelpers = require('./modules/view-helpers');
@@ -21,27 +21,31 @@ var viewHelpers = require('./modules/view-helpers');
 // vars
 var irWatcherConfig = config.get('irWatcherConfig');
 var app = express();
-var pullsDatastore = null;
-var eventsDatastore = null;
+var datastore = null;
 var logger = null;
-var port = "8080";
-var ipAddress = "127.0.0.1";
 
 // functions
-var initDatastores = function()
+var initDatastore = function()
 {
-    pullsDatastore = new nedb({ filename: irWatcherConfig.pullsDataStoreFullPath, autoload: true });
-    eventsDatastore = new nedb({ filename: irWatcherConfig.eventsDataStoreFullPath, autoload: true });
+    datastore = monk(irWatcherConfig.mongodbURL);
+    
+    datastore.getPullsCollection = function(){
+        return(this.get(appConstants.MONGODB_COLLECTION_PULLS));
+    };
+    
+    datastore.getEventsCollection = function(){
+        return(this.get(appConstants.MONGODB_COLLECTION_EVENTS));
+    };
 };
 
 var initLog4js = function()
 {
-    log4js.configure(irWatcherConfig.log4js);
+    log4js.configure(irWatcherConfig.log4js, { cwd : irWatcherConfig.logsDir });
     logger = log4js.getLogger(appConstants.APP_NAME);
 };
 
 var initBankProductJsonService = function(){
-    bankProductJsonService.configure(irWatcherConfig, logger, pullsDatastore, eventsDatastore);
+    bankProductJsonService.configure(irWatcherConfig, logger, datastore);
 };
 
 var processArguments = function(){
@@ -49,16 +53,6 @@ var processArguments = function(){
     if(process.env.environment === 'openshift')
     {
         logger.info("Using openshift configuration.");
-        irWatcherConfig.smtpHost = process.env.smtpHost;
-        irWatcherConfig.smtpUser = process.env.smtpUser;
-        irWatcherConfig.smtpPassword = process.env.smtpPassword;
-        irWatcherConfig.notifyAddresses = process.env.notifyAddresses.split(',');
-        irWatcherConfig.pullsDataStoreFullPath = path.join(process.env.OPENSHIFT_DATA_DIR, irWatcherConfig.pullsDatastore);
-        irWatcherConfig.eventsDataStoreFullPath = path.join(process.env.OPENSHIFT_DATA_DIR, irWatcherConfig.eventsDatastore);
-        // assign the listening port for openshift environment
-        logger.info(util.format("Using openshift assigned port '%s' and IP address '%s'." + process.env.OPENSHIFT_NODEJS_PORT, process.env.OPENSHIFT_NODEJS_IP));
-        port = process.env.OPENSHIFT_NODEJS_PORT;
-        ipAddress = process.env.OPENSHIFT_NODEJS_IP;
     } else {
         logger.info("Using local configuration.");
         // proces the arguments using yargs
@@ -75,16 +69,19 @@ var processArguments = function(){
         .string(['smtpHost', 'smtpUser', 'smtpPassword'])
         .demand(['smtpHost', 'smtpUser', 'smtpPassword', 'notifyAddresses'])
         .argv;
-        
         // add the information from arguments in to the config
-        irWatcherConfig.smtpHost = argv.smtpHost;
-        irWatcherConfig.smtpUser = argv.smtpUser;
-        irWatcherConfig.smtpPassword = argv.smtpPassword;
-        irWatcherConfig.notifyAddresses = argv.notifyAddresses;
-        
-        irWatcherConfig.pullsDataStoreFullPath = irWatcherConfig.datastoreDirectory + irWatcherConfig.pullsDatastore;
-        irWatcherConfig.eventsDataStoreFullPath = irWatcherConfig.datastoreDirectory + irWatcherConfig.eventsDatastore;
+        irWatcherConfig.argumentSmtpHost = argv.smtpHost;
+        irWatcherConfig.argumentSmtpUser = argv.smtpUser;
+        irWatcherConfig.argumentSmtpPassword = argv.smtpPassword;
+        irWatcherConfig.argumentNotifyAddresses = argv.notifyAddresses;
     }
+};
+
+var outputConfigToConsole = function(){
+    console.log("Configuration ->");
+    console.log(irWatcherConfig);
+    console.log("Environment ->");
+    console.log(process.env);
 };
 
 var initApp = function()
@@ -93,8 +90,10 @@ var initApp = function()
     initLog4js();
     // process any command line arguments
     processArguments();
-    // init the data stores
-    initDatastores();
+    // console config and env
+    outputConfigToConsole();
+    // init the datastore
+    initDatastore();
     // init the bank product json service
     initBankProductJsonService();
     // do an initial check
@@ -119,12 +118,10 @@ app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstra
 app.use('/jquery', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
 
 app.use('/', routes);
-app.use('/users', users);
 
 // add locals for routes and views
 app.locals.moment = moment;
-app.locals.pullsDatastore = pullsDatastore;
-app.locals.eventsDatastore = eventsDatastore;
+app.locals.datastore = datastore;
 app.locals.viewHelpers = viewHelpers;
 app.locals.bankProductJsonService = bankProductJsonService;
 app.locals.appConstants = appConstants;
@@ -162,11 +159,11 @@ app.use(function(err, req, res, next) {
 
 
 // start listening on config specified port
-app.listen(port, ipAddress, function (err) {
+app.listen(irWatcherConfig.bindPort, irWatcherConfig.bindIPAddress, function (err) {
     if (err) {
         logger.error(err);
     } else {
-        logger.info(util.format("%s listening on port '%s' for IP address '%s'.", appConstants.APP_NAME, port, ipAddress));
+        logger.info(util.format("%s listening on bound port '%s' for bound IP address '%s'.", appConstants.APP_NAME, irWatcherConfig.bindPort, irWatcherConfig.bindIPAddress));
     }
 });
 

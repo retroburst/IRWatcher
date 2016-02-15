@@ -10,21 +10,19 @@ var appConstants = require('./app-constants');
 
 var _irWatcherConfig = null;
 var _logger = null;
-var _pullsDatastore = null;
-var _eventsDatastore = null;
+var _datastore = null;
 var _configured = false;
 var _emailTemplate = null;
 
 /**
  * Configures this instance of the bank product json service.
  */
-function configure(irWatcherConfig, logger, pullsDatastore, eventsDatastore) {
+function configure(irWatcherConfig, logger, datastore) {
     _irWatcherConfig = irWatcherConfig;
     _logger = logger;
-    _pullsDatastore = pullsDatastore;
-    _eventsDatastore = eventsDatastore;
-    _configured = true;
+    _datastore = datastore;
     _emailTemplate = jade.compileFile("./templates/notify-email.jade", { pretty : true });
+    _configured = true;
 }
 
 var processJsonResult = function(body)
@@ -73,7 +71,7 @@ var insertNewPullDoc = function(ratesOfInterest)
         numRatesOfInterest : ratesOfInterest.length,
         ratesOfInterest : ratesOfInterest
     };
-    _pullsDatastore.insert(pullDoc, handleInsertNewPullDocEvent);
+    _datastore.getPullsCollection().insert(pullDoc, handleInsertNewPullDocEvent);
 };
 
 var handleInsertNewEventDocEvent = function(err, doc){
@@ -92,7 +90,7 @@ var insertNewEventDoc = function(rateChange){
         newRate : rateChange.newRate,
         description : rateChange.description
     };
-    _eventsDatastore.insert(eventDoc, handleInsertNewEventDocEvent);
+    _eventsDatastore.getEventsCollection().insert(eventDoc, handleInsertNewEventDocEvent);
 };
 
 var buildRateChangeDescription = function(rateChange){
@@ -124,25 +122,46 @@ var buildPlainTextChangedRatesMessage = function(changedRates){
 
 var sendEmailNotifications = function(changedRates){
     _logger.info("Sending email notifications to notify addresses.");
-    var server 	= email.server.connect(
+    
+    irWatcherConfig.argumentSmtpHost = argv.smtpHost;
+    irWatcherConfig.argumentSmtpUser = argv.smtpUser;
+    irWatcherConfig.argumentSmtpPassword = argv.smtpPassword;
+    irWatcherConfig.argumentNotifyAddresses = argv.notifyAddresses;
+    
+    var config = null;
+    if(_irWatcherConfig.environment === 'local'){
+        config =
         {
-            user: _irWatcherConfig.smtpUser,
-            password: _irWatcherConfig.smtpPassword,
-            host: _irWatcherConfig.smtpHost,
-            ssl: true
-        });
+            user : _irWatcherConfig.argumentSmtpUser,
+            password : _irWatcherConfig.argumentSmtpPassword,
+            host : _irWatcherConfig.argumentSmtpHost,
+            ssl : true,
+            notifyAddresses : _irWatcherConfig.argumentNotifyAddresses
+        };
+    } else {
+        config =
+        {
+            user : _irWatcherConfig.smtpUser,
+            password : _irWatcherConfig.smtpPassword,
+            host : _irWatcherConfig.smtpHost,
+            ssl : true,
+            notifyAddresses : _irWatcherConfig.notifyAddresses
+        };
+    }
+    
+    var server 	= email.server.connect(config);
     var rateChangesMessage = buildPlainTextChangedRatesMessage(changedRates);
-    var messageHTML = _emailTemplate({ model : { appName : appConstants.APP_NAME, appHost : _irWatcherConfig.appHost, changedRates : changedRates } });
+    var messageHTML = _emailTemplate({ model : { appName : appConstants.APP_NAME, selfURL : _irWatcherConfig.selfURL, changedRates : changedRates } });
     var message	=
     {
-        text: rateChangesMessage,
-        from: appConstants.APP_NAME + " <" + _irWatcherConfig.smtpUser + ">",
-        to: _irWatcherConfig.notifyAddresses.join(),
-        subject: appConstants.APP_NAME + ": Rates of Interest Change(s) @ " + moment(new Date()).format(appConstants.DISPLAY_DATE_FORMAT),
-        attachment:
+    text: rateChangesMessage,
+    from: appConstants.APP_NAME + " <" + _irWatcherConfig.smtpUser + ">",
+    to: config.notifyAddresses,
+    subject: appConstants.APP_NAME + ": Rates of Interest Change(s) @ " + moment(new Date()).format(appConstants.DISPLAY_DATE_FORMAT),
+    attachment:
         [
             { data: messageHTML, alternative: true }
-        ]
+            ]
     };
     server.send(message, handleNotificationMailEvent);
 };
@@ -150,22 +169,22 @@ var sendEmailNotifications = function(changedRates){
 
 var compareRates = function(ratesOfInterest)
 {
-    _pullsDatastore.find({}).sort({ date: -1 }).limit(1).exec(function (err, docs) {
+    _datastore.getPullsCollection().find({}, { limit : 1, sort : { date: -1 } }, function (err, pulls) {
         if(err === null)
         {
             // check for changed rates
             var changedRates = [];
-            if(docs.length >= 1)
+            if(pulls.length >= 1)
             {
-                for(var i=0; i < docs[0].ratesOfInterest.length; i++)
+                for(var i=0; i < pulls[0].ratesOfInterest.length; i++)
                 {
                     for(var j=0; j < ratesOfInterest.length; j++)
                     {
-                        if(docs[0].ratesOfInterest[i].code === ratesOfInterest[j].code)
+                        if(pulls[0].ratesOfInterest[i].code === ratesOfInterest[j].code)
                         {
-                            if(docs[0].ratesOfInterest[i].ratevalue !== ratesOfInterest[j].ratevalue)
+                            if(pulls[0].ratesOfInterest[i].ratevalue !== ratesOfInterest[j].ratevalue)
                             {
-                                var rateChange = { oldRateDate: docs[0].date, oldRate : docs[0].ratesOfInterest[i], newRate : ratesOfInterest[j] };
+                                var rateChange = { oldRateDate: pulls[0].date, oldRate : pulls[0].ratesOfInterest[i], newRate : ratesOfInterest[j] };
                                 rateChange.description = buildRateChangeDescription(rateChange);
                                 _logger.info(rateChange.description);
                                 insertNewEventDoc(rateChange);
@@ -188,7 +207,7 @@ var compareRates = function(ratesOfInterest)
 //TODO: check on callback patterns - this could be improved
 var process = function(callback){
     if(_configured){
-        request(_irWatcherConfig.targetUri, function(error, response, body){
+        request(_irWatcherConfig.productJsonURL, function(error, response, body){
             if (!error && response.statusCode == 200) {
                 var productData = processJsonResult(body);
                 var ratesOfInterest = findRatesOfInterest(productData);
@@ -206,12 +225,12 @@ var process = function(callback){
 var check = function(){
     if(_configured){
         _logger.info("Checking to see if a pull is required from the bank.");
-        _pullsDatastore.find({}).sort({ date: -1 }).limit(1).exec(function (err, docs) {
+        _datastore.getPullsCollection().find({}, { limit : 1, sort : { date : -1} }, function (err, pulls) {
             if(err === null)
             {
                 // check when the last pull was - if a x (from config) or longer - run it now
-                if(docs.length >= 1){
-                    var duration = moment.duration(moment(new Date()).diff(moment(docs[0].date)));
+                if(pulls.length >= 1){
+                    var duration = moment.duration(moment(new Date()).diff(moment(pulls[0].date)));
                     _logger.info(util.format("Difference in hours from last pull to now was %d.", duration.asHours()));
                     if(duration.asHours() >= _irWatcherConfig.numberOfHoursBetweenPulls){
                         _logger.info(util.format("Doing a pull from the bank as it has been %d hours or more since the last.", _irWatcherConfig.numberOfHoursBetweenPulls));
@@ -219,7 +238,7 @@ var check = function(){
                     } else {
                         _logger.info("No pull required from the bank yet.");
                     }
-                } else if (docs.length == 0) {
+                } else if (pulls.length == 0) {
                     _logger.info("Doing an initial pull from the bank as none in the datastore.");
                     process();
                 }

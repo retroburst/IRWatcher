@@ -1,13 +1,6 @@
 {
     "irWatcherConfig" :
     {
-        "appHost" : "http://irwatcher-retroburst.rhcloud.com",
-        "log4js" : {
-            "appenders": [
-                {
-                "type": "console"
-                }
-                ]
-        }
+        "selfURL" : "http://irwatcher-retroburst.rhcloud.com"
     }
 }

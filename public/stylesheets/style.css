@@ -1,6 +1,5 @@
-body {
-    padding: 50px;
-}
-@media (max-width: 979px){
-    body { padding: 0px;  }
-}
+body { padding: 50px; }
+@media (min-width:320px) { body { padding: 2px;  } }
+@media (min-width:481px) { body { padding: 5px;  } }
+@media (min-width:641px) { body { padding: 5px;  } }
+@media (min-width:961px) { body { padding: 10px;  } }

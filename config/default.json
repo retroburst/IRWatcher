@@ -1,53 +1,64 @@
 {
     "irWatcherConfig" :
     {
-        "appHost" : "http://localhost:8080",
-        "targetUri" : "http://www.anz.com/productdata/productdata.asp?output=json&callback=callbackFunction",
-        "datastoreDirectory" : "./datastores/",
-        "pullsDatastore" : "irWatcher.pulls.nedb",
-        "eventsDatastore" : "irWatcher.events.nedb",
+        "environment" : "local",
+        "bindIPAddress" : "127.0.0.1",
+        "bindPort" : "8080",
+        "mongodbURL" : "localhost:27017/irwatcher",
+        "logsDir" : "./logs/",
+        
+        "notifyAddresses" : "",
+        "smtpHost" : "",
+        "smtpUser" : "",
+        "smtpPassword" : "",
+        
+        "selfURL" : "http://localhost:8080",
+        "productJsonURL" : "http://www.anz.com/productdata/productdata.asp?output=json&callback=callbackFunction",
+        
         "numberOfHoursBetweenPulls" : 5,
         "intervalHoursBetweenPullRequiredChecks" : 1,
+        
         "productJsonLeftTrimLength" : 17,
         "productJsonRightTrimLength" : 1,
         "productJsonBaseRatePathsOfInterest" : [
-                                                { "description" : "ANZ Progress Saver", "productCode" : "PSAWB",
-                                                  "jsonPath" : "$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'PSAWB')].baserate[?(@.code === 'PSAWB8T')]"
-                                                },
-                                                { "description" : "ANZ Online Saver", "productCode" : "OS",
-                                                  "jsonPath" : "$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'OS')].baserate[?(@.code === 'OSV')]"
-                                                },
-                                                { "description" : "ANZ Term Deposit : 3 Months", "productCode" : "ATD",
-                                                  "jsonPath" : "$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ATD')].baserate[?(@.code == 'TDB1M2M')]"
-                                                },
-                                                { "description" : "ANZ Term Deposit : 6 Months", "productCode" : "ATD",
-                                                "jsonPath" : "$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ATD')].baserate[?(@.code === 'TDB1M5M')]"
-                                                },
-                                                { "description" : "ANZ Term Deposit : 12 Months", "productCode" : "ATD",
-                                                "jsonPath" : "$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ATD')].baserate[?(@.code === 'TDB1M24A')]"
-                                                },
-                                                { "description" : "ANZ Advance Notice Term Deposit : 3 Months", "productCode" : "ANTD",
-                                                  "jsonPath" : "$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ANTD')].baserate[?(@.code === 'ANTDIML4M')]"
-                                                },
-                                                { "description" : "ANZ Advance Notice Term Deposit : 6 Months", "productCode" : "ANTD",
-                                                  "jsonPath" : "$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ANTD')].baserate[?(@.code === 'ANTDIML8M')]"
-                                                },
-                                                { "description" : "ANZ Advance Notice Term Deposit : 12 Months", "productCode" : "ANTD",
-                                                  "jsonPath" : "$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ANTD')].baserate[?(@.code === 'ANTDAIL18M')]"
-                                                }
-                                                ],
+            { "description" : "ANZ Progress Saver", "productCode" : "PSAWB",
+            "jsonPath" : "$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'PSAWB')].baserate[?(@.code === 'PSAWB8T')]"
+            },
+            { "description" : "ANZ Online Saver", "productCode" : "OS",
+            "jsonPath" : "$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'OS')].baserate[?(@.code === 'OSV')]"
+            },
+            { "description" : "ANZ Term Deposit : 3 Months", "productCode" : "ATD",
+            "jsonPath" : "$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ATD')].baserate[?(@.code == 'TDB1M2M')]"
+            },
+            { "description" : "ANZ Term Deposit : 6 Months", "productCode" : "ATD",
+            "jsonPath" : "$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ATD')].baserate[?(@.code === 'TDB1M5M')]"
+            },
+            { "description" : "ANZ Term Deposit : 12 Months", "productCode" : "ATD",
+            "jsonPath" : "$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ATD')].baserate[?(@.code === 'TDB1M24A')]"
+            },
+            { "description" : "ANZ Advance Notice Term Deposit : 3 Months", "productCode" : "ANTD",
+            "jsonPath" : "$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ANTD')].baserate[?(@.code === 'ANTDIML4M')]"
+            },
+            { "description" : "ANZ Advance Notice Term Deposit : 6 Months", "productCode" : "ANTD",
+            "jsonPath" : "$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ANTD')].baserate[?(@.code === 'ANTDIML8M')]"
+            },
+            { "description" : "ANZ Advance Notice Term Deposit : 12 Months", "productCode" : "ANTD",
+            "jsonPath" : "$.productdata[0].country[?(@.code === 'AU')].interestrates[0].section[?(@.code === 'PDA')].subsection[?(@.code === 'ANTD')].baserate[?(@.code === 'ANTDAIL18M')]"
+            }
+            ],
+        
         "log4js" : {
             "appenders": [
-                          {
-                            "type": "console"
-                          },
-                          {
-                            "type": "file",
-                            "filename": "./logs/irWatcher.log",
-                            "maxLogSize": 20480,
-                            "backups": 3
-                          }
-                          ]
-            }
+                {
+                "type": "console"
+                },
+                {
+                "type": "file",
+                "filename": "irWatcher.log",
+                "maxLogSize": 20480,
+                "backups": 3
+                }
+                ]
+        }
     }
 }
