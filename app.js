@@ -50,10 +50,8 @@ var initBankProductJsonService = function(){
 
 var processArguments = function(){
     // check if deployed on heroku
-    if(process.env.environment === 'openshift')
+    if(config.environment === 'local')
     {
-        logger.info("Using openshift configuration.");
-    } else {
         logger.info("Using local configuration.");
         // proces the arguments using yargs
         var argv = yargs
@@ -70,10 +68,13 @@ var processArguments = function(){
         .demand(['smtpHost', 'smtpUser', 'smtpPassword', 'notifyAddresses'])
         .argv;
         // add the information from arguments in to the config
+        logger.info("Overriding smtp configuration with command line arguments.");
         irWatcherConfig.argumentSmtpHost = argv.smtpHost;
         irWatcherConfig.argumentSmtpUser = argv.smtpUser;
         irWatcherConfig.argumentSmtpPassword = argv.smtpPassword;
         irWatcherConfig.argumentNotifyAddresses = argv.notifyAddresses;
+    } else {
+        logger.info("Using openshift configuration.");
     }
 };
 
@@ -86,12 +87,12 @@ var outputConfigToConsole = function(){
 
 var initApp = function()
 {
+    // console config and env
+    outputConfigToConsole();
     // init log4js
     initLog4js();
     // process any command line arguments
     processArguments();
-    // console config and env
-    outputConfigToConsole();
     // init the datastore
     initDatastore();
     // init the bank product json service
