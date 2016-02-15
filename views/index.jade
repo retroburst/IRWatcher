@@ -33,6 +33,7 @@ block content
                         thead
                             tr
                                 th Product
+                                th Rate Code
                                 th Rate Value
 
     else
@@ -45,9 +46,11 @@ block content
                         thead
                             tr
                                 th Product
+                                th Rate Code
                                 th Rate Value
                         tbody
                             each rate, j in doc.ratesOfInterest
                                 tr
                                     td #{rate.description}
+                                    td #{rate.code}
                                     td #{rate.ratevalue} #{rate.ratesuffix}

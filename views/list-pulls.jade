@@ -14,12 +14,10 @@ block content
                         tr
                             th Product
                             th Rate Code
-                            th Rate Type
                             th Rate Value
                     tbody
                         each rate, j in doc.ratesOfInterest
                             tr
                                 td #{rate.description}
                                 td #{rate.code}
-                                td #{rate.ratetype}
                                 td #{rate.ratevalue} #{rate.ratesuffix}
