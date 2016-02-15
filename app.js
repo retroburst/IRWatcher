@@ -11,6 +11,7 @@ var log4js = require('log4js');
 var moment = require('moment');
 var util = require('util');
 var yargs = require('yargs');
+var str = require('string');
 
 // modules
 var routes = require('./routes/index');
@@ -27,19 +28,26 @@ var logger = null;
 // functions
 var initDatastore = function()
 {
-    datastore = monk(irWatcherConfig.mongodbURL + irWatcherConfig.mongodbName);
-    
+    // build the connection string
+    var connectionString = irWatcherConfig.mongodbURL;
+    if(irWatcherConfig.mongodbName){
+        if(!str(connectionString).endsWith('/')) { connectionString += '/'; }
+        connectionString += irWatcherConfig.mongodbName;
+    }
+    console.log(util.format("Using connection string '%s' for mongodb.", connectionString));
+    datastore = monk(connectionString);
+    // add functions to help manage collections
     datastore.getPullsCollection = function(){
-        return(this.get(appConstants.MONGODB_COLLECTION_PULLS));
+        return(this.get(irWatcherConfig.mongodbPullsCollectionName));
     };
-    
     datastore.getEventsCollection = function(){
-        return(this.get(appConstants.MONGODB_COLLECTION_EVENTS));
+        return(this.get(irWatcherConfig.mongodbEventsCollectionName));
     };
 };
 
 var initLog4js = function()
 {
+    // add the current working directory for support in openshift env
     log4js.configure(irWatcherConfig.log4js, { cwd : irWatcherConfig.logsDir });
     logger = log4js.getLogger(appConstants.APP_NAME);
 };
@@ -48,33 +56,36 @@ var initBankProductJsonService = function(){
     bankProductJsonService.configure(irWatcherConfig, logger, datastore);
 };
 
+var initYargs = function(){
+    var argv = yargs
+    .usage('Usage: $0 --smtpHost [string] --smtpUser [string] --smtpPassword [string] --notifyAddresses [array]')
+    .example('$0 -smtpHost smtp.host.com --smptpUser username --smtpPassword password --notifyAddresses person@host.com anotherperson@host.net')
+    .describe({
+        'smtpHost' : 'SMTP host for sending notification emails',
+        'smtpUser' : 'username for SMTP access',
+        'smtpPassword' : 'password for SMTP access',
+        'notifyAddresses' : 'array of receipient addressess for notification emails'
+        })
+    .array('notifyAddresses')
+    .string(['smtpHost', 'smtpUser', 'smtpPassword'])
+    .demand(['smtpHost', 'smtpUser', 'smtpPassword', 'notifyAddresses'])
+    .argv;
+    return(argv);
+};
+
 var processArguments = function(){
-    // check if deployed on heroku
-    if(config.environment === 'local')
+     logger.info(util.format("Using '%s' configuration.", irWatcherConfig.environment));
+    // check if deployed locally or not
+    if(irWatcherConfig.environment === 'local')
     {
-        logger.info("Using local configuration.");
         // proces the arguments using yargs
-        var argv = yargs
-        .usage('Usage: $0 --smtpHost [string] --smtpUser [string] --smtpPassword [string] --notifyAddresses [array]')
-        .example('$0 -smtpHost smtp.host.com --smptpUser username --smtpPassword password --notifyAddresses person@host.com anotherperson@host.net')
-        .describe({
-            'smtpHost' : 'SMTP host for sending notification emails',
-            'smtpUser' : 'username for SMTP access',
-            'smtpPassword' : 'password for SMTP access',
-            'notifyAddresses' : 'array of receipient addressess for notification emails'
-            })
-        .array('notifyAddresses')
-        .string(['smtpHost', 'smtpUser', 'smtpPassword'])
-        .demand(['smtpHost', 'smtpUser', 'smtpPassword', 'notifyAddresses'])
-        .argv;
+        var argv = initYargs();
         // add the information from arguments in to the config
         logger.info("Overriding smtp configuration with command line arguments.");
         irWatcherConfig.argumentSmtpHost = argv.smtpHost;
         irWatcherConfig.argumentSmtpUser = argv.smtpUser;
         irWatcherConfig.argumentSmtpPassword = argv.smtpPassword;
         irWatcherConfig.argumentNotifyAddresses = argv.notifyAddresses;
-    } else {
-        logger.info("Using openshift configuration.");
     }
 };
 

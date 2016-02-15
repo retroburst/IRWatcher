@@ -1,3 +1,4 @@
+// requires
 var jade = require('jade');
 var request = require('request');
 var jsonPath = require('jsonpath-plus');
@@ -6,8 +7,7 @@ var moment = require('moment');
 var email = require('emailjs');
 var appConstants = require('./app-constants');
 
-//TODO: convert terminology to align with concept of a 'pull' from the bank
-
+// vars
 var _irWatcherConfig = null;
 var _logger = null;
 var _datastore = null;
@@ -120,14 +120,7 @@ var buildPlainTextChangedRatesMessage = function(changedRates){
     return(rateChangesMessage);
 };
 
-var sendEmailNotifications = function(changedRates){
-    _logger.info("Sending email notifications to notify addresses.");
-    
-    irWatcherConfig.argumentSmtpHost = argv.smtpHost;
-    irWatcherConfig.argumentSmtpUser = argv.smtpUser;
-    irWatcherConfig.argumentSmtpPassword = argv.smtpPassword;
-    irWatcherConfig.argumentNotifyAddresses = argv.notifyAddresses;
-    
+var buildSmtpConfig = function(){
     var config = null;
     if(_irWatcherConfig.environment === 'local'){
         config =
@@ -148,7 +141,18 @@ var sendEmailNotifications = function(changedRates){
             notifyAddresses : _irWatcherConfig.notifyAddresses
         };
     }
+    return(config);
+};
+
+var sendEmailNotifications = function(changedRates){
+    _logger.info("Sending email notifications to notify addresses.");
     
+    irWatcherConfig.argumentSmtpHost = argv.smtpHost;
+    irWatcherConfig.argumentSmtpUser = argv.smtpUser;
+    irWatcherConfig.argumentSmtpPassword = argv.smtpPassword;
+    irWatcherConfig.argumentNotifyAddresses = argv.notifyAddresses;
+    
+    var config = buildSmtpConfig();
     var server 	= email.server.connect(config);
     var rateChangesMessage = buildPlainTextChangedRatesMessage(changedRates);
     var messageHTML = _emailTemplate({ model : { appName : appConstants.APP_NAME, selfURL : _irWatcherConfig.selfURL, changedRates : changedRates } });
@@ -161,7 +165,7 @@ var sendEmailNotifications = function(changedRates){
     attachment:
         [
             { data: messageHTML, alternative: true }
-            ]
+        ]
     };
     server.send(message, handleNotificationMailEvent);
 };
@@ -222,6 +226,11 @@ var process = function(callback){
     }
 };
 
+var calculateDurationInHours = function(first, second){
+    var duration = moment.duration(moment(first).diff(moment(second)));
+    return(duration.asHours());
+};
+
 var check = function(){
     if(_configured){
         _logger.info("Checking to see if a pull is required from the bank.");
@@ -230,9 +239,9 @@ var check = function(){
             {
                 // check when the last pull was - if a x (from config) or longer - run it now
                 if(pulls.length >= 1){
-                    var duration = moment.duration(moment(new Date()).diff(moment(pulls[0].date)));
-                    _logger.info(util.format("Difference in hours from last pull to now was %d.", duration.asHours()));
-                    if(duration.asHours() >= _irWatcherConfig.numberOfHoursBetweenPulls){
+                    var durationInHours = calculateDurationInHours(new Date(), pulls[0].date);
+                    _logger.info(util.format("Difference in hours from last pull to now was %d.", durationInHours));
+                    if(durationInHours >= _irWatcherConfig.numberOfHoursBetweenPulls){
                         _logger.info(util.format("Doing a pull from the bank as it has been %d hours or more since the last.", _irWatcherConfig.numberOfHoursBetweenPulls));
                         process();
                     } else {

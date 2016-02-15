@@ -23,6 +23,7 @@
     "morgan": "~1.6.1",
     "request": "~2.69.0",
     "serve-favicon": "~2.3.0",
+    "string": "^3.3.1",
     "yargs": "~3.32.0"
   },
   "main": "app.js"

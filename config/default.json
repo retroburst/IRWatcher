@@ -7,6 +7,8 @@
         
         "mongodbURL" : "mongodb://localhost:27017/",
         "mongodbName" : "irwatcher",
+        "mongodbPullsCollectionName" : "pulls",
+        "mongodbEventsCollectionName" : "events",
         
         "logsDir" : "./logs/",
         
@@ -18,7 +20,7 @@
         "selfURL" : "http://localhost:8080",
         "productJsonURL" : "http://www.anz.com/productdata/productdata.asp?output=json&callback=callbackFunction",
         
-        "numberOfHoursBetweenPulls" : 5,
+        "numberOfHoursBetweenPulls" : 168,
         "intervalHoursBetweenPullRequiredChecks" : 1,
         
         "productJsonLeftTrimLength" : 17,
