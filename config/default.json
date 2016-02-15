@@ -4,7 +4,10 @@
         "environment" : "local",
         "bindIPAddress" : "127.0.0.1",
         "bindPort" : "8080",
-        "mongodbURL" : "localhost:27017/irwatcher",
+        
+        "mongodbURL" : "mongodb://localhost:27017/",
+        "mongodbName" : "irwatcher",
+        
         "logsDir" : "./logs/",
         
         "notifyAddresses" : "",

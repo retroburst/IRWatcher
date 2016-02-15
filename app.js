@@ -27,7 +27,7 @@ var logger = null;
 // functions
 var initDatastore = function()
 {
-    datastore = monk(irWatcherConfig.mongodbURL);
+    datastore = monk(irWatcherConfig.mongodbURL + irWatcherConfig.mongodbName);
     
     datastore.getPullsCollection = function(){
         return(this.get(appConstants.MONGODB_COLLECTION_PULLS));
