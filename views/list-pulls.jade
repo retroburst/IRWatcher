@@ -4,10 +4,10 @@ block content
     h5.
         List of Pulls from ANZ Bank
 
-    each doc, i in model.pulls
+    each pull, i in model.pulls
         div(class="panel panel-default")
             div(class="panel-heading")
-                h3(class="panel-title") #{moment(doc.date).format(appConstants.DISPLAY_DATE_FORMAT)} [#{doc.numRatesOfInterest} rate(s)]
+                h3(class="panel-title") #{context.viewHelpers.formatDate(pull.date)} [#{pull.numRatesOfInterest} rate(s)]
             div(class="panel-body")
                 table(class="table table-striped table-bordered table-hover")
                     thead
@@ -16,7 +16,7 @@ block content
                             th Rate Code
                             th Rate Value
                     tbody
-                        each rate, j in doc.ratesOfInterest
+                        each rate, j in pull.ratesOfInterest
                             tr
                                 td #{rate.description}
                                 td #{rate.code}

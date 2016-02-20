@@ -16,7 +16,7 @@ block content
         tbody
             each event, j in model.events
                 tr
-                    td #{moment(event.date).format(appConstants.DISPLAY_DATE_FORMAT)}
+                    td #{context.viewHelpers.formatDate(event.date)}
                     td #{event.newRate.description}
                     td #{event.newRate.code}
                     td #{event.newRate.ratetype}

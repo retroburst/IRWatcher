@@ -17,9 +17,20 @@ var app = express();
 var datastore = null;
 var logger = null;
 var tailLogBuffer = [];
-var expressLocals = {};
+var expressContext = {};
 
 // functions
+var initExpressContext = function(){
+    // build all the locals for use in routes
+    // and views as a context bundle
+    expressContext.moment = moment;
+    expressContext.datastore = datastore;
+    expressContext.viewHelpers = viewHelpers;
+    expressContext.bankProductJsonService = bankProductJsonService;
+    expressContext.appConstants = appConstants;
+    expressContext.tailLogBuffer = { getBuffer : function(){ return(tailLogBuffer.slice()); } };
+};
+
 var initApp = function()
 {
     // console config and env -> this does not go into the log4js
@@ -42,20 +53,15 @@ var initApp = function()
     // init the express app
     appInitService.initExpress(app, routes, __dirname);
     // add locals for routes and views
-    expressLocals.moment = moment;
-    expressLocals.datastore = datastore;
-    expressLocals.viewHelpers = viewHelpers;
-    expressLocals.bankProductJsonService = bankProductJsonService;
-    expressLocals.appConstants = appConstants;
-    expressLocals.tailLogBuffer = { getBuffer : function(){ return(tailLogBuffer.slice()); } };
-    
-    appInitService.initExpressLocals(app, expressLocals);
+    initExpressContext();
+    // get the init service to push this context onto the locals object
+    appInitService.initExpressLocals(app, expressContext);
 };
 
-// initialise the application services
+// initialise the application
 initApp();
 
-// start listening on config specified port
+// start listening on specified port
 app.listen(irWatcherConfig.bindPort, irWatcherConfig.bindIPAddress, function (err) {
     if (err) {
         logger.error(err);

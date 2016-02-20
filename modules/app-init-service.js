@@ -142,12 +142,7 @@ var initExpress = function(app, routes, __dirname){
 };
 
 var initExpressLocals = function(app, locals){
-    app.locals.moment = locals['moment'];
-    app.locals.datastore = locals['datastore'];
-    app.locals.viewHelpers = locals['viewHelpers'];
-    app.locals.bankProductJsonService = locals['bankProductJsonService'];
-    app.locals.appConstants = locals['appConstants'];
-    app.locals.tailLogBuffer = locals['tailLogBuffer'];
+    app.locals.context = locals;
 };
 
 module.exports = {
