@@ -3,17 +3,18 @@ extends layout
 block content
     h5 Timepoints
     table(class="table table-striped table-bordered table-hover")
-        thead
-            tr
-                th Last Check
-                th Next Check
-                th Last Pull
-                th Next Pull
         tbody
             tr
+                td Last Check
                 td #{context.viewHelpers.formatDate(model.timepoints.lastCheckDate)}
+            tr
+                td Next Check
                 td #{context.viewHelpers.formatDate(model.timepoints.nextCheckDate)}
+            tr
+                td Last Pull
                 td #{context.viewHelpers.formatDate(model.timepoints.lastPullDate)}
+            tr
+                td Next Pull
                 td #{context.viewHelpers.formatDate(model.timepoints.nextPullDate)}
 
     h5 Tail
