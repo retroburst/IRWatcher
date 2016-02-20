@@ -6,6 +6,7 @@
     "start": "node app.js"
   },
   "dependencies": {
+    "app-module-path": "^1.0.5",
     "body-parser": "~1.13.2",
     "bootstrap": "~3.3.6",
     "config": "~1.19.0",
@@ -17,6 +18,7 @@
     "jquery": "~2.2.0",
     "jsonpath-plus": "~0.14.0",
     "log4js": "~0.6.31",
+    "log4js-memory-appender": "^1.0.2",
     "moment": "~2.11.1",
     "mongodb": "^2.1.7",
     "monk": "^1.0.1",

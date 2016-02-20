@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var fs = require('fs');
 
 router.get('/', function(req, res, next) {
     var pullsCollection = req.app.locals.datastore.getPullsCollection();
@@ -9,7 +10,7 @@ router.get('/', function(req, res, next) {
             var eventsCollection = req.app.locals.datastore.getEventsCollection();
             eventsCollection.find({}, { limit : 5, sort : { date : -1 } }, function (err, events) {
                 if(err === null){
-                    res.render('index', { title: 'Home', model : { pulls : pulls, events : events } });
+                    res.render('index', { title: 'Home', model : { pulls : pulls, events : events }});
                 } else {
                     req.logger.error(err);
                 }
@@ -42,13 +43,19 @@ router.get('/list-events', function(req, res, next){
     });
 });
 
-/*
-router.get('/force-pull', function(req, res, next){
-    var svc = req.app.locals.bankProductJsonService;
-    svc.process(function(){
-        res.redirect('/list-pulls');
-    });
+router.get('/diagnostics', function(req, res, next){
+    var timepoints = req.app.locals.bankProductJsonService.calculateTimepoints();
+    var tailLogBuffer = req.app.locals.tailLogBuffer.getBuffer();
+    res.render('diagnostics', { title : 'Diagnostics', model : { timepoints : timepoints, tailLogBuffer : tailLogBuffer } } );
 });
-*/
- 
+
+/*
+ router.get('/force-pull', function(req, res, next){
+ var svc = req.app.locals.bankProductJsonService;
+ svc.process(function(){
+ res.redirect('/list-pulls');
+ });
+ });
+ */
+
 module.exports = router;

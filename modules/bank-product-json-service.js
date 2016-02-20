@@ -13,6 +13,10 @@ var _logger = null;
 var _datastore = null;
 var _configured = false;
 var _emailTemplate = null;
+var _lastCheckDate = null;
+var _lastPullDate = null;
+var _nextCheckDate = null;
+var _nextPullDate = null;
 
 /**
  * Configures this instance of the bank product json service.
@@ -161,7 +165,7 @@ var sendEmailNotifications = function(changedRates){
     text: rateChangesMessage,
     from: appConstants.APP_NAME + " <" + _irWatcherConfig.smtpUser + ">",
     to: config.notifyAddresses,
-    subject: appConstants.APP_NAME + ": Rates of Interest Change(s) @ " + moment(new Date()).format(appConstants.DISPLAY_DATE_FORMAT),
+    subject: appConstants.APP_NAME + ": Rates of Interest Change(s) @ " + moment().format(appConstants.DISPLAY_DATE_FORMAT),
     attachment:
         [
             { data: messageHTML, alternative: true }
@@ -226,6 +230,17 @@ var process = function(callback){
     }
 };
 
+var calculateTimepoints = function(){
+    if(_lastPullDate){ _nextPullDate = _lastPullDate.add(_irWatcherConfig.numberOfHoursBetweenPulls, 'h'); }
+    if(_lastCheckDate){ _nextCheckDate = _lastCheckDate.add(_irWatcherConfig.intervalHoursBetweenPullRequiredChecks, 'h'); }
+    return({
+        lastCheckDate : _lastCheckDate,
+        nextCheckDate : _nextCheckDate,
+        lastPullDate : _lastPullDate,
+        nextPullDate : _nextPullDate
+        });
+};
+
 var calculateDurationInHours = function(first, second){
     var duration = moment.duration(moment(first).diff(moment(second)));
     return(duration.asHours());
@@ -233,12 +248,14 @@ var calculateDurationInHours = function(first, second){
 
 var check = function(){
     if(_configured){
+        _lastCheckDate = moment();
         _logger.info("Checking to see if a pull is required from the bank.");
         _datastore.getPullsCollection().find({}, { limit : 1, sort : { date : -1} }, function (err, pulls) {
             if(err === null)
             {
                 // check when the last pull was - if a x (from config) or longer - run it now
                 if(pulls.length >= 1){
+                    _lastPullDate = moment(pulls[0].date);
                     var durationInHours = calculateDurationInHours(new Date(), pulls[0].date);
                     _logger.info(util.format("Difference in hours from last pull to now was %d.", durationInHours));
                     if(durationInHours >= _irWatcherConfig.numberOfHoursBetweenPulls){
@@ -249,6 +266,7 @@ var check = function(){
                     }
                 } else if (pulls.length == 0) {
                     _logger.info("Doing an initial pull from the bank as none in the datastore.");
+                    _lastPullDate = moment();
                     process();
                 }
             } else {
@@ -263,5 +281,6 @@ var check = function(){
 module.exports = {
     configure : configure,
     check : check,
-    process : process
+    process : process,
+    calculateTimepoints : calculateTimepoints
 };

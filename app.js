@@ -1,4 +1,5 @@
 // requires
+////////////////var appPath = require('app-module-path').addPath(__dirname);
 var config = require('config');
 var express = require('express');
 var path = require('path');
@@ -12,6 +13,7 @@ var moment = require('moment');
 var util = require('util');
 var yargs = require('yargs');
 var str = require('string');
+var memAppender = require('log4js-memory-appender');
 
 // modules
 var routes = require('./routes/index');
@@ -24,6 +26,7 @@ var irWatcherConfig = config.get('irWatcherConfig');
 var app = express();
 var datastore = null;
 var logger = null;
+var tailLogBuffer = [];
 
 // functions
 var initDatastore = function()
@@ -49,6 +52,8 @@ var initLog4js = function()
 {
     // add the current working directory for support in openshift env
     log4js.configure(irWatcherConfig.log4js, { cwd : irWatcherConfig.logsDir });
+    log4js.loadAppender('memory', memAppender({ buffer : tailLogBuffer, maxBufferSize : irWatcherConfig.tailLogBufferSize }));
+    log4js.addAppender(log4js.appenders.memory());
     logger = log4js.getLogger(appConstants.APP_NAME);
 };
 
@@ -137,6 +142,7 @@ app.locals.datastore = datastore;
 app.locals.viewHelpers = viewHelpers;
 app.locals.bankProductJsonService = bankProductJsonService;
 app.locals.appConstants = appConstants;
+app.locals.tailLogBuffer = { getBuffer : function(){ return(tailLogBuffer.slice()); } };
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
