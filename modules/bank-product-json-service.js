@@ -231,8 +231,8 @@ var process = function(callback){
 };
 
 var calculateTimepoints = function(){
-    if(_lastPullDate){ _nextPullDate = _lastPullDate.add(_irWatcherConfig.numberOfHoursBetweenPulls, 'h'); }
-    if(_lastCheckDate){ _nextCheckDate = _lastCheckDate.add(_irWatcherConfig.intervalHoursBetweenPullRequiredChecks, 'h'); }
+    if(_lastPullDate){ _nextPullDate = moment(_lastPullDate).add(_irWatcherConfig.numberOfHoursBetweenPulls, 'h'); }
+    if(_lastCheckDate){ _nextCheckDate = moment(_lastCheckDate).add(_irWatcherConfig.intervalHoursBetweenPullRequiredChecks, 'h'); }
     return({
         lastCheckDate : _lastCheckDate,
         nextCheckDate : _nextCheckDate,
