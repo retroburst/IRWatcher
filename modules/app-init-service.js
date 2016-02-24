@@ -17,6 +17,9 @@ var str = require('string');
 var appConstants = require('./app-constants');
 
 // functions
+/********************************************************
+ * Initializes the MongoDB datastore.
+ ********************************************************/
 var initDatastore = function(irWatcherConfig, logger)
 {
     var datastore = null;
@@ -26,6 +29,7 @@ var initDatastore = function(irWatcherConfig, logger)
         if(!str(connectionString).endsWith('/')) { connectionString += '/'; }
         connectionString += irWatcherConfig.mongodbName;
     }
+    // console this out - as sensitive info present
     console.log(util.format("Using connection string '%s' for mongodb.", connectionString));
     datastore = monk(connectionString);
     // add functions to help manage collections
@@ -38,6 +42,9 @@ var initDatastore = function(irWatcherConfig, logger)
     return(datastore);
 };
 
+/********************************************************
+ * Initializes logging.
+ ********************************************************/
 var initLog4js = function(irWatcherConfig, buffer)
 {
     var logger = null;
@@ -49,6 +56,9 @@ var initLog4js = function(irWatcherConfig, buffer)
     return(logger);
 };
 
+/********************************************************
+ * Initializes Yargs for command line argument processing.
+ ********************************************************/
 var initYargs = function(){
     var argv = yargs
     .usage('Usage: $0 --smtpHost [string] --smtpUser [string] --smtpPassword [string] --notifyAddresses [array]')
@@ -66,6 +76,9 @@ var initYargs = function(){
     return(argv);
 };
 
+/********************************************************
+ * Processes command line arguments.
+ ********************************************************/
 var processArguments = function(irWatcherConfig, logger){
     logger.info(util.format("Using '%s' configuration.", irWatcherConfig.environment));
     // check if deployed locally or not
@@ -82,23 +95,34 @@ var processArguments = function(irWatcherConfig, logger){
     }
 };
 
+/********************************************************
+ * Outputs configuration information to the console. It
+ * is not output to the logs as this is sensitive information
+ * that should not appear on the diagnostics page.
+ ********************************************************/
 var outputConfigToConsole = function(irWatcherConfig, process){
     console.log("Configuration ->");
     console.log(irWatcherConfig);
 };
 
+/********************************************************
+ * Outputs environment information to the console. It
+ * is not output to the logs as this is sensitive information
+ * that should not appear on the diagnostics page.
+ ********************************************************/
 var outputEnvToConsole = function(process){
     console.log("Environment ->");
     console.log(process.env);
 };
 
+/********************************************************
+ * Initializes the express application.
+ ********************************************************/
 var initExpress = function(app, routes, __dirname){
     // view engine setup
     app.set('views', path.join(__dirname, 'views'));
     app.set('view engine', 'jade');
     app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-    // only want this node.js/express logging to go to console
-    //app.use(log4js.connectLogger(log4jsConsoleOnly.getLogger(appConstants.APP_NAME), { level: log4js.levels.INFO }));
     app.use(morgan('combined'));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
@@ -141,6 +165,10 @@ var initExpress = function(app, routes, __dirname){
     });
 };
 
+/********************************************************
+ * Initializes the express locals for use in routes and
+ * views.
+ ********************************************************/
 var initExpressLocals = function(app, locals){
     app.locals.context = locals;
 };

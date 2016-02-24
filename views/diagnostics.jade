@@ -26,5 +26,5 @@ block content
             each log, j in model.tailLogBuffer
                 tr
                     td
-                        span(class=context.viewHelpers.generateClassForLogEntry(log)) &nbsp;
+                        span(class=context.viewHelpers.generateLabelClassForLogEntry(log)) &nbsp;
                         span   #{log}

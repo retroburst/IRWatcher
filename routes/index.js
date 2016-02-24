@@ -1,7 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var fs = require('fs');
 
+/********************************************************
+ * Index route.
+ ********************************************************/
 router.get('/', function(req, res, next) {
     var pullsCollection = req.app.locals.context.datastore.getPullsCollection();
     pullsCollection.find({}, { limit : 1, sort : { date : -1 } }, function (err, pulls) {
@@ -21,6 +23,9 @@ router.get('/', function(req, res, next) {
     });
 });
 
+/********************************************************
+ * List the pull documents route.
+ ********************************************************/
 router.get('/list-pulls', function(req, res, next){
     var pullsCollection = req.app.locals.context.datastore.getPullsCollection();
     pullsCollection.find({}, { sort : { date : -1 } }, function (err, pulls) {
@@ -32,6 +37,9 @@ router.get('/list-pulls', function(req, res, next){
     });
 });
 
+/********************************************************
+ * List the event documents route.
+ ********************************************************/
 router.get('/list-events', function(req, res, next){
     var eventsCollection = req.app.locals.context.datastore.getEventsCollection();
     eventsCollection.find({}, { sort : { date : -1 } }, function (err, events) {
@@ -43,19 +51,13 @@ router.get('/list-events', function(req, res, next){
     });
 });
 
+/********************************************************
+ * Show diagnostics route.
+ ********************************************************/
 router.get('/diagnostics', function(req, res, next){
     var timepoints = req.app.locals.context.bankProductJsonService.calculateTimepoints();
     var tailLogBuffer = req.app.locals.context.tailLogBuffer.getBuffer();
     res.render('diagnostics', { title : 'Diagnostics', model : { timepoints : timepoints, tailLogBuffer : tailLogBuffer } } );
 });
-
-/*
- router.get('/force-pull', function(req, res, next){
- var svc = req.app.locals.bankProductJsonService;
- svc.process(function(){
- res.redirect('/list-pulls');
- });
- });
- */
 
 module.exports = router;

@@ -16,7 +16,7 @@ html
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a.navbar-brand IRWatcher
+           a.navbar-brand(title='#{context.appConstants.APP_NAME} - v#{context.version}') #{context.appConstants.APP_NAME}
         // Collect the nav links, forms, and other content for toggling
         #irwatcher-navbar.collapse.navbar-collapse
           ul.nav.navbar-nav
@@ -34,6 +34,9 @@ html
                 | About
                 span.caret
               ul.dropdown-menu
+                li
+                    a(href='/' class='inactive') Version #{context.version}
+                li.divider(role='separator')
                 li
                     a(href='https://github.com/retroburst') Author on GitHub
                 li

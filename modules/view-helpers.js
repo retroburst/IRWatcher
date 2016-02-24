@@ -2,6 +2,9 @@ var appConstants = require('./app-constants');
 var util = require('util');
 var moment = require('moment');
 
+/********************************************************
+ * Build the title for views.
+ ********************************************************/
 var buildTitle = function(title)
 {
     if(title){
@@ -10,7 +13,10 @@ var buildTitle = function(title)
         return(appConstants.APP_NAME);
     }
 };
-
+/********************************************************
+ * Formats a date using moment and format string from 
+ * constants.
+ ********************************************************/
 var formatDate = function(target){
     if(target){
         if(target instanceof moment){
@@ -21,20 +27,24 @@ var formatDate = function(target){
     }
 };
 
-var generateClassForLogEntry = function(log){
+/********************************************************
+ * Generates the class for a output log on the diagnostics
+ * page.
+ ********************************************************/
+var generateLabelClassForLogEntry = function(log){
     if(log){
-        if(/ERROR/.test(log)) { return("danger"); }
+        if(/ERROR/.test(log)) { return("label label-danger"); }
         else if(/INFO/.test(log)) { return("label label-success"); }
-        else if(/DEBUG/.test(log)) { return("default"); }
-        else if(/WARN/.test(log)) { return("warning"); }
-        else if(/TRACE/.test(log)) { return("default"); }
-        else if(/FATAL/.test(log)) { return("danger"); }
-        else if(/MARK/.test(log)) { return("default"); }
+        else if(/DEBUG/.test(log)) { return("label label-default"); }
+        else if(/WARN/.test(log)) { return("label label-warning"); }
+        else if(/TRACE/.test(log)) { return("label label-default"); }
+        else if(/FATAL/.test(log)) { return("label label-danger"); }
+        else if(/MARK/.test(log)) { return("label label-default"); }
     }
 };
 
 module.exports = {
     buildTitle : buildTitle,
     formatDate : formatDate,
-    generateClassForLogEntry : generateClassForLogEntry
+    generateLabelClassForLogEntry : generateLabelClassForLogEntry
 };

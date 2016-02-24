@@ -18,17 +18,21 @@ var _lastPullDate = null;
 var _nextCheckDate = null;
 var _nextPullDate = null;
 
-/**
- * Configures this instance of the bank product json service.
- */
+/********************************************************
+ * Configures this instance of bank product JSON service.
+ ********************************************************/
 function configure(irWatcherConfig, logger, datastore) {
     _irWatcherConfig = irWatcherConfig;
     _logger = logger;
     _datastore = datastore;
-    _emailTemplate = jade.compileFile("./templates/notify-email.jade", { pretty : true });
+    _emailTemplate = jade.compileFile(appConstants.EMAIL_TEMPLATE_PATH, { pretty : true });
     _configured = true;
 }
 
+/********************************************************
+ * Processes the json result by trimming off the unwanted
+ * sections.
+ ********************************************************/
 var processJsonResult = function(body)
 {
     _logger.info("Trimming json response from bank.");
@@ -38,6 +42,9 @@ var processJsonResult = function(body)
     return(JSON.parse(body));
 };
 
+/********************************************************
+ * Finds the rates of interest in the json.
+ ********************************************************/
 var findRatesOfInterest = function(productData)
 {
     var paths = _irWatcherConfig.productJsonBaseRatePathsOfInterest;
@@ -59,6 +66,9 @@ var findRatesOfInterest = function(productData)
     return(ratesOfInterest);
 };
 
+/********************************************************
+ * Handles the insert result of a new pull document.
+ ********************************************************/
 var handleInsertNewPullDocEvent = function(err, doc){
     if(err === null)
     {
@@ -68,6 +78,9 @@ var handleInsertNewPullDocEvent = function(err, doc){
     }
 };
 
+/********************************************************
+ * Inserts a new pull document.
+ ********************************************************/
 var insertNewPullDoc = function(ratesOfInterest)
 {
     var pullDoc = {
@@ -78,6 +91,9 @@ var insertNewPullDoc = function(ratesOfInterest)
     _datastore.getPullsCollection().insert(pullDoc, handleInsertNewPullDocEvent);
 };
 
+/********************************************************
+ * Handles the insert result of a new event document.
+ ********************************************************/
 var handleInsertNewEventDocEvent = function(err, doc){
     if(err === null)
     {
@@ -87,6 +103,9 @@ var handleInsertNewEventDocEvent = function(err, doc){
     }
 };
 
+/********************************************************
+ * Inserts a new event document.
+ ********************************************************/
 var insertNewEventDoc = function(rateChange){
     var eventDoc = {
         date : new Date(),
@@ -97,6 +116,9 @@ var insertNewEventDoc = function(rateChange){
     _eventsDatastore.getEventsCollection().insert(eventDoc, handleInsertNewEventDocEvent);
 };
 
+/********************************************************
+ * Builds a description of the rate change found.
+ ********************************************************/
 var buildRateChangeDescription = function(rateChange){
     return(util.format("Product '%s' with rate code '%s' changed interest rate from %d %s to %d%s",
         rateChange.oldRate.description,
@@ -107,6 +129,9 @@ var buildRateChangeDescription = function(rateChange){
         rateChange.newRate.ratesuffix));
 };
 
+/********************************************************
+ * Handles the notification mail sent event.
+ ********************************************************/
 var handleNotificationMailEvent = function(err, message){
     if(err){
         _logger.error(err);
@@ -115,6 +140,9 @@ var handleNotificationMailEvent = function(err, message){
     }
 };
 
+/********************************************************
+ * Builds a plain text notification email.
+ ********************************************************/
 var buildPlainTextChangedRatesMessage = function(changedRates){
     var rateChangesMessage = 'Notification\n\nChanges in rates of interest at ANZ bank have been detected.\n\n';
     for(var i=0; i < changedRates.length; i++)
@@ -124,9 +152,13 @@ var buildPlainTextChangedRatesMessage = function(changedRates){
     return(rateChangesMessage);
 };
 
+/********************************************************
+ * Builds the SMTP configuration based conditionally on
+ * the environment in use (local or OpenShift).
+ ********************************************************/
 var buildSmtpConfig = function(){
     var config = null;
-    if(_irWatcherConfig.environment === 'local'){
+    if(_irWatcherConfig.environment == appConstants.ENVIRONMENT_LOCAL_NAME){
         config =
         {
             user : _irWatcherConfig.argumentSmtpUser,
@@ -148,6 +180,9 @@ var buildSmtpConfig = function(){
     return(config);
 };
 
+/********************************************************
+ * Sends email notifications for rate changes.
+ ********************************************************/
 var sendEmailNotifications = function(changedRates){
     _logger.info("Sending email notifications to notify addresses.");
     
@@ -174,7 +209,9 @@ var sendEmailNotifications = function(changedRates){
     server.send(message, handleNotificationMailEvent);
 };
 
-
+/********************************************************
+ * Compares the rates in the current pull with the last pull.
+ ********************************************************/
 var compareRates = function(ratesOfInterest)
 {
     _datastore.getPullsCollection().find({}, { limit : 1, sort : { date: -1 } }, function (err, pulls) {
@@ -212,7 +249,9 @@ var compareRates = function(ratesOfInterest)
     });
 };
 
-//TODO: check on callback patterns - this could be improved
+/********************************************************
+ * Requests the bank product JSON and processes it.
+ ********************************************************/
 var process = function(callback){
     if(_configured){
         request(_irWatcherConfig.productJsonURL, function(error, response, body){
@@ -230,6 +269,10 @@ var process = function(callback){
     }
 };
 
+/********************************************************
+ * Calculates approx. past and future time points for 
+ * check and pull.
+ ********************************************************/
 var calculateTimepoints = function(){
     if(_lastPullDate){ _nextPullDate = moment(_lastPullDate).add(_irWatcherConfig.numberOfHoursBetweenPulls, 'h'); }
     if(_lastCheckDate){ _nextCheckDate = moment(_lastCheckDate).add(_irWatcherConfig.intervalHoursBetweenPullRequiredChecks, 'h'); }
@@ -241,11 +284,18 @@ var calculateTimepoints = function(){
         });
 };
 
+/********************************************************
+ * Calculates the duration in hours.
+ ********************************************************/
 var calculateDurationInHours = function(first, second){
     var duration = moment.duration(moment(first).diff(moment(second)));
     return(duration.asHours());
 };
 
+/********************************************************
+ * Checks to see if the bank product JSON should be requested
+ * and processed yet.
+ ********************************************************/
 var check = function(){
     if(_configured){
         _lastCheckDate = moment();

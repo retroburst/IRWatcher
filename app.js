@@ -3,6 +3,7 @@ var config = require('config');
 var express = require('express');
 var moment = require('moment');
 var util = require('util');
+var pkg = require('./package.json');
 
 // modules
 var routes = require('./routes/index');
@@ -20,9 +21,13 @@ var tailLogBuffer = [];
 var expressContext = {};
 
 // functions
+/********************************************************
+ * Initializes the local context for the express app.
+ ********************************************************/
 var initExpressContext = function(){
     // build all the locals for use in routes
     // and views as a context bundle
+    expressContext.version = irWatcherConfig.version;
     expressContext.moment = moment;
     expressContext.datastore = datastore;
     expressContext.viewHelpers = viewHelpers;
@@ -31,8 +36,13 @@ var initExpressContext = function(){
     expressContext.tailLogBuffer = { getBuffer : function(){ return(tailLogBuffer.slice()); } };
 };
 
+/********************************************************
+ * Initializes the application.
+ ********************************************************/
 var initApp = function()
 {
+    // add the version from package.json to the config
+    irWatcherConfig.version = pkg.version;
     // console config and env -> this does not go into the log4js
     // log as it contains secrets and we don't want it appearing
     // diagnostics page
@@ -66,7 +76,7 @@ app.listen(irWatcherConfig.bindPort, irWatcherConfig.bindIPAddress, function (er
     if (err) {
         logger.error(err);
     } else {
-        logger.info(util.format("%s listening on bound port '%s' for bound IP address '%s'.", appConstants.APP_NAME, irWatcherConfig.bindPort, irWatcherConfig.bindIPAddress));
+        logger.info(util.format("%s [%s] listening on bound port '%s' for bound IP address '%s'.", appConstants.APP_NAME, irWatcherConfig.version, irWatcherConfig.bindPort, irWatcherConfig.bindIPAddress));
     }
 });
 

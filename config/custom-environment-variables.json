@@ -1,3 +1,4 @@
+// OpenShift environment variables overrides
 {
     "irWatcherConfig" :
     {
