@@ -63,7 +63,7 @@ var initApp = function()
     // set an interval to check the last pull in the datastore, if a week or more - do a pull down
     setInterval(bankProductJsonService.check, irWatcherConfig.intervalHoursBetweenPullRequiredChecks * 3600000);
     // init the express app
-    appInitService.initExpress(app, routes, __dirname);
+    appInitService.initExpress(app, routes, __dirname, irWatcherConfig);
     // add locals for routes and views
     initExpressContext();
     // get the init service to push this context onto the locals object

@@ -27,6 +27,8 @@
         
         "paginationPageSize" : 20,
         
+        "useExpressPrettyOutput" : true,
+        
         "productJsonLeftTrimLength" : 17,
         "productJsonRightTrimLength" : 1,
         "productJsonBaseRatePathsOfInterest" : [

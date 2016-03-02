@@ -118,7 +118,7 @@ var outputEnvToConsole = function(process){
 /********************************************************
  * Initializes the express application.
  ********************************************************/
-var initExpress = function(app, routes, __dirname){
+var initExpress = function(app, routes, __dirname, irWatcherConfig){
     // view engine setup
     app.set('views', path.join(__dirname, 'views'));
     app.set('view engine', 'jade');
@@ -163,6 +163,9 @@ var initExpress = function(app, routes, __dirname){
         error: {}
             });
     });
+    
+    // conditionally beautify output
+    app.locals.pretty = irWatcherConfig.useExpressPrettyOutput;
 };
 
 /********************************************************
