@@ -22,3 +22,5 @@ block content
                     td #{event.newRate.ratetype}
                     td(class="danger") #{event.oldRate.ratevalue} #{event.oldRate.ratesuffix}
                     td(class="success") #{event.newRate.ratevalue} #{event.newRate.ratesuffix}
+
+    include ./includes/pagination.jade

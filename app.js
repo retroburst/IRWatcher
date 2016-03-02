@@ -11,6 +11,7 @@ var bankProductJsonService = require('./modules/bank-product-json-service');
 var appConstants = require('./modules/app-constants');
 var viewHelpers = require('./modules/view-helpers');
 var appInitService = require('./modules/app-init-service');
+var routerHelpers = require('./modules/router-helpers');
 
 // vars
 var irWatcherConfig = config.get('irWatcherConfig');
@@ -28,12 +29,15 @@ var initExpressContext = function(){
     // build all the locals for use in routes
     // and views as a context bundle
     expressContext.version = irWatcherConfig.version;
+    expressContext.paginationPageSize = irWatcherConfig.paginationPageSize;
     expressContext.moment = moment;
     expressContext.datastore = datastore;
     expressContext.viewHelpers = viewHelpers;
     expressContext.bankProductJsonService = bankProductJsonService;
     expressContext.appConstants = appConstants;
     expressContext.tailLogBuffer = { getBuffer : function(){ return(tailLogBuffer.slice()); } };
+    expressContext.util = util;
+    expressContext.routerHelpers = routerHelpers;
 };
 
 /********************************************************
@@ -56,8 +60,6 @@ var initApp = function()
     datastore = appInitService.initDatastore(irWatcherConfig, logger);
     // init the bank product json service
     bankProductJsonService.configure(irWatcherConfig, logger, datastore);
-    // do an initial check
-    bankProductJsonService.check();
     // set an interval to check the last pull in the datastore, if a week or more - do a pull down
     setInterval(bankProductJsonService.check, irWatcherConfig.intervalHoursBetweenPullRequiredChecks * 3600000);
     // init the express app
@@ -79,5 +81,8 @@ app.listen(irWatcherConfig.bindPort, irWatcherConfig.bindIPAddress, function (er
         logger.info(util.format("%s [%s] listening on bound port '%s' for bound IP address '%s'.", appConstants.APP_NAME, irWatcherConfig.version, irWatcherConfig.bindPort, irWatcherConfig.bindIPAddress));
     }
 });
+
+// do an initial check with the bank json service
+bankProductJsonService.check();
 
 module.exports = app;

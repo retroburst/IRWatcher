@@ -17,7 +17,7 @@ block content
                 td Next Pull
                 td #{context.viewHelpers.formatDate(model.timepoints.nextPullDate)}
 
-    h5 Tail
+    h5 Tail (last #{model.tailLogBuffer.length} logged events)
     table(class="table table-striped table-bordered table-hover")
         thead
             tr

@@ -23,7 +23,9 @@
         "numberOfHoursBetweenPulls" : 168,
         "intervalHoursBetweenPullRequiredChecks" : 1,
         
-        "tailLogBufferSize" : 200,
+        "tailLogBufferSize" : 100,
+        
+        "paginationPageSize" : 20,
         
         "productJsonLeftTrimLength" : 17,
         "productJsonRightTrimLength" : 1,
