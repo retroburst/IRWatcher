@@ -43,8 +43,22 @@ var generateLabelClassForLogEntry = function(log){
     }
 };
 
+/********************************************************
+ * Formats the uptime duration for display on diagnostics
+ * page.
+ ********************************************************/
+var formatUptimeDuration = function(){
+    var uptime = moment.duration(process.uptime(), 'seconds');
+    if(uptime.asHours() < 1){
+        return(util.format("%d minutes", uptime.asMinutes().toFixed(2)));
+    } else {
+        return(util.format("%d hours", uptime.asHours().toFixed(2)));
+    }
+};
+
 module.exports = {
     buildTitle : buildTitle,
     formatDate : formatDate,
-    generateLabelClassForLogEntry : generateLabelClassForLogEntry
+    generateLabelClassForLogEntry : generateLabelClassForLogEntry,
+    formatUptimeDuration : formatUptimeDuration
 };
