@@ -51,6 +51,8 @@ var formatUptimeDuration = function(){
     var uptime = moment.duration(process.uptime(), 'seconds');
     if(uptime.asHours() < 1){
         return(util.format("%d minutes", uptime.asMinutes().toFixed(2)));
+    } else if(uptime.asHours() > 24){
+        return(util.format("%d days", uptime.asDays().toFixed(2)));
     } else {
         return(util.format("%d hours", uptime.asHours().toFixed(2)));
     }
