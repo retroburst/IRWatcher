@@ -18,6 +18,18 @@ block content
                 td
                     each val, index in process.versions
                         div #{index + ' : ' + val}
+            tr
+                td.col-md-2 Processor
+                td #{process.arch}
+            tr
+                td.col-md-2 Platform
+                td #{process.platform}
+            tr
+                td.col-md-2 Memory Usage
+                td
+                    each val, index in process.memoryUsage()
+                        div #{index + ' : ' + val}
+
 
     h5 Timepoints
     table(class="table table-striped table-bordered table-hover")
