@@ -8,3 +8,7 @@ body { padding: 50px; }
     pointer-events: none;
     cursor: default;
 }
+
+.fixed-table{
+    table-layout: fixed;
+}

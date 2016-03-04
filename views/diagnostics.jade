@@ -2,56 +2,61 @@ extends layout
 
 block content
     h5 Details
-    table(class="table table-striped table-bordered table-hover")
+    table(class="table table-striped table-bordered table-hover fixed-table")
+        colgroup
+            col.col-md-2
+            col.col-md-10
         tbody
             tr
-                td.col-md-2 Application Version
+                td Application Version
                 td v#{context.version}
             tr
-                td.col-md-2 Uptime
+                td Uptime
                 td #{context.viewHelpers.formatUptimeDuration()}
             tr
-                td.col-md-2 Node.js Version
+                td Node.js Version
                 td #{process.version}
             tr
-                td.col-md-2 Node.js Dependencies
+                td Node.js Dependencies
                 td
                     each val, index in process.versions
                         div #{index + ' : ' + val}
             tr
-                td.col-md-2 Processor
+                td Processor
                 td #{process.arch}
             tr
-                td.col-md-2 Platform
+                td Platform
                 td #{process.platform}
             tr
-                td.col-md-2 Memory Usage
+                td Memory Usage
                 td
                     each val, index in process.memoryUsage()
                         div #{index + ' : ' + val}
 
 
     h5 Timepoints
-    table(class="table table-striped table-bordered table-hover")
+    table(class="table table-striped table-bordered table-hover fixed-table")
+        colgroup
+            col.col-md-2
+            col.col-md-10
         tbody
             tr
-                td.col-md-2 Last Check
+                td Last Check
                 td #{context.viewHelpers.formatDate(model.timepoints.lastCheckDate)}
             tr
-                td.col-md-2 Next Check
+                td Next Check
                 td #{context.viewHelpers.formatDate(model.timepoints.nextCheckDate)}
             tr
-                td.col-md-2 Last Pull
+                td Last Pull
                 td #{context.viewHelpers.formatDate(model.timepoints.lastPullDate)}
             tr
-                td.col-md-2 Next Pull
+                td Next Pull
                 td #{context.viewHelpers.formatDate(model.timepoints.nextPullDate)}
 
     h5 Tail (last #{model.tailLogBuffer.length} logged events)
     table(class="table table-striped table-bordered table-hover")
-        thead
-            tr
-                th Event
+        colgroup
+            col.col-md-12
         tbody
             each log, j in model.tailLogBuffer
                 tr

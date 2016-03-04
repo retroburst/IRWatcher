@@ -307,7 +307,7 @@ var check = function(){
                 if(pulls.length >= 1){
                     _lastPullDate = moment(pulls[0].date);
                     var durationInHours = calculateDurationInHours(new Date(), pulls[0].date);
-                    _logger.info(util.format("Difference in hours from last pull to now was %d.", durationInHours));
+                    _logger.info(util.format("Difference in hours from last pull to now was %d.", durationInHours.toFixed(2)));
                     if(durationInHours >= _irWatcherConfig.numberOfHoursBetweenPulls){
                         _logger.info(util.format("Doing a pull from the bank as it has been %d hours or more since the last.", _irWatcherConfig.numberOfHoursBetweenPulls));
                         process();
