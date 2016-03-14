@@ -186,11 +186,6 @@ var buildSmtpConfig = function(){
 var sendEmailNotifications = function(changedRates){
     _logger.info("Sending email notifications to notify addresses.");
     
-    irWatcherConfig.argumentSmtpHost = argv.smtpHost;
-    irWatcherConfig.argumentSmtpUser = argv.smtpUser;
-    irWatcherConfig.argumentSmtpPassword = argv.smtpPassword;
-    irWatcherConfig.argumentNotifyAddresses = argv.notifyAddresses;
-    
     var config = buildSmtpConfig();
     var server 	= email.server.connect(config);
     var rateChangesMessage = buildPlainTextChangedRatesMessage(changedRates);
