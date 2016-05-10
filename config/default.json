@@ -18,7 +18,7 @@
         "smtpPassword" : "",
         
         "selfURL" : "http://localhost:8080",
-        "productJsonURL" : "http://www.anz.com/productdata/productdata.asp?output=json&callback=callbackFunction",
+        "productJsonURL" : "https://www.anz.com/productdata/productdata.asp?output=json&callback=callbackFunction",
         
         "numberOfHoursBetweenPulls" : 168,
         "intervalHoursBetweenPullRequiredChecks" : 1,

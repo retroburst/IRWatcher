@@ -186,22 +186,26 @@ var buildSmtpConfig = function(){
 var sendEmailNotifications = function(changedRates){
     _logger.info("Sending email notifications to notify addresses.");
     
-    var config = buildSmtpConfig();
-    var server 	= email.server.connect(config);
-    var rateChangesMessage = buildPlainTextChangedRatesMessage(changedRates);
-    var messageHTML = _emailTemplate({ model : { appName : appConstants.APP_NAME, selfURL : _irWatcherConfig.selfURL, changedRates : changedRates } });
-    var message	=
-    {
-    text: rateChangesMessage,
-    from: appConstants.APP_NAME + " <" + _irWatcherConfig.smtpUser + ">",
-    to: config.notifyAddresses,
-    subject: appConstants.APP_NAME + ": Rates of Interest Change(s) @ " + moment().format(appConstants.DISPLAY_DATE_FORMAT),
-    attachment:
-        [
-            { data: messageHTML, alternative: true }
-        ]
-    };
-    server.send(message, handleNotificationMailEvent);
+    try{
+        var config = buildSmtpConfig();
+        var server 	= email.server.connect(config);
+        var rateChangesMessage = buildPlainTextChangedRatesMessage(changedRates);
+        var messageHTML = _emailTemplate({ model : { appName : appConstants.APP_NAME, selfURL : _irWatcherConfig.selfURL, changedRates : changedRates } });
+        var message	=
+        {
+            text: rateChangesMessage,
+            from: appConstants.APP_NAME + " <" + config.user + ">",
+            to: config.notifyAddresses,
+            subject: appConstants.APP_NAME + ": Rates of Interest Change(s) @ " + moment().format(appConstants.DISPLAY_DATE_FORMAT),
+            attachment:
+                [
+                    { data: messageHTML, alternative: true }
+                ]
+        };
+        server.send(message, handleNotificationMailEvent);
+    } catch(e){
+        _logger.error("Failed to send email notifications.", e);
+    }
 };
 
 /********************************************************

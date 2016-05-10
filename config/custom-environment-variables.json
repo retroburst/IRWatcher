@@ -11,7 +11,7 @@
         
         "notifyAddresses" : "OPENSHIFT_CUSTOM_NOTIFY_ADDRESSES",
         "smtpHost" : "OPENSHIFT_CUSTOM_SMTP_HOST",
-        "smtpUser" : "OPENSHIFT_CUSTOM_SMTP_PASSWORD",
-        "smtpPassword" : "OPENSHIFT_CUSTOM_SMTP_USER"
+        "smtpUser" : "OPENSHIFT_CUSTOM_SMTP_USER",
+        "smtpPassword" : "OPENSHIFT_CUSTOM_SMTP_PASSWORD"
     }
 }

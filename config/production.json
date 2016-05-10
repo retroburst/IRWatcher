@@ -2,6 +2,6 @@
 {
     "irWatcherConfig" :
     {
-        "selfURL" : "http://irwatcher-retroburst.rhcloud.com"
+        "selfURL" : "https://irwatcher-retroburst.rhcloud.com"
     }
 }
