@@ -113,7 +113,7 @@ var insertNewEventDoc = function(rateChange){
         newRate : rateChange.newRate,
         description : rateChange.description
     };
-    _eventsDatastore.getEventsCollection().insert(eventDoc, handleInsertNewEventDocEvent);
+    _datastore.getEventsCollection().insert(eventDoc, handleInsertNewEventDocEvent);
 };
 
 /********************************************************
