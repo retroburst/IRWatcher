@@ -60,8 +60,6 @@ var initApp = function()
     datastore = appInitService.initDatastore(irWatcherConfig, logger);
     // init the bank product json service
     bankProductJsonService.configure(irWatcherConfig, logger, datastore);
-    // set an interval to check the last pull in the datastore, if a week or more - do a pull down
-    setInterval(bankProductJsonService.check, irWatcherConfig.intervalHoursBetweenPullRequiredChecks * 3600000);
     // init the express app
     appInitService.initExpress(app, routes, __dirname, irWatcherConfig);
     // add locals for routes and views
@@ -81,8 +79,5 @@ app.listen(irWatcherConfig.bindPort, irWatcherConfig.bindIPAddress, function (er
         logger.info(util.format("%s [%s] listening on bound port '%s' for bound IP address '%s'.", appConstants.APP_NAME, irWatcherConfig.version, irWatcherConfig.bindPort, irWatcherConfig.bindIPAddress));
     }
 });
-
-// do an initial check with the bank json service
-bankProductJsonService.check();
 
 module.exports = app;

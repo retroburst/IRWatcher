@@ -45,15 +45,19 @@ var initDatastore = function(irWatcherConfig, logger)
 /********************************************************
  * Initializes logging.
  ********************************************************/
-var initLog4js = function(irWatcherConfig, buffer)
+var initLog4js = function initLog4js(irWatcherConfig, buffer)
 {
-    var logger = null;
+    var log4jsLogger = null;
     // add the current working directory for support in openshift env
     log4js.configure(irWatcherConfig.log4js, { cwd : irWatcherConfig.logsDir });
-    log4js.loadAppender('memory', memAppender({ buffer : buffer, maxBufferSize : irWatcherConfig.tailLogBufferSize }));
-    log4js.addAppender(log4js.appenders.memory());
-    logger = log4js.getLogger(appConstants.APP_NAME);
-    return(logger);
+    log4js.loadAppender('memory', memAppender({ buffer : buffer, maxBufferSize : irWatcherConfig.log4js.memoryAppender.bufferSize }));
+    log4js.addAppender(log4js.appenders.memory(null, irWatcherConfig.log4js.memoryAppender.timezoneOffset));
+    log4jsLogger = log4js.getLogger(appConstants.APP_NAME);
+    // assign as global logger
+    global.logger = log4jsLogger;
+    // create local logger wrapper
+    logger.info("Log4js initialised.");
+    return(log4jsLogger);
 };
 
 /********************************************************

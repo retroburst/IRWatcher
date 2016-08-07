@@ -18,10 +18,13 @@
         "smtpPassword" : "",
         
         "selfURL" : "http://localhost:8080",
-        "productJsonURL" : "https://www.anz.com/productdata/productdata.asp?output=json&callback=callbackFunction",
         
-        "numberOfHoursBetweenPulls" : 168,
-        "intervalHoursBetweenPullRequiredChecks" : 1,
+        "bankProductJsonService" :
+        {
+            // this time is in UTC and will be converted to server local time
+            "jobSchedule": { "hour" : 17, "minute": 30, "dayOfWeek": 1 },
+            "productJsonURL" : "https://www.anz.com/productdata/productdata.asp?output=json&callback=callbackFunction"
+        },
         
         "tailLogBufferSize" : 100,
         
@@ -59,15 +62,12 @@
             ],
         
         "log4js" : {
+            // as the memory appender logs are presented to the user - change to
+            // display in local time (JST) rather than UTC
+            "memoryAppender": { "bufferSize" : 100, "timezoneOffset" : -540 },
             "appenders": [
-                {
-                "type": "console"
-                },
-                {
-                "type": "file",
-                "filename": "irWatcher.log",
-                "maxLogSize": 20480
-                }
+                    { "type": "console", "timezoneOffset": 0 },
+                    { "type": "file", "filename": "irwatcher.log", "maxLogSize": 20480,  "timezoneOffset": 0 }
                 ]
         }
     }

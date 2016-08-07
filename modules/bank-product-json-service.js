@@ -5,6 +5,7 @@ var jsonPath = require('jsonpath-plus');
 var util = require('util');
 var moment = require('moment');
 var email = require('emailjs');
+var schedule = require('node-schedule');
 var appConstants = require('./app-constants');
 
 // vars
@@ -13,21 +14,38 @@ var _logger = null;
 var _datastore = null;
 var _configured = false;
 var _emailTemplate = null;
-var _lastCheckDate = null;
-var _lastPullDate = null;
-var _nextCheckDate = null;
-var _nextPullDate = null;
+var _pullJob = null;
+var _lastScheduledRun = null;
 
 /********************************************************
  * Configures this instance of bank product JSON service.
  ********************************************************/
-function configure(irWatcherConfig, logger, datastore) {
+var configure = function configure(irWatcherConfig, logger, datastore) {
     _irWatcherConfig = irWatcherConfig;
     _logger = logger;
     _datastore = datastore;
     _emailTemplate = jade.compileFile(appConstants.EMAIL_TEMPLATE_PATH, { pretty : true });
+    _pullJob = scheduleJob();
     _configured = true;
 }
+
+/********************************************************
+ * Schedules the pull job based on config.
+ ********************************************************/
+var scheduleJob = function scheduleJob(){
+    var scheduleLocalToServer = null;
+    var scheduleTime = new Date();
+    scheduleTime.setUTCHours(_irWatcherConfig.bankProductJsonService.jobSchedule.hour);
+    scheduleTime.setUTCMinutes(_irWatcherConfig.bankProductJsonService.jobSchedule.minute);
+    scheduleLocalToServer = { hour: scheduleTime.getHours(), minute: scheduleTime.getMinutes(), dayOfWeek: _irWatcherConfig.bankProductJsonService.jobSchedule.dayOfWeek };
+    logger.info("Scheduling Bank Product JSON Service to run according to configuration converted to local time.",
+        scheduleLocalToServer, "local timezone offset", scheduleTime.getTimezoneOffset());
+    console.log(process);
+    var job = schedule.scheduleJob(scheduleLocalToServer, process);
+    console.log(job);
+    console.log(job.nextInvocation());
+    return(job);
+};
 
 /********************************************************
  * Processes the json result by trimming off the unwanted
@@ -253,7 +271,8 @@ var compareRates = function(ratesOfInterest)
  ********************************************************/
 var process = function(callback){
     if(_configured){
-        request(_irWatcherConfig.productJsonURL, function(error, response, body){
+        _lastScheduledRun = new Date();
+        request(_irWatcherConfig.bankProductJsonService.productJsonURL, function(error, response, body){
             if (!error && response.statusCode == 200) {
                 var productData = processJsonResult(body);
                 var ratesOfInterest = findRatesOfInterest(productData);
@@ -269,67 +288,13 @@ var process = function(callback){
 };
 
 /********************************************************
- * Calculates approx. past and future time points for 
- * check and pull.
+ * Returns when the service is set to next run.
  ********************************************************/
-var calculateTimepoints = function(){
-    if(_lastPullDate){ _nextPullDate = moment(_lastPullDate).add(_irWatcherConfig.numberOfHoursBetweenPulls, 'h'); }
-    if(_lastCheckDate){ _nextCheckDate = moment(_lastCheckDate).add(_irWatcherConfig.intervalHoursBetweenPullRequiredChecks, 'h'); }
-    return({
-        lastCheckDate : _lastCheckDate,
-        nextCheckDate : _nextCheckDate,
-        lastPullDate : _lastPullDate,
-        nextPullDate : _nextPullDate
-        });
-};
-
-/********************************************************
- * Calculates the duration in hours.
- ********************************************************/
-var calculateDurationInHours = function(first, second){
-    var duration = moment.duration(moment(first).diff(moment(second)));
-    return(duration.asHours());
-};
-
-/********************************************************
- * Checks to see if the bank product JSON should be requested
- * and processed yet.
- ********************************************************/
-var check = function(){
-    if(_configured){
-        _lastCheckDate = moment();
-        _logger.info("Checking to see if a pull is required from the bank.");
-        _datastore.getPullsCollection().find({}, { limit : 1, sort : { date : -1} }, function (err, pulls) {
-            if(err === null)
-            {
-                // check when the last pull was - if a x (from config) or longer - run it now
-                if(pulls.length >= 1){
-                    _lastPullDate = moment(pulls[0].date);
-                    var durationInHours = calculateDurationInHours(new Date(), pulls[0].date);
-                    _logger.info(util.format("Difference in hours from last pull to now was %d.", durationInHours.toFixed(2)));
-                    if(durationInHours >= _irWatcherConfig.numberOfHoursBetweenPulls){
-                        _logger.info(util.format("Doing a pull from the bank as it has been %d hours or more since the last.", _irWatcherConfig.numberOfHoursBetweenPulls));
-                        process();
-                    } else {
-                        _logger.info("No pull required from the bank yet.");
-                    }
-                } else if (pulls.length == 0) {
-                    _logger.info("Doing an initial pull from the bank as none in the datastore.");
-                    _lastPullDate = moment();
-                    process();
-                }
-            } else {
-                _logger.error(err);
-            }
-        });
-    } else {
-        throw new Error("bankProductJsonService has not been configured. Call configure before attempting to call process.");
-    }
+var getScheduledRunInfo = function(){
+    return({ last: _lastScheduledRun, next: _pullJob.nextInvocation() });
 };
 
 module.exports = {
     configure : configure,
-    check : check,
-    process : process,
-    calculateTimepoints : calculateTimepoints
+    getScheduledRunInfo : getScheduledRunInfo
 };

@@ -77,10 +77,11 @@ var buildListEventsModel = function(req, paginationURLPattern, callback){
  * Builds the diagnostics model for the diagnostics route.
  ********************************************************/
 var buildDiagnosticsModel = function(req, callback){
-    var timepoints = req.app.locals.context.bankProductJsonService.calculateTimepoints();
+    var bankProductJsonServiceRunInfo = req.app.locals.context.bankProductJsonService.getScheduledRunInfo();
     var tailLogBuffer = req.app.locals.context.tailLogBuffer.getBuffer();
     var model = {
-        timepoints : timepoints,
+        localServerTime : new Date(),
+        bankProductJsonServiceRunInfo : bankProductJsonServiceRunInfo,
         tailLogBuffer : tailLogBuffer
     };
     if(callback) callback(null, model);
