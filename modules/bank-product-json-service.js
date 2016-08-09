@@ -54,7 +54,7 @@ var processJsonResult = function processJsonResult(body)
     logger.info("Trimming json response from bank.");
     body = body.slice(irWatcherConfig.productJsonLeftTrimLength, body.length - irWatcherConfig.productJsonRightTrimLength);
     // parse the result
-    _logger.info("Parsing json response from bank.");
+    logger.info("Parsing json response from bank.");
     return(JSON.parse(body));
 };
 
@@ -86,8 +86,7 @@ var findRatesOfInterest = function findRatesOfInterest(productData)
  * Handles the insert result of a new pull document.
  ********************************************************/
 var handleInsertNewPullDocEvent = function handleInsertNewPullDocEvent(err, doc){
-    if(err)
-    {
+    if(err){
         logger.error(err);
     } else {
         logger.info("Inserted new pull doc (" + doc.numRatesOfInterest + " rates).");
@@ -111,8 +110,7 @@ var insertNewPullDoc = function insertNewPullDoc(ratesOfInterest)
  * Handles the insert result of a new event document.
  ********************************************************/
 var handleInsertNewEventDocEvent = function handleInsertNewEventDocEvent(err, doc){
-    if(err)
-    {
+    if(err){
         logger.error(err);
     } else {
         logger.info("Inserted new event doc.");
@@ -205,7 +203,7 @@ var sendEmailNotifications = function sendEmailNotifications(changedRates){
         var config = buildSmtpConfig();
         var server = email.server.connect(config);
         var rateChangesMessage = buildPlainTextChangedRatesMessage(changedRates);
-        var messageHTML = _emailTemplate({ model : { appName : appConstants.APP_NAME, selfURL : irWatcherConfig.selfURL, changedRates : changedRates } });
+        var messageHTML = emailTemplate({ model : { appName : appConstants.APP_NAME, selfURL : irWatcherConfig.selfURL, changedRates : changedRates } });
         var message	= {
             text: rateChangesMessage,
             from: appConstants.APP_NAME + " <" + config.user + ">",
@@ -291,11 +289,15 @@ var compareRates = function compareRates(ratesOfInterest)
  * Requests the bank product JSON and processes it.
  ********************************************************/
 var process = function process(callback){
+    logger.info("Process called - doing a pull from the bank.", irWatcherConfig.bankProductJsonService.productJsonURL);
     request(irWatcherConfig.bankProductJsonService.productJsonURL, function(error, response, body){
+        logger.info("Entering request handler.");
         if (!error && response.statusCode == 200) {
+            logger.info("Response ok. Processing...");
             var productData = processJsonResult(body);
             var ratesOfInterest = findRatesOfInterest(productData);
             compareRates(ratesOfInterest);
+            logger.info("Process complete.");
         } else {
             logger.error(error);
         }
