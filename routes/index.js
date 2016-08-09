@@ -66,9 +66,9 @@ router.get('/diagnostics', function(req, res, next){
 /********************************************************
  * Test email send route.
  ********************************************************/
-router.get('/test-email-send', function(req, res, next){
-    req.app.locals.context.bankProductJsonService.testEmailSend();
-    res.redirect('/diagnostics');
-});
+//router.get('/test-email-send', function(req, res, next){
+//    req.app.locals.context.bankProductJsonService.testEmailSend();
+//    res.redirect('/diagnostics');
+//});
 
 module.exports = router;

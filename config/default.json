@@ -22,7 +22,7 @@
         "bankProductJsonService" :
         {
             // this time is in UTC and will be converted to server local time
-            "jobSchedule": { "hour" : 17, "minute": 30, "dayOfWeek": 1 },
+            "jobSchedule": { "hour" : 13, "minute": 00, "dayOfWeek": 2 },
             "productJsonURL" : "https://www.anz.com/productdata/productdata.asp?output=json&callback=callbackFunction"
         },
         
