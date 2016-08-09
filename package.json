@@ -1,6 +1,6 @@
 {
   "name": "IRWatcher",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "private": true,
   "scripts": {
     "start": "node app.js"
@@ -8,6 +8,7 @@
   "dependencies": {
     "body-parser": "~1.13.2",
     "bootstrap": "~3.3.6",
+    "check-types": "^7.0.0",
     "config": "~1.19.0",
     "cookie-parser": "~1.3.5",
     "debug": "~2.2.0",
@@ -17,6 +18,7 @@
     "jquery": "~2.2.0",
     "jsonpath-plus": "~0.14.0",
     "log4js": "~0.6.31",
+    "log4js-function-designation-wrapper": "0.0.1",
     "log4js-memory-appender": "^1.0.5",
     "moment": "~2.11.1",
     "moment-duration-format": "^1.3.0",

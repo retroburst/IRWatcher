@@ -1,12 +1,15 @@
-var appConstants = require('./app-constants');
+// requires
 var util = require('util');
 var moment = require('moment');
 var momentDurationFormat = require("moment-duration-format");
 
+// modules
+var appConstants = require('./app-constants');
+
 /********************************************************
  * Build the title for views.
  ********************************************************/
-var buildTitle = function(title)
+var buildTitle = function buildTitle(title)
 {
     if(title){
         return(util.format("%s - %s", title, appConstants.APP_NAME));
@@ -18,7 +21,7 @@ var buildTitle = function(title)
  * Formats a date using moment and format string from 
  * constants.
  ********************************************************/
-var formatDate = function(target){
+var formatDate = function formatDate(target){
     if(target){
         if(target instanceof moment){
             return(target.format(appConstants.DISPLAY_DATE_FORMAT));
@@ -32,7 +35,7 @@ var formatDate = function(target){
  * Generates the class for a output log on the diagnostics
  * page.
  ********************************************************/
-var generateLabelClassForLogEntry = function(log){
+var generateLabelClassForLogEntry = function generateLabelClassForLogEntry(log){
     if(log){
         if(/ERROR/.test(log)) { return("label label-danger"); }
         else if(/INFO/.test(log)) { return("label label-success"); }
@@ -48,7 +51,7 @@ var generateLabelClassForLogEntry = function(log){
  * Formats the uptime duration for display on diagnostics
  * page.
  ********************************************************/
-var formatUptimeDuration = function(){
+var formatUptimeDuration = function formatUptimeDuration(){
     var uptime = moment.duration(process.uptime(), 'seconds');
     return(uptime.format("Y [year(s),] M [month(s),] W [week(s),] D [day(s),] H [hour(s),] m [minute(s),] s [second(s)]"));
 };

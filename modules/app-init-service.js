@@ -12,33 +12,44 @@ var memAppender = require('log4js-memory-appender');
 var yargs = require('yargs');
 var util = require('util');
 var str = require('string');
+var loggerWrapper = require('log4js-function-designation-wrapper');
 
 // modules
 var appConstants = require('./app-constants');
+var bankProductJsonService = require('./bank-product-json-service');
+
+// variables
+var logger = null;
 
 // functions
 /********************************************************
- * Initializes the MongoDB datastore.
+ * Builds the datastore connection string based on
+ * configuration values.
  ********************************************************/
-var initDatastore = function(irWatcherConfig, logger)
-{
-    var datastore = null;
-    // build the connection string
+var buildConnectionString = function buildConnectionString(irWatcherConfig){
     var connectionString = irWatcherConfig.mongodbURL;
     if(irWatcherConfig.mongodbName){
         if(!str(connectionString).endsWith('/')) { connectionString += '/'; }
         connectionString += irWatcherConfig.mongodbName;
     }
+    return(connectionString);
+};
+
+/********************************************************
+ * Initializes the MongoDB datastore.
+ ********************************************************/
+var initDatastore = function initDatastore(irWatcherConfig)
+{
+    var datastore = null;
+    // build the connection string
+    var connectionString = buildConnectionString(irWatcherConfig);
     // console this out - as sensitive info present
     console.log(util.format("Using connection string '%s' for mongodb.", connectionString));
     datastore = monk(connectionString);
     // add functions to help manage collections
-    datastore.getPullsCollection = function(){
-        return(this.get(irWatcherConfig.mongodbPullsCollectionName));
-    };
-    datastore.getEventsCollection = function(){
-        return(this.get(irWatcherConfig.mongodbEventsCollectionName));
-    };
+    datastore.getPullsCollection = function(){ return(this.get(irWatcherConfig.mongodbPullsCollectionName)); };
+    datastore.getEventsCollection = function(){ return(this.get(irWatcherConfig.mongodbEventsCollectionName)); };
+    logger.info("Datastore initialised.");
     return(datastore);
 };
 
@@ -55,35 +66,36 @@ var initLog4js = function initLog4js(irWatcherConfig, buffer)
     log4jsLogger = log4js.getLogger(appConstants.APP_NAME);
     // assign as global logger
     global.logger = log4jsLogger;
+    // init local logger
+    logger = loggerWrapper(global.logger, 'app-init-service');
     // create local logger wrapper
     logger.info("Log4js initialised.");
-    return(log4jsLogger);
 };
 
 /********************************************************
  * Initializes Yargs for command line argument processing.
  ********************************************************/
-var initYargs = function(){
+var initYargs = function initYargs(){
     var argv = yargs
-    .usage('Usage: $0 --smtpHost [string] --smtpUser [string] --smtpPassword [string] --notifyAddresses [array]')
-    .example('$0 -smtpHost smtp.host.com --smptpUser username --smtpPassword password --notifyAddresses person@host.com anotherperson@host.net')
-    .describe({
-        'smtpHost' : 'SMTP host for sending notification emails',
-        'smtpUser' : 'username for SMTP access',
-        'smtpPassword' : 'password for SMTP access',
-        'notifyAddresses' : 'array of receipient addressess for notification emails'
-        })
-    .array('notifyAddresses')
-    .string(['smtpHost', 'smtpUser', 'smtpPassword'])
-    .demand(['smtpHost', 'smtpUser', 'smtpPassword', 'notifyAddresses'])
-    .argv;
+        .usage('Usage: $0 --smtpHost [string] --smtpUser [string] --smtpPassword [string] --notifyAddresses [array]')
+        .example('$0 -smtpHost smtp.host.com --smptpUser username --smtpPassword password --notifyAddresses person@host.com anotherperson@host.net')
+        .describe({
+            'smtpHost' : 'SMTP host for sending notification emails',
+            'smtpUser' : 'username for SMTP access',
+            'smtpPassword' : 'password for SMTP access',
+            'notifyAddresses' : 'array of receipient addressess for notification emails'
+            })
+        .array('notifyAddresses')
+        .string(['smtpHost', 'smtpUser', 'smtpPassword'])
+        .demand(['smtpHost', 'smtpUser', 'smtpPassword', 'notifyAddresses'])
+        .argv;
     return(argv);
 };
 
 /********************************************************
  * Processes command line arguments.
  ********************************************************/
-var processArguments = function(irWatcherConfig, logger){
+var processArguments = function processArguments(irWatcherConfig){
     logger.info(util.format("Using '%s' configuration.", irWatcherConfig.environment));
     // check if deployed locally or not
     if(irWatcherConfig.environment === appConstants.ENVIRONMENT_LOCAL_NAME)
@@ -104,7 +116,7 @@ var processArguments = function(irWatcherConfig, logger){
  * is not output to the logs as this is sensitive information
  * that should not appear on the diagnostics page.
  ********************************************************/
-var outputConfigToConsole = function(irWatcherConfig, process){
+var outputConfigToConsole = function outputConfigToConsole(irWatcherConfig){
     console.log("Configuration ->");
     console.log(irWatcherConfig);
 };
@@ -114,7 +126,7 @@ var outputConfigToConsole = function(irWatcherConfig, process){
  * is not output to the logs as this is sensitive information
  * that should not appear on the diagnostics page.
  ********************************************************/
-var outputEnvToConsole = function(process){
+var outputEnvToConsole = function outputEnvToConsole(process){
     console.log("Environment ->");
     console.log(process.env);
 };
@@ -122,7 +134,7 @@ var outputEnvToConsole = function(process){
 /********************************************************
  * Initializes the express application.
  ********************************************************/
-var initExpress = function(app, routes, __dirname, irWatcherConfig){
+var initExpress = function initExpress(app, routes, __dirname, irWatcherConfig){
     // view engine setup
     app.set('views', path.join(__dirname, 'views'));
     app.set('view engine', 'jade');
@@ -146,39 +158,67 @@ var initExpress = function(app, routes, __dirname, irWatcherConfig){
     
     // error handlers
     
-    // development error handler
+    // error handlers
+    // development and test error handler
     // will print stacktrace
-    if (app.get('env') === 'development') {
+    if (app.get('env') === appConstants.NODE_ENVIRONMENT_DEVELOPMENT_NAME || app.get('env') === appConstants.NODE_ENVIRONMENT_TEST_NAME) {
         app.use(function(err, req, res, next) {
-            res.status(err.status || 500);
-            res.render('error', {
-            message: err.message,
-            error: err
+            if(logger.valid()) {
+                logger.error({ designation: "express", functionDesignation: "middleware-error-handler", arguments: ["Express middleware error handler caught an error.", err, util.format("Original URL: '%s'.", req.originalUrl)] });
+            }
+            if(req.xhr){
+                res.status(err.status || 500).send({ message : err.message, error : err });
+            } else {
+                res.status(err.status || 500);
+                res.render('error', {
+                    title: 'Error',
+                    message: err.message,
+                    error: err
                 });
+            }
         });
     }
     
     // production error handler
     // no stacktraces leaked to user
     app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-        message: err.message,
-        error: {}
+        if(logger.valid()) {
+            logger.error({ designation: "express", functionDesignation: "middleware-error-handler", arguments: ["Express middleware error handler caught an error.", err, util.format("Original URL: '%s'.", req.originalUrl)] });
+        }
+        if(req.xhr){
+            res.status(err.status || 500).send({ message : err.message, error: {} });
+        } else {
+            res.status(err.status || 500);
+            res.render('error', {
+                title: 'Error',
+                message: err.message,
+                error: {}
             });
+        }
     });
     
     // conditionally beautify output
     app.locals.pretty = irWatcherConfig.useExpressPrettyOutput;
+    logger.info("Express initialised.");
 };
 
 /********************************************************
  * Initializes the express locals for use in routes and
  * views.
  ********************************************************/
-var initExpressLocals = function(app, locals){
+var initExpressLocals = function initExpressLocals(app, locals){
     app.locals.context = locals;
+    logger.info("Express locals initialised.");
 };
+
+/********************************************************
+ * Initializes the bank product JSON service.
+ ********************************************************/
+var initBankProductJsonService = function initBankProductJsonService(irWatcherConfig, datastore){
+    bankProductJsonService.configure(irWatcherConfig, datastore);
+    logger.info("Bank Product JSON Service initialised.");
+    return(bankProductJsonService);
+}
 
 module.exports = {
     initDatastore : initDatastore,
@@ -187,5 +227,6 @@ module.exports = {
     outputConfigToConsole : outputConfigToConsole,
     outputEnvToConsole : outputEnvToConsole,
     initExpress : initExpress,
-    initExpressLocals : initExpressLocals
+    initExpressLocals : initExpressLocals,
+    initBankProductJsonService : initBankProductJsonService
 };

@@ -1,7 +1,7 @@
 /********************************************************
  * Builds a paginated pulls model for the list pulls route.
  ********************************************************/
-var buildListPullsModel = function(req, paginationURLPattern, callback){
+var buildListPullsModel = function buildListPullsModel(req, paginationURLPattern, callback){
     var pageNumber = parseInt(req.query.pageNumber) || 1;
     var pageSize = parseInt(req.query.pageSize) || req.app.locals.context.paginationPageSize;
     var skip = pageSize * (pageNumber-1);
@@ -39,7 +39,7 @@ var buildListPullsModel = function(req, paginationURLPattern, callback){
 /********************************************************
  * Builds a paginated events model for the list events route.
  ********************************************************/
-var buildListEventsModel = function(req, paginationURLPattern, callback){
+var buildListEventsModel = function buildListEventsModel(req, paginationURLPattern, callback){
     var pageNumber = parseInt(req.query.pageNumber) || 1;
     var pageSize = parseInt(req.query.pageSize) || req.app.locals.context.paginationPageSize;
     var skip = pageSize * (pageNumber-1);
@@ -76,7 +76,7 @@ var buildListEventsModel = function(req, paginationURLPattern, callback){
 /********************************************************
  * Builds the diagnostics model for the diagnostics route.
  ********************************************************/
-var buildDiagnosticsModel = function(req, callback){
+var buildDiagnosticsModel = function buildDiagnosticsModel(req, callback){
     var bankProductJsonServiceRunInfo = req.app.locals.context.bankProductJsonService.getScheduledRunInfo();
     var tailLogBuffer = req.app.locals.context.tailLogBuffer.getBuffer();
     var model = {
@@ -90,7 +90,7 @@ var buildDiagnosticsModel = function(req, callback){
 /********************************************************
  * Builds the model for use by the index route.
  ********************************************************/
-var buildHomeModel = function(req, callback){
+var buildHomeModel = function buildHomeModel(req, callback){
     var pullsCollection = req.app.locals.context.datastore.getPullsCollection();
     pullsCollection.find({}, { limit : 1, sort : { date : -1 } }, function (err, pulls) {
         if(err === null)

@@ -1,15 +1,25 @@
+// requires
 var express = require('express');
+var loggerWrapper = require('log4js-function-designation-wrapper');
+
+// variables
+var routerHelpers = require('../modules/router-helpers');
 var router = express.Router();
+var logger = loggerWrapper(global.logger, "routes->index");
+
+// constants
+const LIST_PULLS_PAGINATION_PATTERN = "/list-pulls/?pageNumber=%s&pageSize=%s";
+const LIST_EVENTS_PAGINATION_PATTERN = "/list-events/?pageNumber=%s&pageSize=%s";
 
 /********************************************************
  * Index route.
  ********************************************************/
 router.get('/', function(req, res, next) {
-    req.app.locals.context.routerHelpers.buildHomeModel(req, function(err, model){
-        if(err ==  null) {
-            res.render('index', { title : 'Home', model : model });
+    routerHelpers.buildHomeModel(req, function(err, model){
+        if(err) {
+            next(err);
         } else {
-            req.logger.error(err);
+            res.render('index', { title : 'Home', model : model });
         }
     });
 });
@@ -18,12 +28,11 @@ router.get('/', function(req, res, next) {
  * List the pull documents route.
  ********************************************************/
 router.get('/list-pulls', function(req, res, next){
-    var paginationURLPattern = "/list-pulls/?pageNumber=%s&pageSize=%s";
-    req.app.locals.context.routerHelpers.buildListPullsModel(req, paginationURLPattern, function(err, model){
-        if(err ==  null) {
-            res.render('list-pulls', { title : 'List of Pulls from ANZ Bank', model : model });
+    routerHelpers.buildListPullsModel(req, LIST_PULLS_PAGINATION_PATTERN, function(err, model){
+        if(err) {
+            next(err);
         } else {
-            req.logger.error(err);
+            res.render('list-pulls', { title : 'List of Pulls from ANZ Bank', model : model });
         }
     });
 });
@@ -32,12 +41,11 @@ router.get('/list-pulls', function(req, res, next){
  * List the event documents route.
  ********************************************************/
 router.get('/list-events', function(req, res, next){
-    var paginationURLPattern = "/list-events/?pageNumber=%s&pageSize=%s";
-    req.app.locals.context.routerHelpers.buildListEventsModel(req, paginationURLPattern, function(err, model){
-        if(err ==  null) {
-            res.render('list-events', { title : 'List of Events', model : model });
+    routerHelpers.buildListEventsModel(req, LIST_EVENTS_PAGINATION_PATTERN, function(err, model){
+        if(err) {
+            next(err);
         } else {
-            req.logger.error(err);
+            res.render('list-events', { title : 'List of Events', model : model });
         }
     });
 });
@@ -46,13 +54,21 @@ router.get('/list-events', function(req, res, next){
  * Show diagnostics route.
  ********************************************************/
 router.get('/diagnostics', function(req, res, next){
-    req.app.locals.context.routerHelpers.buildDiagnosticsModel(req, function(err, model){
-        if(err ==  null) {
-            res.render('diagnostics', { title : 'Diagnostics', model : model });
+    routerHelpers.buildDiagnosticsModel(req, function(err, model){
+        if(err) {
+            next(err);
         } else {
-            req.logger.error(err);
+            res.render('diagnostics', { title : 'Diagnostics', model : model });
         }
     });
+});
+
+/********************************************************
+ * Test email send route.
+ ********************************************************/
+router.get('/test-email-send', function(req, res, next){
+    req.app.locals.context.bankProductJsonService.testEmailSend();
+    res.redirect('/diagnostics');
 });
 
 module.exports = router;
