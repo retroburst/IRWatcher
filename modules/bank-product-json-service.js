@@ -37,7 +37,7 @@ var scheduleJob = function scheduleJob(){
     var scheduleTime = new Date();
     scheduleTime.setUTCHours(irWatcherConfig.bankProductJsonService.jobSchedule.hour);
     scheduleTime.setUTCMinutes(irWatcherConfig.bankProductJsonService.jobSchedule.minute);
-    scheduleLocalToServer = { hour: scheduleTime.getHours(), minute: scheduleTime.getMinutes(), dayOfWeek: irWatcherConfig.bankProductJsonService.jobSchedule.dayOfWeek };
+    scheduleLocalToServer = { hour: scheduleTime.getHours(), minute: scheduleTime.getMinutes() };
     logger.info("Scheduling Bank Product JSON Service to run according to configuration converted to local time.",
         scheduleLocalToServer, "local timezone offset", scheduleTime.getTimezoneOffset());
     console.log(process);
@@ -249,8 +249,7 @@ var testEmailSend = function testEmailSend(){
 var compareRates = function compareRates(ratesOfInterest)
 {
     datastore.getPullsCollection().find({}, { limit : 1, sort : { date: -1 } }, function (err, pulls) {
-        if(err)
-        {
+        if(err){
             logger.error(err);
         } else {
             // check for changed rates
@@ -275,12 +274,16 @@ var compareRates = function compareRates(ratesOfInterest)
                     }
                 }
             }
-            // if differences - notify via email
+            // if we have some change in rates or if there is no pulls
+            // in the datastore yet - save the pull
+            if(changedRates.length > 0 || pulls.length === 0){
+                // stuff them into the datastore
+                insertNewPullDoc(ratesOfInterest);
+            }
+            // if change in rates - notify via email
             if(changedRates.length > 0) {
                 sendEmailNotifications(changedRates);
             }
-            // stuff them into the datastore
-            insertNewPullDoc(ratesOfInterest);
         }
     });
 };
