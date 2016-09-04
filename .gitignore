@@ -37,3 +37,5 @@ datastore/
 
 #commands
 commands/
+
+.DS_Store
